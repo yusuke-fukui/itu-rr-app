@@ -1,5 +1,5 @@
 """
-ITU-RR 条文参照グラフ v3
+ITU-RR 条文参照グラフ v4
 双方向トラバーサルによる条文間リンク表示アプリ。
 ルート切替+パンくず履歴方式。
 Small Satellite Handbook 手続き構造対応。
@@ -23,6 +23,7 @@ GRAPH_PATH = ROOT_DIR / "data" / "graph" / "reference_graph.json"
 ARTICLES_PATH = ROOT_DIR / "data" / "graph" / "articles.json"
 HANDBOOK_PATH = ROOT_DIR / "data" / "graph" / "handbook_overlay.json"
 CACHE_PATH = ROOT_DIR / "data" / "graph" / "summary_cache.json"
+RESOLUTIONS_PATH = ROOT_DIR / "data" / "graph" / "vol3_resolutions_draft.json"
 
 SUMMARY_MODEL = "claude-sonnet-4-20250514"
 
@@ -226,6 +227,32 @@ def save_summary_cache(cache: dict):
         json.dump(cache, f, ensure_ascii=False, indent=2)
 
 
+@st.cache_data
+def load_resolutions() -> list[dict]:
+    """Vol.3 決議データを読み込む。"""
+    if RESOLUTIONS_PATH.exists():
+        with open(RESOLUTIONS_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
+
+
+@st.cache_data
+def build_resolution_reverse_index(_resolutions: list[dict]) -> dict[str, list[dict]]:
+    """条文番号 → その条文を参照している決議リストの逆引きインデックスを構築する。"""
+    index: dict[str, list[dict]] = {}
+    for res in _resolutions:
+        summary = {
+            "number": res["number"],
+            "wrc": res["wrc"],
+            "title": res["title"],
+        }
+        for ref in res.get("refs", []):
+            if ref not in index:
+                index[ref] = []
+            index[ref].append(summary)
+    return index
+
+
 # ─────────────────────────────────────────
 # ユーティリティ
 # ─────────────────────────────────────────
@@ -258,6 +285,16 @@ def navigate_to(num: str):
         st.session_state["history"].append(current)
 
     st.session_state["current_article"] = num
+    st.session_state["current_resolution"] = None
+
+
+def navigate_to_resolution(res_num: int):
+    """決議にナビゲートする。条文表示をクリアし決議ビューに切り替え。"""
+    st.session_state["current_resolution"] = res_num
+    st.session_state["current_article"] = None
+    st.session_state["history"] = []
+    if "active_route" in st.session_state:
+        del st.session_state["active_route"]
 
 
 def navigate_back():
@@ -393,7 +430,7 @@ def render_article_text(num: str, articles: dict, footnote_index: dict = None):
 def render_root(num: str, graph: dict, articles: dict,
                 condition_labels: dict, handbook_notes: dict,
                 procedure_routes: dict, footnote_index: dict = None,
-                rop_index: dict = None):
+                rop_index: dict = None, resolution_reverse_index: dict = None):
     """ルートノードと参照元/参照先の一覧を表示。"""
     node = graph.get(num, {})
     refs_from = node.get("refs_from", [])
@@ -571,6 +608,97 @@ def render_root(num: str, graph: dict, articles: dict,
         else:
             st.info("なし")
 
+    # 決議クロスリファレンス
+    if resolution_reverse_index and num in resolution_reverse_index:
+        res_list = resolution_reverse_index[num]
+        st.divider()
+        st.markdown(
+            f'<p style="font-size:0.95em;font-weight:bold;color:#4a148c;">'
+            f'📜 この条文を参照している決議（{len(res_list)}件）</p>',
+            unsafe_allow_html=True,
+        )
+        for res_info in sorted(res_list, key=lambda r: r["number"]):
+            col_res, col_btn = st.columns([5, 1])
+            with col_res:
+                st.markdown(f"**Resolution {res_info['number']}** ({res_info['wrc']})")
+                st.caption(res_info["title"][:100])
+            with col_btn:
+                if st.button("→", key=f"art_to_res_{res_info['number']}",
+                           help=f"Resolution {res_info['number']} を表示"):
+                    navigate_to_resolution(res_info["number"])
+                    st.rerun()
+
+
+# ─────────────────────────────────────────
+# 決議詳細表示
+# ─────────────────────────────────────────
+
+def render_resolution(res_num: int, resolutions: list[dict],
+                      articles: dict, graph: dict):
+    """決議の詳細表示。タイトル、プレビュー、参照条文リスト。"""
+    res = None
+    for r in resolutions:
+        if r["number"] == res_num:
+            res = r
+            break
+
+    if not res:
+        st.error(f"決議 {res_num} が見つかりません。")
+        return
+
+    if st.button("← 一覧に戻る", key="res_back"):
+        st.session_state["current_resolution"] = None
+        st.rerun()
+
+    st.markdown(f"## Resolution {res['number']} ({res['wrc']})")
+    st.markdown(f"**{res['title']}**")
+
+    meta_parts = [
+        f"pp. {res['start_page']}–{res['end_page']} ({res['pages']}ページ)",
+        f"{res['text_length']:,}文字",
+    ]
+    st.caption(" | ".join(meta_parts))
+
+    if res.get("text_preview"):
+        st.markdown(
+            f'<div style="background:#f8f9fa; border-left:3px solid #7b1fa2; '
+            f'padding:12px 16px; margin:8px 0; font-size:0.9em; '
+            f'color:#333; max-height:300px; overflow-y:auto; line-height:1.6;">'
+            f'{res["text_preview"]}</div>',
+            unsafe_allow_html=True,
+        )
+
+    st.divider()
+
+    refs = res.get("refs", [])
+    st.markdown(
+        f'<p style="font-size:0.95em;font-weight:bold;color:#4a148c;">'
+        f'📎 この決議が参照している条文（{len(refs)}件）</p>',
+        unsafe_allow_html=True,
+    )
+
+    if refs:
+        for ref in sorted(refs, key=sort_key):
+            ref_art = articles.get(ref, {})
+            ref_text = ref_art.get("text", "")[:120]
+            in_graph = ref in graph
+
+            c1, c2 = st.columns([5, 1])
+            with c1:
+                st.markdown(f"**No. {ref}**")
+                if ref_text:
+                    st.caption(ref_text[:120] + ("..." if len(ref_art.get("text", "")) > 120 else ""))
+            with c2:
+                if in_graph:
+                    if st.button("→", key=f"res_goto_{ref}", help=f"No. {ref} に移動"):
+                        navigate_to(ref)
+                        st.rerun()
+                else:
+                    st.caption("—")
+            st.markdown("---")
+    else:
+        st.info("この決議には条文参照がありません。")
+
 
 # ─────────────────────────────────────────
 # AIサマリー
@@ -647,6 +775,8 @@ def main():
     footnote_index = build_footnote_index(articles)
     handbook = load_handbook()
     rop_index = build_rop_index()
+    resolutions = load_resolutions()
+    resolution_reverse_index = build_resolution_reverse_index(resolutions)
 
     condition_labels = handbook.get("condition_labels", {})
     handbook_notes = handbook.get("handbook_notes", {})
@@ -704,6 +834,59 @@ def main():
                         st.session_state["current_article"] = steps[0]["article"]
                         st.session_state["active_route"] = route_id
                         st.rerun()
+
+            st.divider()
+
+        # 決議ブラウザ
+        if resolutions:
+            st.header("決議ブラウザ")
+            res_search = st.text_input(
+                "決議を検索（番号 or キーワード）",
+                placeholder="例: 26, satellite",
+                key="res_search_input",
+            )
+
+            # WRC年代別グループ化（新しい順）
+            wrc_groups: dict[str, list[dict]] = {}
+            for res in resolutions:
+                wrc = res["wrc"]
+                if wrc not in wrc_groups:
+                    wrc_groups[wrc] = []
+                wrc_groups[wrc].append(res)
+
+            def _wrc_sort_key(wrc: str) -> tuple:
+                m = re.search(r'(\d{2,4})$', wrc)
+                year = int(m.group(1)) if m else 0
+                if year < 100:
+                    year += 1900 if year > 50 else 2000
+                is_rev = 0 if wrc.startswith("REV") else 1
+                return (-year, is_rev)
+
+            for wrc in sorted(wrc_groups.keys(), key=_wrc_sort_key):
+                group = wrc_groups[wrc]
+                if res_search:
+                    q = res_search.strip().lower()
+                    group = [
+                        r for r in group
+                        if (q.isdigit() and int(q) == r["number"])
+                        or q in r["title"].lower()
+                        or q in r["wrc"].lower()
+                    ]
+                if not group:
+                    continue
+
+                with st.expander(f"{wrc}（{len(group)}件）", expanded=bool(res_search)):
+                    for res in group:
+                        n_refs = len(res.get("refs", []))
+                        ref_badge = f" [{n_refs}refs]" if n_refs > 0 else ""
+                        col_res, col_btn = st.columns([5, 1])
+                        with col_res:
+                            st.markdown(f"**Res. {res['number']}**{ref_badge}")
+                            st.caption(res["title"][:80])
+                        with col_btn:
+                            if st.button("→", key=f"sb_res_{res['number']}"):
+                                navigate_to_resolution(res["number"])
+                                st.rerun()
 
             st.divider()
 
@@ -774,11 +957,19 @@ def main():
 
     # メイン表示
     current = st.session_state.get("current_article")
-    if current and current in graph:
+    current_res = st.session_state.get("current_resolution")
+
+    if current_res:
+        # 決議詳細表示
+        st.divider()
+        render_resolution(current_res, resolutions, articles, graph)
+
+    elif current and current in graph:
         st.divider()
         render_root(current, graph, articles,
                     condition_labels, handbook_notes, procedure_routes,
-                    footnote_index=footnote_index, rop_index=rop_index)
+                    footnote_index=footnote_index, rop_index=rop_index,
+                    resolution_reverse_index=resolution_reverse_index)
 
         st.divider()
         history = st.session_state.get("history", [])

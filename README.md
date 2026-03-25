@@ -57,13 +57,13 @@ data/graph/
 ```bash
 pip install -r requirements.txt
 echo "ANTHROPIC_API_KEY=sk-..." > .env
-streamlit run src/app_v3.py
+streamlit run src/app_v4.py
 ```
 
 ## Streamlit Community Cloud デプロイ
 
 1. [share.streamlit.io](https://share.streamlit.io) にGitHubアカウントでログイン
 2. リポジトリ `yusuke-fukui/itu-rr-app-v4` を選択（Private対応）
-3. Main file path: `src/app_v3.py`
+3. Main file path: `src/app_v4.py`
 4. Secrets に `ANTHROPIC_API_KEY` を設定
 5. Deploy → 招待したユーザーのみアクセス可能

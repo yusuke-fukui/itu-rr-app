@@ -2,9 +2,9 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "streamlit-app-v3",
+      "name": "streamlit-app-v4",
       "runtimeExecutable": "streamlit",
-      "runtimeArgs": ["run", "src/app_v3.py", "--server.port", "8501"],
+      "runtimeArgs": ["run", "src/app_v4.py", "--server.port", "8501"],
       "port": 8501
     }
   ]
