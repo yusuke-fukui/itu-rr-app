@@ -1,0 +1,164 @@
+{
+  "_meta": {
+    "source": "ITU-R Handbook on Small Satellites, 2023 Edition, Chapter 3",
+    "version": "1.0",
+    "last_updated": "2026-03-24"
+  },
+
+  "condition_labels": {
+    "9.2B -> 9.1": "for networks not subject to coordination under Section II",
+    "9.1 -> 9.3": "after publication of API/A special section",
+    "9.3 -> 9.4": "if unacceptable interference may be caused",
+    "9.3 -> 9.5": "upon consolidation of comments at end of four-month period",
+    "9.3 -> 11.2": "when proceeding to notification",
+    "9.30 -> 9.1A": "upon receipt of complete CR information",
+    "9.35 -> 9.36": "to identify administrations with which coordination is to be effected",
+    "9.36 -> 11.2": "when proceeding to notification after coordination",
+    "11.2 -> 11.15": "DBIU date declared in Appendix 4 data submission",
+    "11.15 -> 11.25": "DBIU must be within 3 years of notification receipt date",
+    "11.31 -> 11.32": "coordination procedure conformity check (if coordination required)",
+    "11.31 -> 11.32A": "harmful interference probability assessment (if applicable)",
+    "11.2 -> 11.31": "regulatory examination of notified assignment",
+    "4.4 -> 11.2": "notification obligation still applies under No. 4.4",
+    "4.4 -> 8.5": "immediate elimination of harmful interference upon notification",
+    "4.2 -> 4.4": "only if use will not cause harmful interference",
+    "8.1 -> 11.2": "international recognition requires notification",
+    "11.2 -> 11.28": "Part I-S acknowledgement of receipt",
+    "11.28 -> 11.31": "regulatory examination follows receipt acknowledgement",
+    "11.31 -> 9.21": "agreement achieved when applicable",
+    "11.31 -> 4.4": "non-conforming use on non-interference/unprotected basis",
+    "11.41 -> 11.42A": "if harmful interference occurs, cancellation possible",
+    "11.31 -> 11.44": "after Master Register recording (Part II-S), proceed to BIU",
+    "11.44 -> 11.47": "BIU confirmation to BR, provisional recording becomes final",
+    "11.44 -> 11.44C": "for non-GSO in FSS/MSS/BSS: 90-day continuous operation required"
+  },
+
+  "handbook_notes": {
+    "9.1": {
+      "section": "§3.5.1",
+      "note": "API submission triggers as-received publication within ~1 week, then API/A special section within 2 months."
+    },
+    "9.2B": {
+      "section": "§3.5.1",
+      "note": "Applies to networks NOT subject to coordination under Section II of Article 9. This is the primary route for most small satellite missions."
+    },
+    "9.3": {
+      "section": "§3.5.1.7",
+      "note": "4-month comment window. No comment = no objection deemed. BR consolidates and publishes API/B."
+    },
+    "9.4": {
+      "section": "§3.5.1.7",
+      "note": "Both administrations must cooperate. Administration with planned network must explore all means without requiring others to adjust. BR assistance available on request."
+    },
+    "9.30": {
+      "section": "§3.5.2",
+      "note": "Coordination Request (CR) submission. Required for networks subject to coordination under Section II of Article 9."
+    },
+    "9.1A": {
+      "section": "§3.5.2",
+      "note": "API/C special section is auto-generated from the CR submission. Published within 2 months of receipt."
+    },
+    "9.35": {
+      "section": "§3.5.2",
+      "note": "BR examines CR and identifies affected administrations. Results published in CR/C special section within 4 months."
+    },
+    "9.36": {
+      "section": "§3.5.2",
+      "note": "Identifies administrations with which coordination is to be effected. Coordination period begins."
+    },
+    "11.2": {
+      "section": "§3.5.3 / §3.7",
+      "note": "Notification of frequency assignments for recording in the MIFR. Must include DBIU (planned BIU date) via Appendix 4 data item (No. 11.15). DBIU must be within 3 years of notification receipt date (No. 11.25)."
+    },
+    "11.15": {
+      "section": "§3.7",
+      "note": "Date of Bringing Into Use (DBIU) — declared in the Appendix 4 submission at notification stage. This is the planned date, not the actual BIU. Constraint: DBIU must be within 3 years of notification receipt (No. 11.25)."
+    },
+    "11.25": {
+      "section": "§3.5.3 / §3.7",
+      "note": "Notification shall not be sent earlier than 3 years before the planned date of bringing into use (DBIU). This constrains the timing window for notification submission."
+    },
+    "11.28": {
+      "section": "§3.5.3",
+      "note": "Part I-S = acknowledgement of receipt. Part II-S = recorded in Master Register (favourable finding). Part III-S = returned to administration (unfavourable finding)."
+    },
+    "11.31": {
+      "section": "§3.5.4",
+      "note": "Regulatory examination applied to all notifications and CRs. Checks compliance with Article 5, Article 21, Article 22, and coordination requirements."
+    },
+    "11.32": {
+      "section": "§3.5.4",
+      "note": "Coordination procedure conformity check. Only applies when coordination under Section II of Article 9 is required."
+    },
+    "11.41": {
+      "section": "§3.5.3.3",
+      "note": "Assignment can be recorded with indication of administrations whose coordination has not been completed. If harmful interference occurs, the responsible administration must immediately eliminate it."
+    },
+    "11.44": {
+      "section": "§3.7",
+      "note": "Bring Into Use (BIU) — the actual act of launching and operating the satellite. Occurs AFTER Master Register recording (Part II-S). Must be within the 7-year clock from API/A receipt (non-coordination) or API/C receipt (coordination). BIU confirmation is then sent to BR via No. 11.47."
+    },
+    "11.47": {
+      "section": "§3.7",
+      "note": "BIU confirmation to the Bureau. Provisional recording becomes final. Must be confirmed within 30 days after the end of the 7-year regulatory period."
+    },
+    "11.32A": {
+      "section": "§3.5.4",
+      "note": "Harmful interference probability assessment. Applied when the Bureau needs to evaluate whether an assignment would cause harmful interference to existing or planned assignments."
+    },
+    "8.5": {
+      "section": "§3.5.3",
+      "note": "Any administration which has knowledge that a station under its jurisdiction is causing harmful interference shall immediately eliminate that interference."
+    },
+    "4.4": {
+      "section": "§3.6",
+      "note": "Administration must determine before BIU: (a) no harmful interference to conforming stations, (b) measures to immediately eliminate interference per No. 8.5. Notification required with these confirmations."
+    }
+  },
+
+  "procedure_routes": {
+    "non_coordination": {
+      "name": "非調整フロー (Non-coordination)",
+      "name_en": "Non-coordination Procedure",
+      "description": "調整対象外ネットワークの手続き: API → コメント → 通告 → 審査 → 記録 → BIU",
+      "handbook_section": "§3.5.1",
+      "seven_year_clock_from": "API/A受理日（No. 9.1）",
+      "steps": [
+        {"article": "9.2B", "label": "API提出（非調整）"},
+        {"article": "9.1", "label": "事前公表 (API/A)", "note": "⏱ 7年クロック起算"},
+        {"article": "9.3", "label": "コメント期間（4ヶ月）"},
+        {"article": "9.4", "label": "困難の解決"},
+        {"article": "9.5", "label": "API/B公表"},
+        {"article": "11.2", "label": "通告 — DBIU日付をAppendix 4で申告 (No.11.15)"},
+        {"article": "11.28", "label": "Part I-S 受理確認"},
+        {"article": "11.31", "label": "規制審査 (Examination)"},
+        {"article": "11.41", "label": "Master Register記録（条件付き可）"},
+        {"article": "11.44", "label": "BIU — 衛星打上げ・使用開始"},
+        {"article": "11.47", "label": "BIU確認 → 仮記録確定"},
+        {"article": "8.5", "label": "有害干渉の即時排除義務"}
+      ]
+    },
+    "coordination": {
+      "name": "調整フロー (Coordination)",
+      "name_en": "Coordination Procedure",
+      "description": "調整対象ネットワークの手続き: CR → 調整 → 通告 → 審査 → 記録 → BIU",
+      "handbook_section": "§3.5.2",
+      "seven_year_clock_from": "API/C受理日（No. 9.1A）",
+      "steps": [
+        {"article": "9.30", "label": "CR提出"},
+        {"article": "9.1A", "label": "API/C公表", "note": "⏱ 7年クロック起算"},
+        {"article": "9.35", "label": "BR審査・影響行政庁特定"},
+        {"article": "9.36", "label": "調整実施"},
+        {"article": "11.2", "label": "通告 — DBIU日付をAppendix 4で申告 (No.11.15)"},
+        {"article": "11.28", "label": "Part I-S 受理確認"},
+        {"article": "11.31", "label": "規制審査"},
+        {"article": "11.32", "label": "調整手続き適合確認"},
+        {"article": "11.32A", "label": "有害干渉確率評価"},
+        {"article": "11.41", "label": "Master Register記録（条件付き可）"},
+        {"article": "11.44", "label": "BIU — 衛星打上げ・使用開始"},
+        {"article": "11.47", "label": "BIU確認 → 仮記録確定"},
+        {"article": "8.5", "label": "有害干渉の即時排除義務"}
+      ]
+    }
+  }
+}

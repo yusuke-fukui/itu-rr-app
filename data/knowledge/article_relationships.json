@@ -1,0 +1,338 @@
+{
+  "_source": "ITU-R Handbook on Small Satellites (2023 edition), Chapter 3",
+  "_description": "ITU RR条文間の関係マップ。ツリーエンジンが関連条文を推論する際の知識ベース。",
+
+  "regulatory_flow": {
+    "description": "衛星ネットワークの規制手続き全体フロー",
+    "phases": [
+      {
+        "phase": "1_frequency_selection",
+        "description": "周波数選定・分配確認",
+        "key_articles": ["Art.5", "No.4.4"],
+        "details": "Art.5の周波数分配表と脚注を確認。脚注がArt.9の調整要否を決定する。"
+      },
+      {
+        "phase": "2_api_or_cr",
+        "description": "事前公表(API)または調整要請(CR)の提出",
+        "branches": {
+          "not_subject_to_coordination": {
+            "description": "調整対象外（Art.9 Section IA）",
+            "articles": ["No.9.1", "No.9.2", "No.9.2B"],
+            "publications": ["API/A", "API/B"],
+            "timeline": "API受領後約6ヶ月〜最大7年でNotification"
+          },
+          "subject_to_coordination": {
+            "description": "調整対象（Art.9 Section II）",
+            "articles": ["No.9.1A", "No.9.30"],
+            "publications": ["API/C (=CR抜粋)", "CR/C", "CR/D", "CR/E"],
+            "timeline": "CR受領後4ヶ月で審査、4ヶ月コメント期間、最大7年でNotification"
+          }
+        }
+      },
+      {
+        "phase": "3_coordination",
+        "description": "調整手続き（調整対象のみ）",
+        "key_articles": ["No.9.35", "No.9.36", "No.9.38", "No.9.48", "No.9.52"],
+        "details": "BRがArt.9.35に基づき審査、9.36で影響主管庁を特定、CR/Cで公表"
+      },
+      {
+        "phase": "4_notification",
+        "description": "通告・記録",
+        "key_articles": ["No.11.2", "No.11.9", "No.11.15", "No.11.25", "No.11.28"],
+        "publications": ["Part I-S", "Part II-S", "Part III-S"],
+        "details": "通告情報を提出→Part I-Sで公表→審査→Part II-S(favorable)またはPart III-S(unfavorable)"
+      },
+      {
+        "phase": "5_examination",
+        "description": "BR審査（Art.11.31〜11.33）",
+        "key_articles": ["No.11.31", "No.11.32", "No.11.32A", "No.11.33"],
+        "details": "11.31: RR適合性、11.32: 調整手続き適合性、11.32A: 有害干渉の可能性"
+      },
+      {
+        "phase": "6_recording",
+        "description": "国際周波数登録簿(MIFR)への記録",
+        "key_articles": ["No.11.41", "No.8.1", "No.8.3"],
+        "details": "Favorable findingで記録。調整未完了でも11.41で記録可能（条件付き）"
+      },
+      {
+        "phase": "7_biu",
+        "description": "使用開始(Bringing Into Use)",
+        "key_articles": ["No.11.44", "No.11.44B", "No.11.44C", "No.11.44D", "No.11.44E", "No.11.47"],
+        "details": "API/CR受領から7年以内。FSS/MSS/BSSは90日間継続運用の確認が必要。"
+      }
+    ]
+  },
+
+  "article_9_coordination_types": {
+    "description": "Art.9の調整種別と適用条件",
+    "provisions": {
+      "No.9.7": {
+        "description": "GSO衛星ネットワークの調整（地上業務との間）",
+        "scenario": "GSO/terrestrial",
+        "trigger": "pfd threshold (Appendix 5)",
+        "related": ["No.9.7A", "No.9.7B", "Appendix 5"]
+      },
+      "No.9.7A": {
+        "description": "GSO FSS地球局 vs non-GSO FSS（epfd閾値）",
+        "scenario": "GSO_ES/non-GSO",
+        "trigger": "epfd threshold (Appendix 5)",
+        "related": ["No.9.7B", "Art.22", "Rec. ITU-R S.1503"]
+      },
+      "No.9.7B": {
+        "description": "non-GSO FSS vs GSO FSS地球局（epfd閾値）",
+        "scenario": "non-GSO/GSO_ES",
+        "trigger": "epfd threshold (Appendix 5)",
+        "related": ["No.9.7A", "Art.22", "Rec. ITU-R S.1503"]
+      },
+      "No.9.11": {
+        "description": "BSS宇宙局の調整（地上業務と共用する帯域、BSS計画対象外）",
+        "scenario": "BSS_space/terrestrial",
+        "trigger": "pfd threshold",
+        "related": ["No.9.14", "No.11.32A"]
+      },
+      "No.9.11A": {
+        "description": "脚注参照による調整（包括規定）。Art.5脚注がこの条文を参照する場合に適用",
+        "scenario": "Various (defined by footnotes)",
+        "trigger": "Art.5 footnote reference",
+        "sub_provisions": ["No.9.12", "No.9.12A", "No.9.13", "No.9.14", "No.9.15", "No.9.16"],
+        "related": ["Art.5", "RoP Table 9.11A-1", "Appendix 5"]
+      },
+      "No.9.12": {
+        "description": "non-GSO間の調整（FSS・MSS）。同じ脚注で参照される非静止衛星システム間",
+        "scenario": "non-GSO/non-GSO (FSS, MSS)",
+        "trigger": "frequency overlap",
+        "related": ["No.9.11A", "No.9.12A", "No.9.13", "Appendix 5", "No.5.550C", "No.5.550E"],
+        "notes": "Q/Vバンド(37.5-51.4 GHz)でWRC-19により新たな調整義務が追加"
+      },
+      "No.9.12A": {
+        "description": "non-GSO vs GSO間の調整",
+        "scenario": "non-GSO/GSO",
+        "trigger": "frequency overlap",
+        "related": ["No.9.12", "No.9.11A", "Appendix 5"]
+      },
+      "No.9.13": {
+        "description": "non-GSO vs 地上業務の調整",
+        "scenario": "non-GSO/terrestrial",
+        "trigger": "frequency overlap + pfd threshold",
+        "related": ["No.9.14", "No.9.11A", "Appendix 5", "Table 5-2"]
+      },
+      "No.9.14": {
+        "description": "non-GSO vs 地上業務の調整（9.13の補完）",
+        "scenario": "non-GSO/terrestrial",
+        "trigger": "frequency overlap + pfd threshold",
+        "related": ["No.9.13", "No.9.11"]
+      },
+      "No.9.21": {
+        "description": "同意取得の要求（地上業務との共用で特定国の同意が必要）",
+        "scenario": "Various",
+        "trigger": "Art.5 footnote reference",
+        "sub_provisions": {
+          "No.9.21/A_in_Preface": "GSOネットワークとの同意",
+          "No.9.21/B_in_Preface": "non-GSOネットワーク間の同意",
+          "No.9.21/C_in_Preface": "地上局との同意"
+        },
+        "related": ["Art.5", "No.9.6"]
+      }
+    }
+  },
+
+  "article_11_examination": {
+    "description": "Art.11に基づくBR審査の体系",
+    "No.11.31": {
+      "description": "RR適合性審査（全通告に適用）",
+      "checks": [
+        {
+          "provision": "Art.5",
+          "description": "周波数分配表への適合性（脚注含む）"
+        },
+        {
+          "provision": "Art.21 Section III",
+          "description": "地球局の電力制限"
+        },
+        {
+          "provision": "Art.21 Section IV",
+          "description": "地球局の最小仰角"
+        },
+        {
+          "provision": "Art.21 Section V",
+          "description": "宇宙局のpfd制限"
+        },
+        {
+          "provision": "Art.22 Section II",
+          "description": "non-GSOのepfd制限"
+        },
+        {
+          "provision": "Art.22 Section III",
+          "description": "宇宙局のstation-keeping"
+        },
+        {
+          "provision": "Art.22 Section IV",
+          "description": "GSO衛星のアンテナ指向精度"
+        },
+        {
+          "provision": "Art.22 Section VI",
+          "description": "FSS地球局のoff-axis電力制限"
+        },
+        {
+          "provision": "Art.23 Section II",
+          "description": "サービスエリアからの主管庁除外"
+        },
+        {
+          "provision": "No.9.21",
+          "description": "同意取得の確認"
+        },
+        {
+          "provision": "No.4.4",
+          "description": "非適合使用の認識"
+        }
+      ],
+      "applicable_to": ["CR/C", "Notification (space station)", "Notification (earth station)"]
+    },
+    "No.11.32": {
+      "description": "調整手続き適合性審査（通告のみ、調整対象）",
+      "details": "調整手続きが完了しているかの審査",
+      "applicable_to": ["Notification (space station)", "Notification (earth station)"],
+      "related": ["No.9.7", "No.9.12", "No.9.12A", "No.9.13"]
+    },
+    "No.11.32A": {
+      "description": "有害干渉の可能性審査（通告のみ、要請時）",
+      "applicable_to": ["Notification (space station)"],
+      "related": ["No.11.33"]
+    }
+  },
+
+  "key_cross_references": {
+    "description": "条文間の重要な相互参照関係",
+    "links": [
+      {
+        "from": "Art.5_footnotes",
+        "to": ["No.9.11A", "No.9.21"],
+        "relationship": "Art.5脚注が調整の要否を決定する",
+        "importance": "critical"
+      },
+      {
+        "from": "No.9.11A",
+        "to": ["No.9.12", "No.9.12A", "No.9.13", "No.9.14"],
+        "relationship": "9.11Aは包括規定で、具体的な調整シナリオは9.12〜9.14で規定",
+        "importance": "critical"
+      },
+      {
+        "from": "No.9.35",
+        "to": ["Appendix 5", "No.9.36"],
+        "relationship": "BRが9.35に基づきCRを審査、Appendix 5の基準で判定、9.36で影響主管庁を特定",
+        "importance": "high"
+      },
+      {
+        "from": "No.11.31",
+        "to": ["Art.5", "Art.21", "Art.22", "No.9.21", "No.4.4"],
+        "relationship": "11.31審査で複数条文への適合性を確認",
+        "importance": "critical"
+      },
+      {
+        "from": "No.11.32",
+        "to": ["No.9.7", "No.9.12", "No.9.12A", "No.9.13"],
+        "relationship": "11.32審査で調整手続きの完了を確認",
+        "importance": "high"
+      },
+      {
+        "from": "No.11.44",
+        "to": ["No.11.44C", "No.11.44D", "No.11.44E", "Resolution 35"],
+        "relationship": "BIU期限（7年）と継続運用要件（90日）",
+        "importance": "high"
+      },
+      {
+        "from": "No.9.12",
+        "to": ["No.22.5C", "No.22.5D", "No.22.5F", "No.22.5L", "No.5.550C", "No.5.550E"],
+        "relationship": "Q/Vバンドの新規調整義務（WRC-19）",
+        "importance": "high"
+      },
+      {
+        "from": "Art.21",
+        "to": ["No.21.16", "Table 21-4"],
+        "relationship": "pfd制限値とsteerable beam対応",
+        "importance": "high"
+      },
+      {
+        "from": "Art.22",
+        "to": ["No.22.5C", "No.9.7A", "No.9.7B", "Rec. ITU-R S.1503"],
+        "relationship": "epfd制限とnon-GSO/GSO共用",
+        "importance": "high"
+      },
+      {
+        "from": "Appendix 4",
+        "to": ["No.9.1", "No.9.1A", "No.9.30", "No.11.15"],
+        "relationship": "提出情報のフォーマット（API、CR、通告で共通）",
+        "importance": "medium"
+      },
+      {
+        "from": "Appendix 5",
+        "to": ["No.9.7A", "No.9.7B", "No.9.11", "No.9.12", "No.9.12A", "No.9.13", "No.9.14"],
+        "relationship": "調整の技術基準（閾値・計算方法）",
+        "importance": "critical"
+      },
+      {
+        "from": "Resolution 35",
+        "to": ["No.11.44", "No.11.44C"],
+        "relationship": "non-GSOのマイルストーンベース配備要件（10%→50%→100%）",
+        "importance": "high"
+      },
+      {
+        "from": "Resolution 32",
+        "to": ["No.9.1", "No.11.44"],
+        "relationship": "短期ミッション(SDM)の簡易手続き",
+        "importance": "medium"
+      },
+      {
+        "from": "No.4.4",
+        "to": ["No.8.4", "No.8.5", "No.11.31"],
+        "relationship": "非適合使用：保護を受けない、干渉排除義務あり",
+        "importance": "medium"
+      },
+      {
+        "from": "No.8.1",
+        "to": ["No.8.3", "No.11.41"],
+        "relationship": "MIFR記録による国際的承認の権利",
+        "importance": "medium"
+      },
+      {
+        "from": "Resolution 49",
+        "to": ["No.11.44"],
+        "relationship": "administrative due diligence（FSS/MSS/BSS対象）",
+        "importance": "medium"
+      }
+    ]
+  },
+
+  "not_subject_to_coordination_flow": {
+    "description": "調整対象外の衛星ネットワークの手続きフロー",
+    "steps": [
+      {"step": 1, "action": "API提出", "article": "No.9.1/9.2", "details": "Appendix 4情報を含む"},
+      {"step": 2, "action": "BR公表(as-received)", "timing": "受領後約1週間"},
+      {"step": 3, "action": "API/A公表", "article": "No.9.2B", "timing": "受領後2ヶ月"},
+      {"step": 4, "action": "コメント期間", "article": "No.9.3", "timing": "API/A公表後4ヶ月"},
+      {"step": 5, "action": "API/B公表", "article": "No.9.5", "details": "コメントまとめ"},
+      {"step": 6, "action": "困難の解決", "article": "No.9.3/9.4"},
+      {"step": 7, "action": "通告提出", "article": "Art.11", "timing": "API受領後4ヶ月〜7年"},
+      {"step": 8, "action": "11.31審査", "article": "No.11.31", "details": "適合性のみ（11.32/11.32A不要）"},
+      {"step": 9, "action": "記録/返却", "article": "No.11.41 or Part III-S"}
+    ]
+  },
+
+  "subject_to_coordination_flow": {
+    "description": "調整対象の衛星ネットワークの手続きフロー",
+    "steps": [
+      {"step": 1, "action": "CR提出", "article": "No.9.30", "details": "Appendix 4情報 + GIMS + コミットメント"},
+      {"step": 2, "action": "BR公表(as-received)", "timing": "受領後約1週間"},
+      {"step": 3, "action": "API/C公表（CRからの抜粋）", "article": "No.9.1A"},
+      {"step": 4, "action": "BR審査", "article": "No.9.35", "timing": "受領後4ヶ月"},
+      {"step": 5, "action": "CR/C公表", "article": "No.9.38", "details": "影響主管庁リスト含む"},
+      {"step": 6, "action": "コメント期間", "timing": "CR/C公表後4ヶ月"},
+      {"step": 7, "action": "CR/D,CR/E公表", "details": "コメントまとめ"},
+      {"step": 8, "action": "二者間調整", "article": "No.9.48/9.52", "details": "影響主管庁との調整"},
+      {"step": 9, "action": "Due diligence提出", "article": "Resolution 49", "timing": "BIU期限後30日"},
+      {"step": 10, "action": "通告提出", "article": "Art.11", "timing": "CR受領後7年以内"},
+      {"step": 11, "action": "11.31+11.32審査", "article": "No.11.31/11.32", "details": "適合性+調整手続き"},
+      {"step": 12, "action": "記録/返却", "article": "No.11.41 or Part III-S"}
+    ]
+  }
+}

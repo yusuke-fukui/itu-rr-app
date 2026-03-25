@@ -1,0 +1,2686 @@
+[
+  {
+    "number": 1,
+    "wrc": "REV.WRC-97",
+    "title": "Notification of frequency assignments",
+    "start_page": 30,
+    "end_page": 32,
+    "pages": 2,
+    "text_length": 880,
+    "refs": [],
+    "text_preview": "RESOLUTION 1 (REV.WRC-97) Notification of frequency assignments1   The World Radiocommunication Conference (Geneva, 1997), referring to – the Preamble of the Constitution, – Article 42 of the Constitu"
+  },
+  {
+    "number": 2,
+    "wrc": "REV.WRC-03",
+    "title": "Equitable use, by all countries, with equal rights, of the geostationary-satellite and other satellite orbits and of frequency bands for space radiocommunication services",
+    "start_page": 32,
+    "end_page": 34,
+    "pages": 2,
+    "text_length": 1490,
+    "refs": [],
+    "text_preview": "RESOLUTION 2 (REV.WRC-03) Equitable use, by all countries, with equal rights, of the geostationary-satellite  and other satellite orbits and of frequency bands for   space radiocommunication services "
+  },
+  {
+    "number": 4,
+    "wrc": "REV.WRC-03",
+    "title": "Period of validity of frequency assignments to space stations using the geostationary-satellite and other satellite orbits",
+    "start_page": 34,
+    "end_page": 38,
+    "pages": 4,
+    "text_length": 5998,
+    "refs": [
+      "11.31",
+      "11.43A",
+      "9.7"
+    ],
+    "text_preview": "RESOLUTION 4 (REV.WRC-03) Period of validity of frequency assignments to space stations using the  geostationary-satellite and other satellite orbits1  The World Radiocommunication Conference (Geneva,"
+  },
+  {
+    "number": 5,
+    "wrc": "REV.WRC-23",
+    "title": "Technical cooperation with the developing countries in the study of propagation in tropical and similar areas",
+    "start_page": 38,
+    "end_page": 40,
+    "pages": 2,
+    "text_length": 3128,
+    "refs": [],
+    "text_preview": "RESOLUTION 5 (REV.WRC-23) Technical cooperation with the developing countries in the study   of propagation in tropical and similar areas  The World Radiocommunication Conference (Dubai, 2023), having"
+  },
+  {
+    "number": 7,
+    "wrc": "REV.WRC-19",
+    "title": "Development of national radio-frequency management",
+    "start_page": 40,
+    "end_page": 42,
+    "pages": 2,
+    "text_length": 2884,
+    "refs": [],
+    "text_preview": "RESOLUTION 7 (REV.WRC-19) Development of national radio-frequency management  The World Radiocommunication Conference (Sharm el-Sheikh, 2019), considering a) that the Radio Regulations contain, inter "
+  },
+  {
+    "number": 8,
+    "wrc": "WRC-23",
+    "title": "Tolerances for certain orbital characteristics of space stations deployed as part of non-geostationary-satellite orbit systems in the fixed- satellite, broadcasting-satellite or mobile-satellite service",
+    "start_page": 42,
+    "end_page": 52,
+    "pages": 10,
+    "text_length": 25152,
+    "refs": [
+      "11.31",
+      "11.43A",
+      "11.43B",
+      "11.44C",
+      "11.49",
+      "13.6",
+      "9.36"
+    ],
+    "text_preview": "RESOLUTION 8 (WRC-23) Tolerances for certain orbital characteristics of space stations   deployed as part of non-geostationary-satellite orbit systems in the fixed- satellite, broadcasting-satellite o"
+  },
+  {
+    "number": 10,
+    "wrc": "REV.WRC-2000",
+    "title": "Use of two-way wireless telecommunications by the International Red Cross and Red Crescent Movement",
+    "start_page": 52,
+    "end_page": 54,
+    "pages": 2,
+    "text_length": 1616,
+    "refs": [],
+    "text_preview": "RESOLUTION 10 (REV.WRC-2000) Use of two-way wireless telecommunications by the International Red Cross and  Red Crescent Movement  The World Radiocommunication Conference (Istanbul, 2000), considering"
+  },
+  {
+    "number": 12,
+    "wrc": "REV.WRC-23",
+    "title": "Assistance and support to Palestine",
+    "start_page": 54,
+    "end_page": 58,
+    "pages": 4,
+    "text_length": 8166,
+    "refs": [],
+    "text_preview": "RESOLUTION 12 (REV.WRC-23) Assistance and support to Palestine  The World Radiocommunication Conference (Dubai, 2023), recalling a) the Charter of the United Nations and the Universal Declaration of H"
+  },
+  {
+    "number": 13,
+    "wrc": "REV.WRC-97",
+    "title": "Formation of call signs and allocation of new international series",
+    "start_page": 58,
+    "end_page": 60,
+    "pages": 2,
+    "text_length": 2245,
+    "refs": [],
+    "text_preview": "RESOLUTION 13 (REV.WRC-97) Formation of call signs and allocation of new international series  The World Radiocommunication Conference (Geneva, 1997),  considering the increasing demand for call signs"
+  },
+  {
+    "number": 14,
+    "wrc": "WRC-23",
+    "title": "Studies on development of regulatory measures, and implementability thereof, to limit the unauthorized operations of non-geostationary-satellite orbit (non-GSO) earth stations in the fixed-satellite service (FSS) and mobile-satellite service (MSS) and associated issues related to the service area of non-GSO FSS and MSS satellite systems",
+    "start_page": 60,
+    "end_page": 62,
+    "pages": 2,
+    "text_length": 4939,
+    "refs": [
+      "15.5",
+      "18.1"
+    ],
+    "text_preview": "RESOLUTION 14 (WRC-23) Studies on development of regulatory measures, and implementability thereof,  to limit the unauthorized operations of non-geostationary-satellite orbit   (non-GSO) earth station"
+  },
+  {
+    "number": 15,
+    "wrc": "REV.WRC-03",
+    "title": "International cooperation and technical assistance in the field of space radiocommunications",
+    "start_page": 62,
+    "end_page": 64,
+    "pages": 2,
+    "text_length": 2239,
+    "refs": [],
+    "text_preview": "RESOLUTION 15 (REV.WRC-03) International cooperation and technical assistance in the field of space  radiocommunications  The World Radiocommunication Conference (Geneva, 2003), considering a) that a "
+  },
+  {
+    "number": 18,
+    "wrc": "REV.WRC-23",
+    "title": "Relating to the procedure for identifying and announcing the position of ships and aircraft of States not parties to an armed conflict",
+    "start_page": 64,
+    "end_page": 66,
+    "pages": 2,
+    "text_length": 3860,
+    "refs": [],
+    "text_preview": "RESOLUTION 18 (REV.WRC-23) Relating to the procedure for identifying and announcing the position of  ships and aircraft of States not parties to an armed conflict  The World Radiocommunication Confere"
+  },
+  {
+    "number": 20,
+    "wrc": "REV.WRC-03",
+    "title": "Technical cooperation with developing countries in the field of aeronautical telecommunications",
+    "start_page": 66,
+    "end_page": 68,
+    "pages": 2,
+    "text_length": 2856,
+    "refs": [],
+    "text_preview": "RESOLUTION 20 (REV.WRC-03) Technical cooperation with developing countries in the field of   aeronautical telecommunications  The World Radiocommunication Conference (Geneva, 2003), considering a) tha"
+  },
+  {
+    "number": 22,
+    "wrc": "REV.WRC-23",
+    "title": "Measures to limit unauthorized uplink transmissions from earth stations",
+    "start_page": 68,
+    "end_page": 70,
+    "pages": 2,
+    "text_length": 4429,
+    "refs": [
+      "18.1"
+    ],
+    "text_preview": "RESOLUTION 22 (REV.WRC-23) Measures to limit unauthorized uplink transmissions  from earth stations  The World Radiocommunication Conference (Dubai, 2023), considering  a) that, in accordance with Res"
+  },
+  {
+    "number": 25,
+    "wrc": "REV.WRC-23",
+    "title": "Operation of global satellite systems for personal communications",
+    "start_page": 70,
+    "end_page": 72,
+    "pages": 2,
+    "text_length": 4493,
+    "refs": [
+      "18.1"
+    ],
+    "text_preview": "RESOLUTION 25 (REV.WRC-23) Operation of global satellite systems for personal communications  The World Radiocommunication Conference (Dubai, 2023), considering a) that, in accordance with No. 6 of it"
+  },
+  {
+    "number": 26,
+    "wrc": "REV.WRC-23",
+    "title": "Footnotes to the Table of Frequency Allocations in Article 5 of the Radio Regulations",
+    "start_page": 72,
+    "end_page": 76,
+    "pages": 4,
+    "text_length": 8239,
+    "refs": [],
+    "text_preview": "RESOLUTION 26 (REV.WRC-23) Footnotes to the Table of Frequency Allocations in Article 5 of   the Radio Regulations  The World Radiocommunication Conference (Dubai, 2023), considering a) that footnotes"
+  },
+  {
+    "number": 27,
+    "wrc": "REV.WRC-19",
+    "title": "Use of incorporation by reference in the Radio Regulations",
+    "start_page": 76,
+    "end_page": 80,
+    "pages": 4,
+    "text_length": 9714,
+    "refs": [],
+    "text_preview": "RESOLUTION 27 (REV.WRC-19) Use of incorporation by reference in the Radio Regulations  The World Radiocommunication Conference (Sharm el-Sheikh, 2019), considering a) that the Voluntary Group of Exper"
+  },
+  {
+    "number": 32,
+    "wrc": "REV.WRC-23",
+    "title": "Regulatory procedures for frequency assignments to non-geostationary-satellite networks or systems identified as short-duration mission not subject to the application of Section II of Article",
+    "start_page": 80,
+    "end_page": 84,
+    "pages": 4,
+    "text_length": 9884,
+    "refs": [
+      "11.25",
+      "11.28",
+      "11.31",
+      "11.36",
+      "11.43A",
+      "11.44",
+      "22.1",
+      "9.1",
+      "9.2B",
+      "9.3"
+    ],
+    "text_preview": "RESOLUTION 32 (REV.WRC-23) Regulatory procedures for frequency assignments to non-geostationary-satellite  networks or systems identified as short-duration mission not subject to the  application of S"
+  },
+  {
+    "number": 34,
+    "wrc": "REV.WRC-19",
+    "title": "Establishment of the broadcasting-satellite service in Region 3 in the frequency band 12.5-12.75 GHz and sharing with space and terrestrial services in Regions 1, 2 and",
+    "start_page": 84,
+    "end_page": 86,
+    "pages": 2,
+    "text_length": 2152,
+    "refs": [
+      "5.494"
+    ],
+    "text_preview": "RESOLUTION 34 (REV.WRC-19) Establishment of the broadcasting-satellite service in Region 3   in the frequency band 12.5-12.75 GHz and sharing with space and   terrestrial services in Regions 1, 2 and "
+  },
+  {
+    "number": 35,
+    "wrc": "REV.WRC-23",
+    "title": "A milestone-based approach for the implementation of frequency assignments to space stations in a non-geostationary-satellite system in specific frequency bands and services",
+    "start_page": 86,
+    "end_page": 98,
+    "pages": 12,
+    "text_length": 27957,
+    "refs": [
+      "11.31",
+      "11.43A",
+      "11.43B",
+      "11.44",
+      "11.44C",
+      "11.49",
+      "13.6",
+      "9.36"
+    ],
+    "text_preview": "RESOLUTION 35 (REV.WRC-23) A milestone-based approach for the implementation of frequency assignments   to space stations in a non-geostationary-satellite system   in specific frequency bands and serv"
+  },
+  {
+    "number": 40,
+    "wrc": "REV.WRC-19",
+    "title": "Use of one space station to bring frequency assignments to geostationary- satellite networks at different orbital locations into use within a short period of time",
+    "start_page": 98,
+    "end_page": 100,
+    "pages": 2,
+    "text_length": 4524,
+    "refs": [
+      "11.44"
+    ],
+    "text_preview": "RESOLUTION 40 (REV.WRC-19) Use of one space station to bring frequency assignments to geostationary- satellite networks at different orbital locations into use   within a short period of time  The Wor"
+  },
+  {
+    "number": 42,
+    "wrc": "REV.WRC-19",
+    "title": "Use of interim systems in Region 2 in the broadcasting-satellite and fixed-satellite (feeder-link) services in Region 2 for the frequency bands covered by Appendices 30 and 30A",
+    "start_page": 100,
+    "end_page": 106,
+    "pages": 6,
+    "text_length": 16774,
+    "refs": [
+      "9.2B",
+      "9.7"
+    ],
+    "text_preview": "RESOLUTION 42 (REV.WRC-19) Use of interim systems in Region 2 in the broadcasting-satellite and  fixed-satellite (feeder-link) services in Region 2 for the frequency bands covered  by Appendices 30 an"
+  },
+  {
+    "number": 491,
+    "wrc": "REV.WRC-23",
+    "title": "Administrative due diligence applicable to some satellite radiocommunication services",
+    "start_page": 106,
+    "end_page": 107,
+    "pages": 1,
+    "text_length": 2142,
+    "refs": [],
+    "text_preview": "RESOLUTION 491 (REV.WRC-23) Administrative due diligence applicable to some   satellite radiocommunication services  The World Radiocommunication Conference (Dubai, 2023), considering a) that Resoluti"
+  },
+  {
+    "number": 49,
+    "wrc": "REV.WRC-23",
+    "title": "1 Any satellite network or satellite system of the fixed-satellite service, mobile-satellite service or broadcasting-satellite service with frequency assignments that are subject to coordination under Nos. 9.7, 9.11, 9.12, 9.12A and 9.13 shall be subject to these procedures. 2 Any request for modifications of the Region 2 Plan under the relevant provisions of Article 4 of Appendices 30 and 30A that involve the addition of new frequencies or orbital positions or for modifications of the Region 2 Plan under the relevant provisions of Article 4 of Appendices 30 and 30A that extend the service area to another country or countries in addition to the existing service area or request for additional uses in Regions 1 and 3 under the relevant provisions of Article 4 of Appendices 30 and 30A shall be subject to these procedures. 3 Any submission of information under Article 6 of Appendix 30B, with the exception of submissions of new Member States seeking the acquisition of their respecti",
+    "start_page": 107,
+    "end_page": 110,
+    "pages": 3,
+    "text_length": 7776,
+    "refs": [
+      "11.41",
+      "11.44",
+      "9.30",
+      "9.7"
+    ],
+    "text_preview": "resolves that the administrative due diligence procedure contained in Annex 1 to this Resolution shall be  applied for a satellite network or satellite system of the fixed-satellite service, mobile-sa"
+  },
+  {
+    "number": 55,
+    "wrc": "REV.WRC-23",
+    "title": "Electronic submission of, and communications on, notice forms for satellite networks, earth stations and radio astronomy stations and reports of harmful interference affecting space services",
+    "start_page": 110,
+    "end_page": 114,
+    "pages": 4,
+    "text_length": 7147,
+    "refs": [
+      "13.2",
+      "9.11",
+      "9.3",
+      "9.41"
+    ],
+    "text_preview": "RESOLUTION 55 (REV.WRC-23) Electronic submission of, and communications on, notice forms for satellite  networks, earth stations and radio astronomy stations and reports   of harmful interference affe"
+  },
+  {
+    "number": 63,
+    "wrc": "REV.WRC-12",
+    "title": "Protection of radiocommunication services against interference caused by radiation from industrial, scientific and medical (ISM) equipment",
+    "start_page": 114,
+    "end_page": 116,
+    "pages": 2,
+    "text_length": 3774,
+    "refs": [
+      "1.15"
+    ],
+    "text_preview": "RESOLUTION 63 (REV.WRC-12) Protection of radiocommunication services against interference caused by  radiation from industrial, scientific and medical (ISM) equipment  The World Radiocommunication Con"
+  },
+  {
+    "number": 72,
+    "wrc": "REV.WRC-19",
+    "title": "World and regional preparations for world radiocommunication conferences",
+    "start_page": 116,
+    "end_page": 118,
+    "pages": 2,
+    "text_length": 3591,
+    "refs": [],
+    "text_preview": "RESOLUTION 72 (REV.WRC-19) World and regional preparations for world radiocommunication conferences  The World Radiocommunication Conference (Sharm el-Sheikh, 2019), considering a) that the regional t"
+  },
+  {
+    "number": 74,
+    "wrc": "REV.WRC-03",
+    "title": "Process to keep the technical bases of Appendix 7 current",
+    "start_page": 118,
+    "end_page": 120,
+    "pages": 2,
+    "text_length": 3864,
+    "refs": [],
+    "text_preview": "RESOLUTION 74 (REV.WRC-03) Process to keep the technical bases of Appendix 7 current   The World Radiocommunication Conference (Geneva, 2003), considering a) that Appendix 7 provides the method for th"
+  },
+  {
+    "number": 76,
+    "wrc": "REV.WRC-23",
+    "title": "Protection of geostationary fixed-satellite service and geostationary broadcasting-satellite service networks from the maximum aggregate equivalent power flux-density produced by multiple non-geostationary fixed-satellite service systems in frequency bands where equivalent power flux-density limits have been adopted",
+    "start_page": 120,
+    "end_page": 130,
+    "pages": 10,
+    "text_length": 17539,
+    "refs": [
+      "11.2",
+      "22.5K",
+      "9.12",
+      "9.7A"
+    ],
+    "text_preview": "RESOLUTION 76 (REV.WRC-23) Protection of geostationary fixed-satellite service and geostationary  broadcasting-satellite service networks from the maximum aggregate   equivalent power flux-density pro"
+  },
+  {
+    "number": 80,
+    "wrc": "REV.WRC-07",
+    "title": "Due diligence in applying the principles embodied in the Constitution",
+    "start_page": 130,
+    "end_page": 134,
+    "pages": 4,
+    "text_length": 6861,
+    "refs": [
+      "0.3",
+      "11.30",
+      "11.48"
+    ],
+    "text_preview": "RESOLUTION 80 (REV.WRC-07) Due diligence in applying the principles embodied in the Constitution  The World Radiocommunication Conference (Geneva, 2007), considering a) that Articles 12 and 44 of the "
+  },
+  {
+    "number": 81,
+    "wrc": "REV.WRC-15",
+    "title": "Evaluation of the administrative due diligence procedure for satellite networks",
+    "start_page": 134,
+    "end_page": 136,
+    "pages": 2,
+    "text_length": 3100,
+    "refs": [
+      "11.44"
+    ],
+    "text_preview": "RESOLUTION 81 (REV.WRC-15) Evaluation of the administrative due diligence procedure for satellite networks  The World Radiocommunication Conference (Geneva, 2015), considering a) that WRC-97 adopted R"
+  },
+  {
+    "number": 85,
+    "wrc": "REV.WRC-23",
+    "title": "Application of Article 22 of the Radio Regulations for the protection of geostationary fixed-satellite service and broadcasting-satellite service networks from non-geostationary fixed-satellite service systems",
+    "start_page": 136,
+    "end_page": 140,
+    "pages": 4,
+    "text_length": 7422,
+    "refs": [
+      "11.31",
+      "22.2",
+      "22.5C",
+      "22.5H",
+      "9.30",
+      "9.35",
+      "9.7A"
+    ],
+    "text_preview": "RESOLUTION 85 (REV.WRC-23) Application of Article 22 of the Radio Regulations for the protection of  geostationary fixed-satellite service and broadcasting-satellite service networks  from non-geostat"
+  },
+  {
+    "number": 86,
+    "wrc": "REV.WRC-07",
+    "title": "Implementation of Resolution 86 (Rev. Marrakesh, 2002) of the Plenipotentiary Conference",
+    "start_page": 140,
+    "end_page": 142,
+    "pages": 2,
+    "text_length": 1853,
+    "refs": [
+      "13.0"
+    ],
+    "text_preview": "RESOLUTION 86 (REV.WRC-07) Implementation of Resolution 86 (Rev. Marrakesh, 2002) of   the Plenipotentiary Conference  The World Radiocommunication Conference (Geneva, 2007), considering a) that the P"
+  },
+  {
+    "number": 95,
+    "wrc": "REV.WRC-19",
+    "title": "General review of the Resolutions and Recommendations of world administrative radio conferences and world radiocommunication conferences",
+    "start_page": 142,
+    "end_page": 144,
+    "pages": 2,
+    "text_length": 3637,
+    "refs": [],
+    "text_preview": "RESOLUTION 95 (REV.WRC-19) General review of the Resolutions and Recommendations of world  administrative radio conferences and world radiocommunication conferences  The World Radiocommunication Confe"
+  },
+  {
+    "number": 99,
+    "wrc": "REV.WRC-23",
+    "title": "Provisional application of certain provisions of the Radio Regulations as revised by the 2023 World Radiocommunication Conference and abrogation of certain Resolutions and Recommendations",
+    "start_page": 144,
+    "end_page": 146,
+    "pages": 2,
+    "text_length": 2560,
+    "refs": [
+      "5.368"
+    ],
+    "text_preview": "RESOLUTION 99 (REV.WRC-23) Provisional application of certain provisions of the Radio Regulations  as revised by the 2023 World Radiocommunication Conference   and abrogation of certain Resolutions an"
+  },
+  {
+    "number": 111,
+    "wrc": "ORB-88",
+    "title": "Planning of the fixed-satellite service in the bands 18.1-18.3 GHz, 18.3-20.2 GHz and 27-30 GHz",
+    "start_page": 146,
+    "end_page": 148,
+    "pages": 2,
+    "text_length": 1784,
+    "refs": [],
+    "text_preview": "RESOLUTION 111 (ORB-88) Planning of the fixed-satellite service in the bands 18.1-18.3 GHz,  18.3-20.2 GHz and 27-30 GHz1  The World Administrative Radio Conference on the Use of the Geostationary-Sat"
+  },
+  {
+    "number": 114,
+    "wrc": "REV.WRC-15",
+    "title": "Compatibility between the aeronautical radionavigation service and the fixed-satellite service (Earth-to-space) (limited to feeder links of the non-geostationary mobile-satellite systems in the mobile-satellite service) in the frequency band 5 091-5 150 MHz",
+    "start_page": 148,
+    "end_page": 150,
+    "pages": 2,
+    "text_length": 2430,
+    "refs": [
+      "5.444"
+    ],
+    "text_preview": "RESOLUTION 114 (REV.WRC-15) Compatibility between the aeronautical radionavigation service and the   fixed-satellite service (Earth-to-space) (limited to feeder links of the   non-geostationary mobile"
+  },
+  {
+    "number": 121,
+    "wrc": "WRC-23",
+    "title": "Use of the frequency band 12.75-13.25 GHz by earth stations in motion on aircraft and vessels communicating with geostationary space stations in the fixed-satellite service",
+    "start_page": 150,
+    "end_page": 178,
+    "pages": 28,
+    "text_length": 67569,
+    "refs": [
+      "18.1",
+      "5.340",
+      "5.441"
+    ],
+    "text_preview": "RESOLUTION 121 (WRC-23) Use of the frequency band 12.75-13.25 GHz by earth stations in motion   on aircraft and vessels communicating with geostationary   space stations in the fixed-satellite service"
+  },
+  {
+    "number": 122,
+    "wrc": "REV.WRC-19",
+    "title": "Use of the frequency bands 47.2-47.5 GHz and 47.9-48.2 GHz by high-altitude platform stations in the fixed service",
+    "start_page": 178,
+    "end_page": 182,
+    "pages": 4,
+    "text_length": 6382,
+    "refs": [
+      "5.552"
+    ],
+    "text_preview": "RESOLUTION 122 (REV.WRC-19) Use of the frequency bands 47.2-47.5 GHz and 47.9-48.2 GHz   by high-altitude platform stations in the fixed service  The World Radiocommunication Conference (Sharm el-Shei"
+  },
+  {
+    "number": 123,
+    "wrc": "WRC-23",
+    "title": "Use of the frequency bands 17.7-18.6 GHz, 18.8-19.3 GHz and 19.7-20.2 GHz (space-to-Earth) and 27.5-29.1 GHz and 29.5-30 GHz (Earth-to-space) by aeronautical and maritime earth stations in motion communicating with non-geostationary space stations in the fixed-satellite service",
+    "start_page": 182,
+    "end_page": 200,
+    "pages": 18,
+    "text_length": 40781,
+    "refs": [
+      "11.31",
+      "11.38",
+      "11.41",
+      "11.42",
+      "22.2",
+      "22.5C",
+      "5.43A",
+      "5.524",
+      "5.542",
+      "9.11A",
+      "9.12",
+      "9.12A",
+      "9.7B"
+    ],
+    "text_preview": "RESOLUTION 123 (WRC-23) Use of the frequency bands 17.7-18.6 GHz, 18.8-19.3 GHz and 19.7-20.2 GHz  (space-to-Earth) and 27.5-29.1 GHz and 29.5-30 GHz (Earth-to-space) by  aeronautical and maritime ear"
+  },
+  {
+    "number": 125,
+    "wrc": "REV.WRC-12",
+    "title": "Frequency sharing in the bands 1 610.6-1 613.8 MHz and 1 660-1 660.5 MHz between the mobile-satellite service and the radio astronomy service",
+    "start_page": 200,
+    "end_page": 202,
+    "pages": 2,
+    "text_length": 2883,
+    "refs": [
+      "29.13",
+      "5.372"
+    ],
+    "text_preview": "RESOLUTION 125 (REV.WRC-12) Frequency sharing in the bands 1 610.6-1 613.8 MHz and 1 660-1 660.5 MHz   between the mobile-satellite service and the radio astronomy service  The World Radiocommunicatio"
+  },
+  {
+    "number": 126,
+    "wrc": "WRC-23",
+    "title": "Temporary regulatory measures in Appendix 30B to improve the reference situation of severely impacted national allotments",
+    "start_page": 202,
+    "end_page": 204,
+    "pages": 2,
+    "text_length": 3355,
+    "refs": [],
+    "text_preview": "RESOLUTION 126 (WRC-23) Temporary regulatory measures in Appendix 30B to improve the reference   situation of severely impacted national allotments  The World Radiocommunication Conference (Dubai, 202"
+  },
+  {
+    "number": 129,
+    "wrc": "WRC-23",
+    "title": "Studies on possible revisions of sharing conditions in the frequency band 13.75-14 GHz to allow the use of uplink fixed-satellite service earth stations with smaller antenna sizes",
+    "start_page": 204,
+    "end_page": 208,
+    "pages": 4,
+    "text_length": 6828,
+    "refs": [
+      "11.14",
+      "5.499",
+      "5.501",
+      "5.502",
+      "5.503"
+    ],
+    "text_preview": "RESOLUTION 129 (WRC-23) Studies on possible revisions of sharing conditions in the frequency band   13.75-14 GHz to allow the use of uplink fixed-satellite service   earth stations with smaller antenn"
+  },
+  {
+    "number": 130,
+    "wrc": "WRC-23",
+    "title": "Studies relating to the use of the frequency band 51.4-52.4 GHz to enable its use by gateway earth stations transmitting to non-geostationary-satellite orbit systems in the fixed-satellite service (Earth-to-space)",
+    "start_page": 208,
+    "end_page": 212,
+    "pages": 4,
+    "text_length": 6937,
+    "refs": [
+      "5.338A",
+      "5.340",
+      "5.547",
+      "5.555C",
+      "5.556"
+    ],
+    "text_preview": "RESOLUTION 130 (WRC-23) Studies relating to the use of the frequency band 51.4-52.4 GHz to enable   its use by gateway earth stations transmitting to non-geostationary-satellite   orbit systems in the"
+  },
+  {
+    "number": 131,
+    "wrc": "WRC-23",
+    "title": "Consideration of technical and regulatory measures for fixed-satellite service satellite networks/systems in the frequency bands 37.5-42.5 GHz (space-to-Earth), 42.5-43.5 GHz (Earth-to-space), 47.2-50.2 GHz (Earth-to-space) and 50.4-51.4 GHz (Earth-to-space) for equitable access to these frequency bands",
+    "start_page": 212,
+    "end_page": 216,
+    "pages": 4,
+    "text_length": 5614,
+    "refs": [
+      "5.516B",
+      "5.550B"
+    ],
+    "text_preview": "RESOLUTION 131 (WRC-23) Consideration of technical and regulatory measures for fixed-satellite   service satellite networks/systems in the frequency bands 37.5-42.5 GHz   (space-to-Earth), 42.5-43.5 G"
+  },
+  {
+    "number": 133,
+    "wrc": "WRC-23",
+    "title": "Study of the possible use of the frequency band 12.75-13.25 GHz by aeronautical and maritime earth stations in motion communicating with non-geostationary space stations in the fixed-satellite service (Earth-to-space)",
+    "start_page": 216,
+    "end_page": 220,
+    "pages": 4,
+    "text_length": 7191,
+    "refs": [
+      "5.340",
+      "5.441",
+      "9.12"
+    ],
+    "text_preview": "RESOLUTION 133 (WRC-23) Study of the possible use of the frequency band 12.75-13.25 GHz by aeronautical  and maritime earth stations in motion communicating with non-geostationary  space stations in t"
+  },
+  {
+    "number": 140,
+    "wrc": "REV.WRC-23",
+    "title": "Measures and studies associated with the equivalent power flux-density (epfd) limits in the frequency band 19.7-20.2 GHz",
+    "start_page": 220,
+    "end_page": 222,
+    "pages": 2,
+    "text_length": 3538,
+    "refs": [
+      "22.2",
+      "22.5C",
+      "9.7A"
+    ],
+    "text_preview": "RESOLUTION 140 (REV.WRC-23) Measures and studies associated with the equivalent power flux-density (epfd)  limits in the frequency band 19.7-20.2 GHz  The World Radiocommunication Conference (Dubai, 2"
+  },
+  {
+    "number": 143,
+    "wrc": "REV.WRC-19",
+    "title": "Guidelines for the implementation of high-density applications in the fixed- satellite service in frequency bands identified for these applications",
+    "start_page": 222,
+    "end_page": 226,
+    "pages": 4,
+    "text_length": 6822,
+    "refs": [
+      "5.340",
+      "5.516B",
+      "5.522A"
+    ],
+    "text_preview": "RESOLUTION 143 (REV.WRC-19) Guidelines for the implementation of high-density applications in the fixed- satellite service in frequency bands identified for these applications  The World Radiocommunic"
+  },
+  {
+    "number": 144,
+    "wrc": "REV.WRC-15",
+    "title": "Special requirements of geographically small or narrow countries operating earth stations in the fixed-satellite service in the frequency band 13.75-14 GHz",
+    "start_page": 226,
+    "end_page": 228,
+    "pages": 2,
+    "text_length": 2889,
+    "refs": [
+      "5.502"
+    ],
+    "text_preview": "RESOLUTION 144 (REV.WRC-15) Special requirements of geographically small or narrow countries operating  earth stations in the fixed-satellite service in the frequency band 13.75-14 GHz  The World Radi"
+  },
+  {
+    "number": 145,
+    "wrc": "REV.WRC-19",
+    "title": "Use of the frequency band 27.9-28.2 GHz by high-altitude platform stations in the fixed service",
+    "start_page": 228,
+    "end_page": 230,
+    "pages": 2,
+    "text_length": 4760,
+    "refs": [
+      "4.23",
+      "5.537A"
+    ],
+    "text_preview": "RESOLUTION 145 (REV.WRC-19) Use of the frequency band 27.9-28.2 GHz by   high-altitude platform stations in the fixed service  The World Radiocommunication Conference (Sharm el-Sheikh, 2019), consider"
+  },
+  {
+    "number": 147,
+    "wrc": "WRC-07",
+    "title": "Power flux-density limits for certain systems in the fixed-satellite service using highly-inclined orbits having an apogee altitude greater than 18 000 km and an orbital inclination between 35° and 145° in the band 17.7-19.7 GHz",
+    "start_page": 230,
+    "end_page": 232,
+    "pages": 2,
+    "text_length": 2479,
+    "refs": [],
+    "text_preview": "RESOLUTION 147 (WRC-07) Power flux-density limits for certain systems in the fixed-satellite service using  highly-inclined orbits having an apogee altitude greater than 18 000 km and   an orbital inc"
+  },
+  {
+    "number": 148,
+    "wrc": "REV.WRC-15",
+    "title": "Satellite systems formerly listed in Part B of the Plan of Appendix 30B (WARC Orb-88)",
+    "start_page": 232,
+    "end_page": 234,
+    "pages": 2,
+    "text_length": 2765,
+    "refs": [],
+    "text_preview": "RESOLUTION 148 (REV.WRC-15) Satellite systems formerly listed in Part B of the Plan of Appendix 30B  (WARC Orb-88)  The World Radiocommunication Conference (Geneva, 2015), considering a) that WARC Orb"
+  },
+  {
+    "number": 149,
+    "wrc": "REV.WRC-12",
+    "title": "Submissions from new Member States of the Union relating to Appendix 30B of the Radio Regulations",
+    "start_page": 234,
+    "end_page": 236,
+    "pages": 2,
+    "text_length": 2187,
+    "refs": [],
+    "text_preview": "RESOLUTION 149 (REV.WRC-12) Submissions from new Member States of the Union relating  to Appendix 30B of the Radio Regulations  The World Radiocommunication Conference (Geneva, 2012), considering a) t"
+  },
+  {
+    "number": 150,
+    "wrc": "WRC-12",
+    "title": "Use of the bands 6 440-6 520 MHz and 6 560-6 640 MHz by gateway links for high-altitude platform stations in the fixed service",
+    "start_page": 236,
+    "end_page": 240,
+    "pages": 4,
+    "text_length": 6031,
+    "refs": [
+      "5.149",
+      "5.457",
+      "5.458"
+    ],
+    "text_preview": "RESOLUTION 150 (WRC-12) Use of the bands 6 440-6 520 MHz and 6 560-6 640 MHz by gateway links   for high-altitude platform stations in the fixed service  The World Radiocommunication Conference (Genev"
+  },
+  {
+    "number": 154,
+    "wrc": "REV.WRC-15",
+    "title": "Consideration of technical and regulatory actions in order to support existing and future operation of fixed-satellite service earth stations within the frequency band 3 400-4 200 MHz, as an aid to the safe operation of aircraft and reliable distribution of meteorological information in some countries in Region",
+    "start_page": 240,
+    "end_page": 244,
+    "pages": 4,
+    "text_length": 6111,
+    "refs": [],
+    "text_preview": "RESOLUTION 154 (REV.WRC-15) Consideration of technical and regulatory actions in order to support existing   and future operation of fixed-satellite service earth stations within the  frequency band 3"
+  },
+  {
+    "number": 155,
+    "wrc": "REV.WRC-19",
+    "title": "Regulatory provisions related to earth stations on board unmanned aircraft which operate with geostationary-satellite networks in the fixed-satellite service in certain frequency bands not subject to a Plan of Appendices 30, 30A and 30B for the control and non-payload communications of unmanned aircraft systems in non-segregated airspaces*",
+    "start_page": 244,
+    "end_page": 252,
+    "pages": 8,
+    "text_length": 14217,
+    "refs": [
+      "11.31",
+      "11.32",
+      "4.10",
+      "5.505",
+      "5.508"
+    ],
+    "text_preview": "RESOLUTION 155 (REV.WRC-19) Regulatory provisions related to earth stations on board unmanned aircraft  which operate with geostationary-satellite networks in the fixed-satellite   service in certain "
+  },
+  {
+    "number": 156,
+    "wrc": "REV.WRC-23",
+    "title": "Use of the frequency bands 19.7-20.2 GHz and 29.5-30.0 GHz by earth stations in motion communicating with geostationary space stations in the fixed-satellite service",
+    "start_page": 252,
+    "end_page": 258,
+    "pages": 6,
+    "text_length": 9654,
+    "refs": [
+      "5.524",
+      "5.526",
+      "5.527A",
+      "5.542"
+    ],
+    "text_preview": "RESOLUTION 156 (REV.WRC-23) Use of the frequency bands 19.7-20.2 GHz and 29.5-30.0 GHz by earth stations  in motion communicating with geostationary space stations in the   fixed-satellite service1  T"
+  },
+  {
+    "number": 163,
+    "wrc": "WRC-15",
+    "title": "Deployment of earth stations in some Regions 1 and 2 countries in the frequency band 14.5-14.75 GHz in the fixed-satellite service (Earth-to-space) not for feeder links for the broadcasting-satellite service",
+    "start_page": 258,
+    "end_page": 260,
+    "pages": 2,
+    "text_length": 1875,
+    "refs": [
+      "5.509B"
+    ],
+    "text_preview": "RESOLUTION 163 (WRC-15) Deployment of earth stations in some Regions 1 and 2 countries in the frequency  band 14.5-14.75 GHz in the fixed-satellite service (Earth-to-space)   not for feeder links for "
+  },
+  {
+    "number": 164,
+    "wrc": "WRC-15",
+    "title": "Deployment of earth stations in some Region 3 countries in the frequency band 14.5-14.8 GHz in the fixed-satellite service (Earth-to-space) not for feeder links for the broadcasting-satellite service",
+    "start_page": 260,
+    "end_page": 262,
+    "pages": 2,
+    "text_length": 1657,
+    "refs": [
+      "5.509B"
+    ],
+    "text_preview": "RESOLUTION 164 (WRC-15) Deployment of earth stations in some Region 3 countries in the frequency   band 14.5-14.8 GHz in the fixed-satellite service (Earth-to-space) not   for feeder links for the bro"
+  },
+  {
+    "number": 165,
+    "wrc": "REV.WRC-23",
+    "title": "Use of the frequency band 21.4-22 GHz by high-altitude platform stations in the fixed service in Region",
+    "start_page": 262,
+    "end_page": 266,
+    "pages": 4,
+    "text_length": 6006,
+    "refs": [
+      "1.66A",
+      "4.23"
+    ],
+    "text_preview": "RESOLUTION 165 (REV.WRC-23) Use of the frequency band 21.4-22 GHz by high-altitude platform   stations in the fixed service in Region 2  The World Radiocommunication Conference (Dubai, 2023), consider"
+  },
+  {
+    "number": 166,
+    "wrc": "REV.WRC-23",
+    "title": "Use of the frequency band 24.25-27.5 GHz by high-altitude platform stations in the fixed service in Region",
+    "start_page": 266,
+    "end_page": 270,
+    "pages": 4,
+    "text_length": 10371,
+    "refs": [
+      "9.17",
+      "9.18"
+    ],
+    "text_preview": "RESOLUTION 166 (REV.WRC-23) Use of the frequency band 24.25-27.5 GHz by high-altitude platform stations   in the fixed service in Region 2  The World Radiocommunication Conference (Dubai, 2023), consi"
+  },
+  {
+    "number": 167,
+    "wrc": "REV.WRC-23",
+    "title": "Use of the frequency band 31-31.3 GHz by high-altitude platform stations in the fixed service",
+    "start_page": 270,
+    "end_page": 274,
+    "pages": 4,
+    "text_length": 7614,
+    "refs": [
+      "5.543A"
+    ],
+    "text_preview": "RESOLUTION 167 (REV.WRC-23) Use of the frequency band 31-31.3 GHz by high-altitude platform   stations in the fixed service  The World Radiocommunication Conference (Dubai, 2023), considering a) that "
+  },
+  {
+    "number": 168,
+    "wrc": "REV.WRC-23",
+    "title": "Use of the frequency band 38-39.5 GHz by high-altitude platform stations in the fixed service",
+    "start_page": 274,
+    "end_page": 278,
+    "pages": 4,
+    "text_length": 9160,
+    "refs": [],
+    "text_preview": "RESOLUTION 168 (REV.WRC-23) Use of the frequency band 38-39.5 GHz by high-altitude platform   stations in the fixed service  The World Radiocommunication Conference (Dubai, 2023), considering a) that "
+  },
+  {
+    "number": 169,
+    "wrc": "REV.WRC-23",
+    "title": "Use of the frequency bands 17.7-19.7 GHz and 27.5-29.5 GHz by earth stations in motion communicating with geostationary space stations in the fixed-satellite service",
+    "start_page": 278,
+    "end_page": 288,
+    "pages": 10,
+    "text_length": 21000,
+    "refs": [
+      "11.31",
+      "11.38",
+      "11.42",
+      "22.32",
+      "22.5C",
+      "9.7"
+    ],
+    "text_preview": "RESOLUTION 169 (REV.WRC-23) Use of the frequency bands 17.7-19.7 GHz and 27.5-29.5 GHz   by earth stations in motion communicating with geostationary space stations  in the fixed-satellite service  Th"
+  },
+  {
+    "number": 170,
+    "wrc": "REV.WRC-23",
+    "title": "Additional measures for satellite networks in the fixed-satellite service in frequency bands subject to Appendix 30B for the enhancement of equitable access to these frequency bands",
+    "start_page": 288,
+    "end_page": 302,
+    "pages": 14,
+    "text_length": 28916,
+    "refs": [
+      "9.6"
+    ],
+    "text_preview": "RESOLUTION 170 (REV.WRC-23) Additional measures for satellite networks in the fixed-satellite service  in frequency bands subject to Appendix 30B for the enhancement  of equitable access to these freq"
+  },
+  {
+    "number": 176,
+    "wrc": "REV.WRC-23",
+    "title": "Studies on the use of the frequency bands 47.2-50.2 GHz (Earth-to-space) and 50.4-51.4 GHz (Earth-to-space), or parts thereof, by aeronautical and maritime earth stations in motion in the fixed-satellite service",
+    "start_page": 302,
+    "end_page": 306,
+    "pages": 4,
+    "text_length": 7331,
+    "refs": [
+      "29.12",
+      "5.149",
+      "5.338A",
+      "5.516B",
+      "5.517A",
+      "5.527A",
+      "5.550B",
+      "5.552",
+      "5.554A",
+      "5.555",
+      "5.555B"
+    ],
+    "text_preview": "RESOLUTION 176 (REV.WRC-23) Studies on the use of the frequency bands 47.2-50.2 GHz (Earth-to-space)   and 50.4-51.4 GHz (Earth-to-space), or parts thereof, by aeronautical   and maritime earth statio"
+  },
+  {
+    "number": 205,
+    "wrc": "REV.WRC-19",
+    "title": "Protection of systems operating in the mobile- satellite service in the frequency band 406-406.1 MHz",
+    "start_page": 306,
+    "end_page": 310,
+    "pages": 4,
+    "text_length": 9663,
+    "refs": [
+      "5.266",
+      "5.267"
+    ],
+    "text_preview": "RESOLUTION 205 (REV.WRC-19) Protection of systems operating in the mobile-  satellite service in the frequency band 406-406.1 MHz  The World Radiocommunication Conference (Sharm el-Sheikh, 2019), cons"
+  },
+  {
+    "number": 207,
+    "wrc": "REV.WRC-15",
+    "title": "Measures to address unauthorized use of and interference to frequencies in the frequency bands allocated to the maritime mobile service and to the aeronautical mobile (R) service",
+    "start_page": 310,
+    "end_page": 314,
+    "pages": 4,
+    "text_length": 8282,
+    "refs": [
+      "23.2",
+      "4.4",
+      "43.1"
+    ],
+    "text_preview": "RESOLUTION 207 (REV.WRC-15) Measures to address unauthorized use of and interference to frequencies in  the frequency bands allocated to the maritime mobile service and to the  aeronautical mobile (R)"
+  },
+  {
+    "number": 212,
+    "wrc": "REV.WRC-23",
+    "title": "Implementation of International Mobile Telecommunications in the frequency bands 1 885-2 025 MHz and 2 110-2 200 MHz",
+    "start_page": 314,
+    "end_page": 318,
+    "pages": 4,
+    "text_length": 9539,
+    "refs": [
+      "5.388"
+    ],
+    "text_preview": "RESOLUTION 212 (REV.WRC-23) Implementation of International Mobile Telecommunications in the frequency  bands 1 885-2 025 MHz and 2 110-2 200 MHz  The World Radiocommunication Conference (Dubai, 2023)"
+  },
+  {
+    "number": 213,
+    "wrc": "WRC-23",
+    "title": "Use of high-altitude platform stations as International Mobile Telecommunications base stations in the frequency band 694-960 MHz, or portions thereof",
+    "start_page": 318,
+    "end_page": 324,
+    "pages": 6,
+    "text_length": 10051,
+    "refs": [
+      "1.66A",
+      "5.312",
+      "5.312B",
+      "5.313A",
+      "9.21"
+    ],
+    "text_preview": "RESOLUTION 213 (WRC-23) Use of high-altitude platform stations as International Mobile  Telecommunications base stations in the frequency   band 694-960 MHz, or portions thereof1  The World Radiocommu"
+  },
+  {
+    "number": 215,
+    "wrc": "REV.WRC-12",
+    "title": "Coordination process among mobile-satellite systems and efficient use of the allocations to the mobile-satellite service in the 1-3 GHz range",
+    "start_page": 324,
+    "end_page": 326,
+    "pages": 2,
+    "text_length": 3729,
+    "refs": [],
+    "text_preview": "RESOLUTION 215 (REV.WRC-12) Coordination process among mobile-satellite systems and efficient use of   the allocations to the mobile-satellite service in the 1-3 GHz range  The World Radiocommunicatio"
+  },
+  {
+    "number": 217,
+    "wrc": "REV.WRC-23",
+    "title": "Implementation of wind profiler radars",
+    "start_page": 326,
+    "end_page": 328,
+    "pages": 2,
+    "text_length": 3975,
+    "refs": [
+      "5.162A",
+      "5.266",
+      "5.267",
+      "5.291A"
+    ],
+    "text_preview": "RESOLUTION 217 (REV.WRC-23) Implementation of wind profiler radars  The World Radiocommunication Conference (Dubai, 2023), having noted a request to ITU from the Secretary-General of the World Meteoro"
+  },
+  {
+    "number": 218,
+    "wrc": "WRC-23",
+    "title": "Use of high-altitude platform stations as International Mobile Telecommunications base stations in the frequency band 2 500-2 690 MHz, or portions thereof",
+    "start_page": 328,
+    "end_page": 334,
+    "pages": 6,
+    "text_length": 10480,
+    "refs": [
+      "1.66A",
+      "5.340",
+      "5.384A",
+      "5.409A",
+      "5.423"
+    ],
+    "text_preview": "RESOLUTION 218 (WRC-23) Use of high-altitude platform stations as International Mobile  Telecommunications base stations in the frequency   band 2 500-2 690 MHz, or portions thereof1  The World Radioc"
+  },
+  {
+    "number": 219,
+    "wrc": "WRC-23",
+    "title": "Terrestrial component of International Mobile Telecommunications in the frequency band 10-10.5 GHz in Region",
+    "start_page": 334,
+    "end_page": 336,
+    "pages": 2,
+    "text_length": 4796,
+    "refs": [
+      "5.340",
+      "5.480A"
+    ],
+    "text_preview": "RESOLUTION 219 (WRC-23) Terrestrial component of International Mobile Telecommunications   in the frequency band 10-10.5 GHz in Region 2  The World Radiocommunication Conference (Dubai, 2023), conside"
+  },
+  {
+    "number": 220,
+    "wrc": "WRC-23",
+    "title": "Terrestrial component of International Mobile Telecommunications (IMT) within the frequency band 6 425-7 125 MHz",
+    "start_page": 336,
+    "end_page": 342,
+    "pages": 6,
+    "text_length": 12926,
+    "refs": [
+      "21.5",
+      "5.149",
+      "5.457D",
+      "5.458",
+      "5.458B",
+      "5.459"
+    ],
+    "text_preview": "RESOLUTION 220 (WRC-23) Terrestrial component of International Mobile Telecommunications (IMT)   within the frequency band 6 425-7 125 MHz  The World Radiocommunication Conference (Dubai, 2023),  cons"
+  },
+  {
+    "number": 221,
+    "wrc": "REV.WRC-23",
+    "title": "Use of high altitude platform stations as International Mobile Telecommunications base stations in the frequency bands 1 710-1 980 MHz, 2 010-2 025 MHz and 2 110-2 170 MHz",
+    "start_page": 342,
+    "end_page": 348,
+    "pages": 6,
+    "text_length": 9999,
+    "refs": [
+      "1.66A",
+      "5.10",
+      "5.384A",
+      "5.388A"
+    ],
+    "text_preview": "RESOLUTION 221 (REV.WRC-23) Use of high altitude platform stations as International Mobile  Telecommunications base stations in the frequency bands 1 710-1 980 MHz,  2 010-2 025 MHz and 2 110-2 170 MH"
+  },
+  {
+    "number": 222,
+    "wrc": "REV.WRC-23",
+    "title": "Use of the frequency bands 1 525-1 559 MHz and 1 626.5-1 660.5 MHz by the mobile-satellite service, and procedures to ensure long-term spectrum access for the aeronautical mobile-satellite (R) service",
+    "start_page": 348,
+    "end_page": 354,
+    "pages": 6,
+    "text_length": 12923,
+    "refs": [
+      "13.3",
+      "5.353A",
+      "5.357A"
+    ],
+    "text_preview": "RESOLUTION 222 (REV.WRC-23) Use of the frequency bands 1 525-1 559 MHz and 1 626.5-1 660.5 MHz   by the mobile-satellite service, and procedures to ensure long-term   spectrum access for the aeronauti"
+  },
+  {
+    "number": 223,
+    "wrc": "REV.WRC-23",
+    "title": "Additional frequency bands identified for International Mobile Telecommunications",
+    "start_page": 354,
+    "end_page": 360,
+    "pages": 6,
+    "text_length": 12959,
+    "refs": [
+      "5.317A",
+      "5.341B",
+      "5.384A",
+      "5.388",
+      "5.429",
+      "5.429B",
+      "5.441A",
+      "5.441B",
+      "9.21"
+    ],
+    "text_preview": "RESOLUTION 223 (REV.WRC-23) Additional frequency bands identified for International   Mobile Telecommunications  The World Radiocommunication Conference (Dubai, 2023), considering a) that  Internation"
+  },
+  {
+    "number": 224,
+    "wrc": "REV.WRC-23",
+    "title": "Frequency bands for the terrestrial component of International Mobile Telecommunications below 1 GHz",
+    "start_page": 360,
+    "end_page": 366,
+    "pages": 6,
+    "text_length": 10958,
+    "refs": [
+      "5.286A",
+      "5.290",
+      "5.295",
+      "5.296A",
+      "5.307A",
+      "5.312",
+      "5.313A"
+    ],
+    "text_preview": "RESOLUTION 224 (REV.WRC-23) Frequency bands for the terrestrial component of International  Mobile Telecommunications below 1 GHz The World Radiocommunication Conference (Dubai, 2023), considering a) "
+  },
+  {
+    "number": 225,
+    "wrc": "REV.WRC-23",
+    "title": "Use of additional frequency bands for the satellite component of IMT",
+    "start_page": 366,
+    "end_page": 368,
+    "pages": 2,
+    "text_length": 4489,
+    "refs": [
+      "5.353A",
+      "5.384A",
+      "5.388",
+      "5.403"
+    ],
+    "text_preview": "RESOLUTION 225 (REV.WRC-23) Use of additional frequency bands for the satellite component of IMT  The World Radiocommunication Conference (Dubai, 2023), considering a) that the frequency bands 1 980-2"
+  },
+  {
+    "number": 229,
+    "wrc": "REV.WRC-23",
+    "title": "Use of the frequency bands 5 150-5 250 MHz, 5 250-5 350 MHz and 5 470-5 725 MHz by the mobile service for the implementation of wireless access systems including radio local area networks",
+    "start_page": 368,
+    "end_page": 374,
+    "pages": 6,
+    "text_length": 12477,
+    "refs": [
+      "5.447",
+      "5.447A",
+      "5.452",
+      "9.21"
+    ],
+    "text_preview": "RESOLUTION 229 (REV.WRC-23) Use of the frequency bands 5 150-5 250 MHz, 5 250-5 350 MHz and  5 470-5 725 MHz by the mobile service for the implementation of   wireless access systems including radio l"
+  },
+  {
+    "number": 235,
+    "wrc": "REV.WRC-23",
+    "title": "Review of the spectrum use of the frequency band 470-694 MHz or parts thereof for some countries in Region",
+    "start_page": 374,
+    "end_page": 378,
+    "pages": 4,
+    "text_length": 8423,
+    "refs": [
+      "4.4",
+      "5.10",
+      "5.149",
+      "5.291A",
+      "5.295A",
+      "5.296",
+      "5.304",
+      "5.306",
+      "5.312"
+    ],
+    "text_preview": "RESOLUTION 235 (REV.WRC-23) Review of the spectrum use of the frequency band 470-694 MHz   or parts thereof for some countries in Region 1  The World Radiocommunication Conference (Dubai, 2023), consi"
+  },
+  {
+    "number": 240,
+    "wrc": "WRC-19",
+    "title": "Spectrum harmonization for railway radiocommunication systems between train and trackside within the existing mobile-service allocations",
+    "start_page": 378,
+    "end_page": 382,
+    "pages": 4,
+    "text_length": 5351,
+    "refs": [],
+    "text_preview": "RESOLUTION 240 (WRC-19) Spectrum harmonization for railway radiocommunication systems between  train and trackside within the existing mobile-service allocations  The World Radiocommunication Conferen"
+  },
+  {
+    "number": 241,
+    "wrc": "REV.WRC-23",
+    "title": "Use of the frequency band 66-71 GHz for International Mobile Telecommunications and coexistence with other applications of the mobile service",
+    "start_page": 382,
+    "end_page": 384,
+    "pages": 2,
+    "text_length": 3146,
+    "refs": [
+      "5.559A"
+    ],
+    "text_preview": "RESOLUTION 241 (REV.WRC-23) Use of the frequency band 66-71 GHz for International Mobile  Telecommunications and coexistence with   other applications of the mobile service  The World Radiocommunicati"
+  },
+  {
+    "number": 242,
+    "wrc": "REV.WRC-23",
+    "title": "Terrestrial component of International Mobile Telecommunications in the frequency band 24.25-27.5 GHz",
+    "start_page": 384,
+    "end_page": 388,
+    "pages": 4,
+    "text_length": 8451,
+    "refs": [
+      "5.532A"
+    ],
+    "text_preview": "RESOLUTION 242 (REV.WRC-23) Terrestrial component of International Mobile Telecommunications   in the frequency band 24.25-27.5 GHz   The World Radiocommunication Conference (Dubai, 2023), considering"
+  },
+  {
+    "number": 243,
+    "wrc": "REV.WRC-23",
+    "title": "Terrestrial component of International Mobile Telecommunications in the frequency bands 37-43.5 GHz and 47.2-48.2 GHz",
+    "start_page": 388,
+    "end_page": 392,
+    "pages": 4,
+    "text_length": 9777,
+    "refs": [
+      "5.149",
+      "5.516B",
+      "5.550B",
+      "5.553B"
+    ],
+    "text_preview": "RESOLUTION 243 (REV.WRC-23) Terrestrial component of International Mobile Telecommunications   in the frequency bands 37-43.5 GHz and 47.2-48.2 GHz  The World Radiocommunication Conference (Dubai, 202"
+  },
+  {
+    "number": 244,
+    "wrc": "REV.WRC-23",
+    "title": "International Mobile Telecommunications in the frequency band 45.5-47 GHz",
+    "start_page": 392,
+    "end_page": 394,
+    "pages": 2,
+    "text_length": 2576,
+    "refs": [
+      "5.553A"
+    ],
+    "text_preview": "RESOLUTION 244 (REV.WRC-23) International Mobile Telecommunications  in the frequency band 45.5-47 GHz   The World Radiocommunication Conference (Dubai, 2023), considering a) that International  Mobil"
+  },
+  {
+    "number": 249,
+    "wrc": "REV.WRC-23",
+    "title": "Study of technical and operational issues and regulatory provisions for space-to-space transmissions in the frequency bands 1 518-1 544 MHz, 1 545-1 559 MHz, 1 610-1 645.5 MHz, 1 646.5-1 660 MHz, 1 670-1 675 MHz and 2 483.5-2 500 MHz",
+    "start_page": 394,
+    "end_page": 400,
+    "pages": 6,
+    "text_length": 10824,
+    "refs": [
+      "4.10",
+      "4.4",
+      "5.149",
+      "5.343",
+      "5.348",
+      "5.353A",
+      "5.356",
+      "5.357A",
+      "5.366",
+      "5.367",
+      "5.368",
+      "8.5",
+      "9.21"
+    ],
+    "text_preview": "RESOLUTION 249 (REV.WRC-23) Study of technical and operational issues and regulatory provisions   for space-to-space transmissions in the frequency bands 1 518-1 544 MHz,   1 545-1 559 MHz, 1 610-1 64"
+  },
+  {
+    "number": 251,
+    "wrc": "REV.WRC-23",
+    "title": "Studies to consider a possible primary allocation in the frequency bands [694-960 MHz, or parts thereof, in Region 1], 890-942 MHz, or parts thereof, in Region 2, and [3 400-3 700 MHz, or parts thereof, in Region 3] to the aeronautical mobile service for the use of International Mobile Telecommunications (IMT) user equipment in terrestrial IMT networks by non-safety applications*",
+    "start_page": 400,
+    "end_page": 404,
+    "pages": 4,
+    "text_length": 6248,
+    "refs": [
+      "5.312",
+      "5.317A",
+      "5.318",
+      "5.325",
+      "5.432",
+      "5.433A"
+    ],
+    "text_preview": "RESOLUTION 251 (REV.WRC-23) Studies to consider a possible primary allocation in the frequency   bands [694-960 MHz, or parts thereof, in Region 1], 890-942 MHz,   or parts thereof, in Region 2, and ["
+  },
+  {
+    "number": 252,
+    "wrc": "WRC-23",
+    "title": "Studies on potential new allocations to, and regulatory actions for, the mobile-satellite service in the frequency bands 1 427-1 432 MHz (space-to-Earth), 1 645.5-1 646.5 MHz (space-to-Earth) (Earth-to-space), 1 880-1 920 MHz (space-to-Earth) (Earth-to-space) and 2 010-2 025 MHz (space-to-Earth) (Earth-to-space) required for the future development of low-data-rate non-geostationary mobile-satellite systems",
+    "start_page": 404,
+    "end_page": 408,
+    "pages": 4,
+    "text_length": 5915,
+    "refs": [
+      "5.388A"
+    ],
+    "text_preview": "RESOLUTION 252 (WRC-23) Studies on potential new allocations to, and regulatory actions for,   the mobile-satellite service in the frequency bands 1 427-1 432 MHz   (space-to-Earth), 1 645.5-1 646.5 M"
+  },
+  {
+    "number": 253,
+    "wrc": "WRC-23",
+    "title": "Studies on possible new allocations to the mobile-satellite service for direct connectivity between space stations and International Mobile Telecommunications (IMT) user equipment to complement terrestrial IMT network coverage",
+    "start_page": 408,
+    "end_page": 412,
+    "pages": 4,
+    "text_length": 5460,
+    "refs": [],
+    "text_preview": "RESOLUTION 253 (WRC-23) Studies on possible new allocations to the mobile-satellite service for  direct connectivity between space stations and International Mobile  Telecommunications (IMT) user equi"
+  },
+  {
+    "number": 254,
+    "wrc": "WRC-23",
+    "title": "Studies on possible new frequency allocations to the mobile-satellite service in the frequency bands 2 010-2 025 MHz (Earth-to-space) and 2 160-2 170 MHz (space-to-Earth) in Regions 1 and 3 and 2 120-2 160 MHz (space-to-Earth) in all Regions",
+    "start_page": 412,
+    "end_page": 416,
+    "pages": 4,
+    "text_length": 7419,
+    "refs": [
+      "5.388"
+    ],
+    "text_preview": "RESOLUTION 254 (WRC-23) Studies on possible new frequency allocations to the mobile-satellite service   in the frequency bands 2 010-2 025 MHz (Earth-to-space) and 2 160-2 170 MHz  (space-to-Earth) in"
+  },
+  {
+    "number": 255,
+    "wrc": "WRC-23",
+    "title": "Studies on frequency-related matters for International Mobile Telecommunications (IMT) identification in the frequency bands [102-109.5 GHz, 151.5-164 GHz, 167-174.8 GHz, 209-226 GHz and 252-275 GHz] for the future development of IMT*",
+    "start_page": 416,
+    "end_page": 420,
+    "pages": 4,
+    "text_length": 5608,
+    "refs": [
+      "5.340"
+    ],
+    "text_preview": "RESOLUTION 255 (WRC-23) Studies on frequency-related matters for International Mobile  Telecommunications (IMT) identification in the frequency bands   [102-109.5 GHz, 151.5-164 GHz, 167-174.8 GHz, 20"
+  },
+  {
+    "number": 256,
+    "wrc": "WRC-23",
+    "title": "Sharing and compatibility studies and development of technical conditions for the use of International Mobile Telecommunications (IMT) in the frequency bands 4 400-4 800 MHz, 7 125-8 400 MHz (or parts thereof), and 14.8-15.35 GHz for the terrestrial component of IMT",
+    "start_page": 420,
+    "end_page": 424,
+    "pages": 4,
+    "text_length": 6664,
+    "refs": [
+      "5.457D"
+    ],
+    "text_preview": "RESOLUTION 256 (WRC-23) Sharing and compatibility studies and development of technical conditions   for the use of International Mobile Telecommunications (IMT) in the frequency  bands 4 400-4 800 MHz"
+  },
+  {
+    "number": 331,
+    "wrc": "REV.WRC-12",
+    "title": "Operation of the Global Maritime Distress and Safety System",
+    "start_page": 424,
+    "end_page": 428,
+    "pages": 4,
+    "text_length": 5040,
+    "refs": [
+      "52.239"
+    ],
+    "text_preview": "RESOLUTION 331 (REV.WRC-12) Operation of the Global Maritime Distress and Safety System  The World Radiocommunication Conference (Geneva, 2012), noting that all ships subject to the International Conv"
+  },
+  {
+    "number": 339,
+    "wrc": "REV.WRC-07",
+    "title": "Coordination of NAVTEX services",
+    "start_page": 428,
+    "end_page": 430,
+    "pages": 2,
+    "text_length": 1280,
+    "refs": [
+      "20.7"
+    ],
+    "text_preview": "RESOLUTION 339 (REV.WRC-07) Coordination of NAVTEX services  The World Radiocommunication Conference (Geneva, 2007), considering a) that the International Maritime Organization (IMO) has established a"
+  },
+  {
+    "number": 343,
+    "wrc": "REV.WRC-12",
+    "title": "Maritime certification for personnel of ship stations and ship earth stations for which a radio installation is not compulsory",
+    "start_page": 430,
+    "end_page": 434,
+    "pages": 4,
+    "text_length": 5712,
+    "refs": [],
+    "text_preview": "RESOLUTION 343 (REV.WRC-12) Maritime certification for personnel of ship stations and ship earth stations   for which a radio installation is not compulsory  The World Radiocommunication Conference (G"
+  },
+  {
+    "number": 344,
+    "wrc": "REV.WRC-19",
+    "title": "Management of the maritime identity numbering resource",
+    "start_page": 434,
+    "end_page": 436,
+    "pages": 2,
+    "text_length": 4253,
+    "refs": [],
+    "text_preview": "RESOLUTION 344 (REV.WRC-19) Management of the maritime identity numbering resource  The World Radiocommunication Conference (Sharm el-Sheikh, 2019), noting a) that the installation of digital selectiv"
+  },
+  {
+    "number": 349,
+    "wrc": "REV.WRC-23",
+    "title": "Operational procedures for cancelling false distress alerts in the global maritime distress and safety system",
+    "start_page": 436,
+    "end_page": 440,
+    "pages": 4,
+    "text_length": 5363,
+    "refs": [],
+    "text_preview": "RESOLUTION 349 (REV.WRC-23) Operational procedures for cancelling false distress alerts in   the global maritime distress and safety system  The World Radiocommunication Conference (Dubai, 2023), cons"
+  },
+  {
+    "number": 352,
+    "wrc": "WRC-03",
+    "title": "Use of the carrier frequencies 12 290 kHz and 16 420 kHz for safety-related calling to and from rescue coordination centres",
+    "start_page": 440,
+    "end_page": 442,
+    "pages": 2,
+    "text_length": 2595,
+    "refs": [
+      "52.221A"
+    ],
+    "text_preview": "RESOLUTION 352 (WRC-03) Use of the carrier frequencies 12 290 kHz and 16 420 kHz for safety-related  calling to and from rescue coordination centres  The World Radiocommunication Conference (Geneva, 2"
+  },
+  {
+    "number": 354,
+    "wrc": "REV.WRC-23",
+    "title": "Distress and safety radiotelephony procedures for 2 182 kHz",
+    "start_page": 442,
+    "end_page": 448,
+    "pages": 6,
+    "text_length": 13059,
+    "refs": [
+      "32.1",
+      "32.13B",
+      "32.16",
+      "32.23",
+      "32.39",
+      "33.1",
+      "33.31",
+      "4.16",
+      "5.110",
+      "52.130"
+    ],
+    "text_preview": "RESOLUTION 354 (REV.WRC-23) Distress and safety radiotelephony procedures for 2 182 kHz   The World Radiocommunication Conference (Dubai, 2023), noting a) that all ships subject to the International C"
+  },
+  {
+    "number": 356,
+    "wrc": "REV.WRC-19",
+    "title": "ITU maritime service information registration",
+    "start_page": 448,
+    "end_page": 450,
+    "pages": 2,
+    "text_length": 2139,
+    "refs": [
+      "20.15",
+      "20.16"
+    ],
+    "text_preview": "RESOLUTION 356 (REV.WRC-19) ITU maritime service information registration  The World Radiocommunication Conference (Sharm el-Sheikh, 2019), noting a) that the provisions of No. 20.16 of Article 20 req"
+  },
+  {
+    "number": 363,
+    "wrc": "REV.WRC-23",
+    "title": "Improving the utilization of the VHF maritime mobile band",
+    "start_page": 450,
+    "end_page": 454,
+    "pages": 4,
+    "text_length": 5074,
+    "refs": [],
+    "text_preview": "RESOLUTION 363 (REV.WRC-23) Improving the utilization of the VHF maritime mobile band   The World Radiocommunication Conference (Dubai, 2023), considering a) that the ITU Radiocommunication Sector (IT"
+  },
+  {
+    "number": 364,
+    "wrc": "WRC-23",
+    "title": "Coordination of services provided by the NAVDAT system",
+    "start_page": 454,
+    "end_page": 456,
+    "pages": 2,
+    "text_length": 1397,
+    "refs": [
+      "20.7",
+      "5.79"
+    ],
+    "text_preview": "RESOLUTION 364 (WRC-23) Coordination of services provided by the NAVDAT system  The World Radiocommunication Conference (Dubai, 2023), considering a) that the International Maritime Organization (IMO)"
+  },
+  {
+    "number": 365,
+    "wrc": "WRC-23",
+    "title": "Provisional application of the Radio Regulations for the introduction of new geostationary satellite networks into the global maritime distress and safety system",
+    "start_page": 456,
+    "end_page": 460,
+    "pages": 4,
+    "text_length": 6886,
+    "refs": [
+      "11.41",
+      "11.41B",
+      "5.368",
+      "9.27",
+      "9.7"
+    ],
+    "text_preview": "RESOLUTION 365 (WRC-23) Provisional application of the Radio Regulations for the introduction   of new geostationary satellite networks into the global maritime distress   and safety system  The World"
+  },
+  {
+    "number": 366,
+    "wrc": "WRC-23",
+    "title": "Improving the utilization and channelization of maritime radiocommunication in the MF and HF bands, including potential revisions to Article 52 and Appendix",
+    "start_page": 460,
+    "end_page": 464,
+    "pages": 4,
+    "text_length": 6057,
+    "refs": [],
+    "text_preview": "RESOLUTION 366 (WRC-23) Improving the utilization and channelization of maritime radiocommunication  in the MF and HF bands, including potential revisions  to Article 52 and Appendix 17  The World Rad"
+  },
+  {
+    "number": 406,
+    "wrc": "WRC-23",
+    "title": "Use of the frequency band 117.975-137 MHz by the aeronautical mobile-satellite (R) service",
+    "start_page": 464,
+    "end_page": 468,
+    "pages": 4,
+    "text_length": 5410,
+    "refs": [
+      "9.14"
+    ],
+    "text_preview": "RESOLUTION 406 (WRC-23) Use of the frequency band 117.975-137 MHz by  the aeronautical mobile-satellite (R) service  The World Radiocommunication Conference (Dubai, 2023), considering a) that the opti"
+  },
+  {
+    "number": 411,
+    "wrc": "WRC-23",
+    "title": "Consideration of appropriate regulatory actions to update Appendix 26 in support of modernization of high-frequency spectrum use in the aeronautical mobile (OR) service",
+    "start_page": 468,
+    "end_page": 470,
+    "pages": 2,
+    "text_length": 3369,
+    "refs": [],
+    "text_preview": "RESOLUTION 411 (WRC-23) Consideration of appropriate regulatory actions to update Appendix 26  in support of modernization of high-frequency spectrum  use in the aeronautical mobile (OR) service  The "
+  },
+  {
+    "number": 413,
+    "wrc": "REV.WRC-23",
+    "title": "Use of the frequency band 108-117.975 MHz by the aeronautical mobile (R) service",
+    "start_page": 470,
+    "end_page": 474,
+    "pages": 4,
+    "text_length": 5453,
+    "refs": [
+      "5.43"
+    ],
+    "text_preview": "RESOLUTION 413 (REV.WRC-23) Use of the frequency band 108-117.975 MHz   by the aeronautical mobile (R) service  The World Radiocommunication Conference (Dubai, 2023), considering a) the current alloca"
+  },
+  {
+    "number": 416,
+    "wrc": "WRC-07",
+    "title": "Use of the bands 4 400-4 940 MHz and 5 925-6 700 MHz by an aeronautical mobile telemetry application in the mobile service",
+    "start_page": 474,
+    "end_page": 476,
+    "pages": 2,
+    "text_length": 5036,
+    "refs": [
+      "1.59",
+      "1.83",
+      "5.149",
+      "5.440A",
+      "5.441",
+      "5.442",
+      "5.443"
+    ],
+    "text_preview": "RESOLUTION 416 (WRC-07) Use of the bands 4 400-4 940 MHz and 5 925-6 700 MHz by an aeronautical  mobile telemetry application in the mobile service  The World Radiocommunication Conference (Geneva, 20"
+  },
+  {
+    "number": 417,
+    "wrc": "REV.WRC-15",
+    "title": "Use of the frequency band 960-1 164 MHz by the aeronautical mobile (R) service",
+    "start_page": 476,
+    "end_page": 480,
+    "pages": 4,
+    "text_length": 6938,
+    "refs": [],
+    "text_preview": "RESOLUTION 417 (REV.WRC-15) Use of the frequency band 960-1 164 MHz by the aeronautical mobile (R) service  The World Radiocommunication Conference (Geneva, 2015), considering a) that WRC-07 allocated"
+  },
+  {
+    "number": 418,
+    "wrc": "REV.WRC-19",
+    "title": "Use of the frequency band 5 091-5 250 MHz by the aeronautical mobile service for telemetry applications",
+    "start_page": 480,
+    "end_page": 484,
+    "pages": 4,
+    "text_length": 7297,
+    "refs": [
+      "1.59",
+      "1.83",
+      "5.444",
+      "5.444B",
+      "5.446C",
+      "9.21"
+    ],
+    "text_preview": "RESOLUTION 418 (REV.WRC-19) Use of the frequency band 5 091-5 250 MHz by the aeronautical   mobile service for telemetry applications   The World Radiocommunication Conference (Sharm el-Sheikh, 2019),"
+  },
+  {
+    "number": 422,
+    "wrc": "WRC-12",
+    "title": "Development of methodology to calculate aeronautical mobile-satellite (R) service spectrum requirements within the frequency bands 1 545-1 555 MHz (space-to-Earth) and 1 646.5-1 656.5 MHz (Earth-to-space)",
+    "start_page": 484,
+    "end_page": 486,
+    "pages": 2,
+    "text_length": 3184,
+    "refs": [
+      "5.357A"
+    ],
+    "text_preview": "RESOLUTION 422 (WRC-12) Development of methodology to calculate aeronautical mobile-satellite (R)  service spectrum requirements within the frequency bands 1 545-1 555 MHz  (space-to-Earth) and 1 646."
+  },
+  {
+    "number": 424,
+    "wrc": "REV.WRC-23",
+    "title": "Use of Wireless Avionics Intra-Communications in the frequency band 4 200-4 400 MHz",
+    "start_page": 486,
+    "end_page": 488,
+    "pages": 2,
+    "text_length": 2378,
+    "refs": [
+      "43.1"
+    ],
+    "text_preview": "RESOLUTION 424 (REV.WRC-23) Use of Wireless Avionics Intra-Communications in the   frequency band 4 200-4 400 MHz  The World Radiocommunication Conference (Dubai, 2023), considering a) that aircraft a"
+  },
+  {
+    "number": 425,
+    "wrc": "REV.WRC-19",
+    "title": "Use of the frequency band 1 087.7-1 092.3 MHz by the aeronautical mobile-satellite (R) service (Earth-to-space) to facilitate global flight tracking for civil aviation",
+    "start_page": 488,
+    "end_page": 490,
+    "pages": 2,
+    "text_length": 3607,
+    "refs": [
+      "5.328A"
+    ],
+    "text_preview": "RESOLUTION 425 (REV.WRC-19) Use of the frequency band 1 087.7-1 092.3 MHz by the aeronautical   mobile-satellite (R) service (Earth-to-space) to facilitate   global flight tracking for civil aviation "
+  },
+  {
+    "number": 506,
+    "wrc": "REV.WRC-97",
+    "title": "Use by space stations in the broadcasting-satellite service operating in the 12 GHz frequency bands allocated to the broadcasting-satellite service of the geostationary-satellite orbit and no other",
+    "start_page": 490,
+    "end_page": 492,
+    "pages": 2,
+    "text_length": 1308,
+    "refs": [],
+    "text_preview": "RESOLUTION 506 (REV.WRC-97) Use by space stations in the broadcasting-satellite service operating in the  12 GHz frequency bands allocated to the broadcasting-satellite service of   the geostationary-"
+  },
+  {
+    "number": 507,
+    "wrc": "REV.WRC-19",
+    "title": "Establishment of agreements and associated plans for the broadcasting-satellite service",
+    "start_page": 492,
+    "end_page": 494,
+    "pages": 2,
+    "text_length": 1652,
+    "refs": [],
+    "text_preview": "RESOLUTION 507 (REV.WRC-19) Establishment of agreements and associated plans for   the broadcasting-satellite service1  The World Radiocommunication Conference (Sharm el-Sheikh, 2019), considering a) "
+  },
+  {
+    "number": 517,
+    "wrc": "REV.WRC-19",
+    "title": "Introduction of digitally modulated emissions in the high-frequency bands between 3 200 kHz and 26 100 kHz allocated to the broadcasting service",
+    "start_page": 494,
+    "end_page": 496,
+    "pages": 2,
+    "text_length": 4018,
+    "refs": [],
+    "text_preview": "RESOLUTION 517 (REV.WRC-19) Introduction of digitally modulated emissions in the high-frequency bands  between 3 200 kHz and 26 100 kHz allocated to the broadcasting service  The World Radiocommunicat"
+  },
+  {
+    "number": 526,
+    "wrc": "REV.WRC-12",
+    "title": "Future adoption of procedures to ensure flexibility in the use of the frequency band allocated to the broadcasting-satellite service (BSS) for wide RF-band high-definition television (HDTV) and to the associated feeder links",
+    "start_page": 496,
+    "end_page": 498,
+    "pages": 2,
+    "text_length": 1094,
+    "refs": [],
+    "text_preview": "RESOLUTION 526 (REV.WRC-12) Future adoption of procedures to ensure flexibility in the use of the frequency   band allocated to the broadcasting-satellite service (BSS) for wide RF-band   high-definit"
+  },
+  {
+    "number": 528,
+    "wrc": "REV.WRC-19",
+    "title": "Introduction of broadcasting-satellite service (sound) systems and complementary terrestrial broadcasting in the frequency bands allocated to these services within the frequency range 1-3 GHz",
+    "start_page": 498,
+    "end_page": 500,
+    "pages": 2,
+    "text_length": 2159,
+    "refs": [],
+    "text_preview": "RESOLUTION 528 (REV.WRC-19) Introduction of broadcasting-satellite service (sound) systems and  complementary terrestrial broadcasting in the frequency bands  allocated to these services within the fr"
+  },
+  {
+    "number": 535,
+    "wrc": "REV.WRC-23",
+    "title": "Information needed for the application of Article 12 of the Radio Regulations",
+    "start_page": 500,
+    "end_page": 510,
+    "pages": 10,
+    "text_length": 15126,
+    "refs": [],
+    "text_preview": "RESOLUTION 535 (REV.WRC-23) Information needed for the application of Article 12 of the Radio Regulations  The World Radiocommunication Conference (Dubai, 2023), considering a) that WRC-97 adopted Art"
+  },
+  {
+    "number": 536,
+    "wrc": "WRC-97",
+    "title": "Operation of broadcasting satellites serving other countries",
+    "start_page": 510,
+    "end_page": 512,
+    "pages": 2,
+    "text_length": 1615,
+    "refs": [
+      "23.13"
+    ],
+    "text_preview": "RESOLUTION 536 (WRC-97) Operation of broadcasting satellites serving other countries  The World Radiocommunication Conference (Geneva, 1997), considering a) the institutional nature of the ITU which i"
+  },
+  {
+    "number": 539,
+    "wrc": "REV.WRC-19",
+    "title": "Use of the frequency band 2 605-2 655 MHz in certain Region 3 countries by non-geostationary-satellite systems in the broadcasting-satellite service (sound)",
+    "start_page": 512,
+    "end_page": 516,
+    "pages": 4,
+    "text_length": 7277,
+    "refs": [
+      "11.31",
+      "11.32",
+      "11.32A",
+      "5.416",
+      "5.418",
+      "9.11"
+    ],
+    "text_preview": "RESOLUTION 539 (REV.WRC-19) Use of the frequency band 2 605-2 655 MHz in certain Region 3 countries  by non-geostationary-satellite systems in the   broadcasting-satellite service (sound)  The World R"
+  },
+  {
+    "number": 543,
+    "wrc": "REV.WRC-19",
+    "title": "Provisional RF protection ratio values for analogue and digitally modulated emissions in the high-frequency broadcasting service",
+    "start_page": 516,
+    "end_page": 520,
+    "pages": 4,
+    "text_length": 7749,
+    "refs": [],
+    "text_preview": "RESOLUTION 543 (REV.WRC-19) Provisional RF protection ratio values for analogue and digitally modulated  emissions in the high-frequency broadcasting service  The World Radiocommunication Conference ("
+  },
+  {
+    "number": 548,
+    "wrc": "REV.WRC-12",
+    "title": "Application of the grouping concept in Appendices 30 and 30A in Regions 1 and",
+    "start_page": 520,
+    "end_page": 522,
+    "pages": 2,
+    "text_length": 3862,
+    "refs": [],
+    "text_preview": "RESOLUTION 548 (REV.WRC-12) Application of the grouping concept in Appendices 30 and 30A  in Regions 1 and 31  The World Radiocommunication Conference (Geneva, 2012), considering a) that the grouping "
+  },
+  {
+    "number": 550,
+    "wrc": "REV.WRC-19",
+    "title": "Information relating to the high-frequency broadcasting service",
+    "start_page": 522,
+    "end_page": 524,
+    "pages": 2,
+    "text_length": 1584,
+    "refs": [],
+    "text_preview": "RESOLUTION 550 (REV.WRC-19) Information relating to the high-frequency broadcasting service  The World Radiocommunication Conference (Sharm el-Sheikh, 2019), considering a) that this conference review"
+  },
+  {
+    "number": 552,
+    "wrc": "REV.WRC-23",
+    "title": "Long-term access to and development in the frequency band 21.4-22 GHz in Regions 1 and",
+    "start_page": 524,
+    "end_page": 528,
+    "pages": 4,
+    "text_length": 7710,
+    "refs": [
+      "11.49",
+      "9.30"
+    ],
+    "text_preview": "RESOLUTION 552 (REV.WRC-23) Long-term access to and development in the frequency band   21.4-22 GHz in Regions 1 and 3  The World Radiocommunication Conference (Dubai, 2023), considering a) that WARC-"
+  },
+  {
+    "number": 553,
+    "wrc": "REV.WRC-23",
+    "title": "Additional regulatory measures for broadcasting-satellite networks in the frequency band 21.4-22 GHz in Regions 1 and 3 for the enhancement of equitable access to this frequency band",
+    "start_page": 528,
+    "end_page": 538,
+    "pages": 10,
+    "text_length": 17949,
+    "refs": [
+      "11.31",
+      "11.49",
+      "23.13",
+      "9.34",
+      "9.38"
+    ],
+    "text_preview": "RESOLUTION 553 (REV.WRC-23) Additional regulatory measures for broadcasting-satellite networks   in the frequency band 21.4-22 GHz in Regions 1 and 3 for the   enhancement of equitable access to this "
+  },
+  {
+    "number": 554,
+    "wrc": "WRC-12",
+    "title": "Application of pfd masks to coordination under No. 9.7 for broadcasting- satellite service networks in the band 21.4-22 GHz in Regions 1 and",
+    "start_page": 538,
+    "end_page": 540,
+    "pages": 2,
+    "text_length": 1946,
+    "refs": [
+      "11.32",
+      "9.30",
+      "9.7"
+    ],
+    "text_preview": "RESOLUTION 554 (WRC-12) Application of pfd masks to coordination under No. 9.7 for broadcasting- satellite service networks in the band 21.4-22 GHz in Regions 1 and 3  The World Radiocommunication Con"
+  },
+  {
+    "number": 558,
+    "wrc": "WRC-19",
+    "title": "Protection of implemented broadcasting-satellite service networks in the orbital arc of the geostationary-satellite orbit between 37.2° W and 10° E in the frequency band 11.7-12.2 GHz",
+    "start_page": 540,
+    "end_page": 544,
+    "pages": 4,
+    "text_length": 5750,
+    "refs": [],
+    "text_preview": "RESOLUTION 558 (WRC-19) Protection of implemented broadcasting-satellite service networks in the orbital  arc of the geostationary-satellite orbit between 37.2° W and 10° E  in the frequency band 11.7"
+  },
+  {
+    "number": 559,
+    "wrc": "WRC-19",
+    "title": "Additional temporary regulatory measures following the deletion of part of Annex 7 to Appendix 30 (Rev.WRC-15) by WRC-",
+    "start_page": 544,
+    "end_page": 548,
+    "pages": 4,
+    "text_length": 6848,
+    "refs": [],
+    "text_preview": "RESOLUTION 559 (WRC-19) Additional temporary regulatory measures following the deletion   of part of Annex 7 to Appendix 30 (Rev.WRC-15) by WRC-19  The World Radiocommunication Conference (Sharm el-Sh"
+  },
+  {
+    "number": 608,
+    "wrc": "REV.WRC-19",
+    "title": "Use of the frequency band 1 215-1 300 MHz by systems of the radionavigation-satellite service (space-to-Earth)",
+    "start_page": 548,
+    "end_page": 550,
+    "pages": 2,
+    "text_length": 3315,
+    "refs": [
+      "5.329",
+      "5.331",
+      "5.43"
+    ],
+    "text_preview": "RESOLUTION 608 (REV.WRC-19) Use of the frequency band 1 215-1 300 MHz by systems of the   radionavigation-satellite service (space-to-Earth)  The World Radiocommunication Conference (Sharm el-Sheikh, "
+  },
+  {
+    "number": 609,
+    "wrc": "REV.WRC-07",
+    "title": "Protection of aeronautical radionavigation service systems from the equivalent power flux-density produced by radionavigation-satellite service networks and systems in the 1 164-1 215 MHz frequency band",
+    "start_page": 550,
+    "end_page": 554,
+    "pages": 4,
+    "text_length": 8293,
+    "refs": [
+      "5.328A",
+      "7.5",
+      "9.12"
+    ],
+    "text_preview": "RESOLUTION 609 (REV.WRC-07) Protection of aeronautical radionavigation service systems from the equivalent  power flux-density produced by radionavigation-satellite service networks and  systems in th"
+  },
+  {
+    "number": 610,
+    "wrc": "REV.WRC-19",
+    "title": "Coordination and bilateral resolution of technical compatibility issues for radionavigation-satellite service networks and systems in the frequency bands 1 164-1 300 MHz, 1 559-1 610 MHz and 5 010-5 030 MHz",
+    "start_page": 554,
+    "end_page": 558,
+    "pages": 4,
+    "text_length": 6490,
+    "refs": [
+      "11.47",
+      "9.12",
+      "9.52",
+      "9.7"
+    ],
+    "text_preview": "RESOLUTION 610 (REV.WRC-19) Coordination and bilateral resolution of technical compatibility issues for  radionavigation-satellite service networks and systems in the frequency bands  1 164-1 300 MHz,"
+  },
+  {
+    "number": 612,
+    "wrc": "REV.WRC-12",
+    "title": "Use of the radiolocation service between 3 and 50 MHz to support oceanographic radar operations",
+    "start_page": 558,
+    "end_page": 562,
+    "pages": 4,
+    "text_length": 6268,
+    "refs": [
+      "11.2",
+      "25.11",
+      "4.4"
+    ],
+    "text_preview": "RESOLUTION 612 (REV.WRC-12) Use of the radiolocation service between 3 and 50 MHz to   support oceanographic radar operations   The World Radiocommunication Conference (Geneva, 2012), considering a) t"
+  },
+  {
+    "number": 646,
+    "wrc": "REV.WRC-19",
+    "title": "Public protection and disaster relief",
+    "start_page": 562,
+    "end_page": 568,
+    "pages": 6,
+    "text_length": 14157,
+    "refs": [
+      "1.59",
+      "5.266"
+    ],
+    "text_preview": "RESOLUTION 646 (REV.WRC-19) Public protection and disaster relief  The World Radiocommunication Conference (Sharm el-Sheikh, 2019), considering a) that the term “public protection radiocommunication” "
+  },
+  {
+    "number": 647,
+    "wrc": "REV.WRC-19",
+    "title": "Radiocommunication aspects, including spectrum-management guidelines, for early warning, disaster prediction, detection, mitigation and relief operations relating to emergencies and disasters",
+    "start_page": 568,
+    "end_page": 574,
+    "pages": 6,
+    "text_length": 11232,
+    "refs": [],
+    "text_preview": "RESOLUTION 647 (REV.WRC-19) Radiocommunication aspects, including spectrum-management guidelines,   for early warning, disaster prediction, detection, mitigation and   relief operations relating to em"
+  },
+  {
+    "number": 655,
+    "wrc": "REV.WRC-23",
+    "title": "Definition of time scale and dissemination of time signals via radiocommunication systems",
+    "start_page": 574,
+    "end_page": 578,
+    "pages": 4,
+    "text_length": 6820,
+    "refs": [
+      "26.1",
+      "26.6"
+    ],
+    "text_preview": "RESOLUTION 655 (REV.WRC-23) Definition of time scale and dissemination of time signals via  radiocommunication systems  The World Radiocommunication Conference (Dubai, 2023), considering a) that the I"
+  },
+  {
+    "number": 660,
+    "wrc": "WRC-19",
+    "title": "Use of the frequency band 137-138 MHz by non-geostationary satellites with short-duration missions in the space operation service",
+    "start_page": 578,
+    "end_page": 580,
+    "pages": 2,
+    "text_length": 2856,
+    "refs": [],
+    "text_preview": "RESOLUTION 660 (WRC-19) Use of the frequency band 137-138 MHz by non-geostationary satellites with  short-duration missions in the space operation service   The World Radiocommunication Conference (Sh"
+  },
+  {
+    "number": 663,
+    "wrc": "REV.WRC-23",
+    "title": "Studies on possible new additional allocations to the radiolocation service on a primary basis in the frequency range 231.5-275 GHz, and possible new identifications for radiolocation service applications in frequency bands within the frequency range 275-700 GHz",
+    "start_page": 580,
+    "end_page": 584,
+    "pages": 4,
+    "text_length": 7712,
+    "refs": [
+      "5.340",
+      "5.563A",
+      "5.564A",
+      "5.565"
+    ],
+    "text_preview": "RESOLUTION 663 (REV.WRC-23) Studies on possible new additional allocations to the radiolocation   service on a primary basis in the frequency range 231.5-275 GHz,   and possible new identifications fo"
+  },
+  {
+    "number": 664,
+    "wrc": "REV.WRC-23",
+    "title": "Studies on a possible new primary allocation to the Earth exploration-satellite service (Earth-to-space) in the frequency band 22.55-23.15 GHz",
+    "start_page": 584,
+    "end_page": 586,
+    "pages": 2,
+    "text_length": 3198,
+    "refs": [
+      "5.149",
+      "5.340"
+    ],
+    "text_preview": "RESOLUTION 664 (REV.WRC-23) Studies on a possible new primary allocation to the Earth exploration-satellite  service (Earth-to-space) in the frequency band 22.55-23.15 GHz  The World Radiocommunicatio"
+  },
+  {
+    "number": 673,
+    "wrc": "REV.WRC-23",
+    "title": "The importance of Earth observation radiocommunication applications",
+    "start_page": 586,
+    "end_page": 590,
+    "pages": 4,
+    "text_length": 5436,
+    "refs": [
+      "5.340"
+    ],
+    "text_preview": "RESOLUTION 673 (REV.WRC-23) The importance of Earth observation radiocommunication applications  The World Radiocommunication Conference (Dubai, 2023), considering a) that the collection and exchange "
+  },
+  {
+    "number": 674,
+    "wrc": "WRC-23",
+    "title": "Studies on possible allocations to the Earth exploration-satellite service (passive) in the bands 4 200-4 400 MHz and 8 400-8 500 MHz",
+    "start_page": 590,
+    "end_page": 592,
+    "pages": 2,
+    "text_length": 2788,
+    "refs": [
+      "5.458"
+    ],
+    "text_preview": "RESOLUTION 674 (WRC-23) Studies on possible allocations to the Earth exploration-satellite service (passive)  in the bands 4 200-4 400 MHz and 8 400-8 500 MHz  The World Radiocommunication Conference "
+  },
+  {
+    "number": 675,
+    "wrc": "WRC-23",
+    "title": "Importance of meteorological aids service (space weather) applications",
+    "start_page": 592,
+    "end_page": 596,
+    "pages": 4,
+    "text_length": 8536,
+    "refs": [
+      "11.31"
+    ],
+    "text_preview": "RESOLUTION 675 (WRC-23) Importance of meteorological aids service (space weather) applications  The World Radiocommunication Conference (Dubai, 2023), considering a) that the collection and exchange o"
+  },
+  {
+    "number": 676,
+    "wrc": "WRC-23",
+    "title": "Prevention and mitigation of harmful interference to the radionavigation- satellite service in the frequency bands 1 164-1 215 MHz and 1 559-1 610 MHz",
+    "start_page": 596,
+    "end_page": 600,
+    "pages": 4,
+    "text_length": 5862,
+    "refs": [
+      "13.2",
+      "21.18",
+      "4.10",
+      "5.328A",
+      "5.43A"
+    ],
+    "text_preview": "RESOLUTION 676 (WRC-23) Prevention and mitigation of harmful interference to the radionavigation- satellite service in the frequency bands 1 164-1 215 MHz   and 1 559-1 610 MHz  The World Radiocommuni"
+  },
+  {
+    "number": 677,
+    "wrc": "WRC-23",
+    "title": "Use of the frequency range 40-50 MHz allocated to the Earth exploration- satellite service (active) for spaceborne radar sounders",
+    "start_page": 600,
+    "end_page": 604,
+    "pages": 4,
+    "text_length": 6696,
+    "refs": [
+      "21.16",
+      "5.161",
+      "5.162A",
+      "5.43A"
+    ],
+    "text_preview": "RESOLUTION 677 (WRC-23) Use of the frequency range 40-50 MHz allocated to the Earth exploration- satellite service (active) for spaceborne radar sounders  The World Radiocommunication Conference (Duba"
+  },
+  {
+    "number": 678,
+    "wrc": "WRC-23",
+    "title": "Use of the frequency band 14.8-15.35 GHz by the space research service (space-to-space) (Earth-to-space) (space-to-Earth) and associated transitional measures",
+    "start_page": 604,
+    "end_page": 608,
+    "pages": 4,
+    "text_length": 5982,
+    "refs": [
+      "11.31",
+      "11.50",
+      "4.4",
+      "5.43A",
+      "8.5",
+      "9.18"
+    ],
+    "text_preview": "RESOLUTION 678 (WRC-23) Use of the frequency band 14.8-15.35 GHz by the space research service   (space-to-space) (Earth-to-space) (space-to-Earth)   and associated transitional measures  The World Ra"
+  },
+  {
+    "number": 679,
+    "wrc": "WRC-23",
+    "title": "Use of the frequency bands 18.1-18.6 GHz, 18.8-20.2 GHz and 27.5-30 GHz by the inter-satellite service",
+    "start_page": 608,
+    "end_page": 626,
+    "pages": 18,
+    "text_length": 38694,
+    "refs": [
+      "11.31",
+      "5.542",
+      "9.6"
+    ],
+    "text_preview": "RESOLUTION 679 (WRC-23) Use of the frequency bands 18.1-18.6 GHz, 18.8-20.2 GHz   and 27.5-30 GHz by the inter-satellite service   The World Radiocommunication Conference (Dubai, 2023), considering a)"
+  },
+  {
+    "number": 680,
+    "wrc": "WRC-23",
+    "title": "Studies on frequency-related matters, including possible new or modified space research service (space-to-space) allocations, for future development of communications on the lunar surface and between lunar orbit and the lunar surface",
+    "start_page": 626,
+    "end_page": 630,
+    "pages": 4,
+    "text_length": 9698,
+    "refs": [
+      "5.262",
+      "5.269",
+      "5.418",
+      "5.446C",
+      "5.447E",
+      "5.448",
+      "5.450",
+      "5.453",
+      "5.455",
+      "5.536"
+    ],
+    "text_preview": "RESOLUTION 680 (WRC-23) Studies on frequency-related matters, including possible new   or modified space research service (space-to-space) allocations,   for future development of communications on th"
+  },
+  {
+    "number": 681,
+    "wrc": "WRC-23",
+    "title": "Studies of technical and regulatory provisions necessary to protect radio astronomy operating in specific Radio Quiet Zones and, in radio astronomy service primary allocated frequency bands globally, from aggregate radio-frequency interference caused by systems in the non-geostationary-satellite orbit",
+    "start_page": 630,
+    "end_page": 634,
+    "pages": 4,
+    "text_length": 8667,
+    "refs": [
+      "29.12"
+    ],
+    "text_preview": "RESOLUTION 681 (WRC-23) Studies of technical and regulatory provisions necessary to protect   radio astronomy operating in specific Radio Quiet Zones and, in radio  astronomy service primary allocated"
+  },
+  {
+    "number": 682,
+    "wrc": "WRC-23",
+    "title": "Consideration of regulatory provisions and potential primary allocations to the meteorological aids service (space weather) to accommodate receive-only space weather sensor applications in the Radio Regulations",
+    "start_page": 634,
+    "end_page": 638,
+    "pages": 4,
+    "text_length": 6874,
+    "refs": [
+      "1.59",
+      "11.2"
+    ],
+    "text_preview": "RESOLUTION 682 (WRC-23) Consideration of regulatory provisions and potential primary allocations   to the meteorological aids service (space weather) to accommodate receive-only  space weather sensor "
+  },
+  {
+    "number": 683,
+    "wrc": "WRC-23",
+    "title": "Study of technical and operational issues and regulatory provisions to support inter-satellite service transmissions in the frequency bands 3 700-4 200 MHz and 5 925-6 425 MHz for non-geostationary-satellite space stations communicating with geostationary-satellite space stations",
+    "start_page": 638,
+    "end_page": 642,
+    "pages": 4,
+    "text_length": 6528,
+    "refs": [
+      "22.5C",
+      "5.435B",
+      "5.457A",
+      "5.457C"
+    ],
+    "text_preview": "RESOLUTION 683 (WRC-23) Study of technical and operational issues and regulatory provisions to   support inter-satellite service transmissions in the frequency bands   3 700-4 200 MHz and 5 925-6 425 "
+  },
+  {
+    "number": 684,
+    "wrc": "WRC-23",
+    "title": "Studies on possible new allocations to the radionavigation-satellite service (space-to-Earth) in the frequency bands [5 030-5 150 MHz and 5 150-5 250 MHz] or parts thereof*",
+    "start_page": 642,
+    "end_page": 646,
+    "pages": 4,
+    "text_length": 5785,
+    "refs": [
+      "5.443A",
+      "5.443B",
+      "5.443C",
+      "5.443D",
+      "5.444",
+      "5.444A",
+      "5.444B",
+      "5.446",
+      "5.446A",
+      "5.447D"
+    ],
+    "text_preview": "RESOLUTION 684 (WRC-23) Studies on possible new allocations to the radionavigation-satellite service  (space-to-Earth) in the frequency bands [5 030-5 150 MHz and   5 150-5 250 MHz] or parts thereof* "
+  },
+  {
+    "number": 685,
+    "wrc": "WRC-23",
+    "title": "Studies towards frequency allocations for the Earth exploration-satellite service (space-to-Earth) within the frequency range [37.5-52.4 GHz]*",
+    "start_page": 646,
+    "end_page": 648,
+    "pages": 2,
+    "text_length": 2965,
+    "refs": [],
+    "text_preview": "RESOLUTION 685 (WRC-23) Studies towards frequency allocations for the Earth exploration-satellite service  (space-to-Earth) within the frequency range [37.5-52.4 GHz]*  The World Radiocommunication Co"
+  },
+  {
+    "number": 686,
+    "wrc": "WRC-23",
+    "title": "Possible secondary allocation to the Earth exploration-satellite service (active) in the frequency bands [3 000-3 100 MHz] and [3 300-3 400 MHz]*",
+    "start_page": 648,
+    "end_page": 650,
+    "pages": 2,
+    "text_length": 3374,
+    "refs": [
+      "5.149",
+      "5.429A",
+      "5.429B"
+    ],
+    "text_preview": "RESOLUTION 686 (WRC-23) Possible secondary allocation to the Earth exploration-satellite service (active)   in the frequency bands [3 000-3 100 MHz] and [3 300-3 400 MHz]*  The World Radiocommunicatio"
+  },
+  {
+    "number": 703,
+    "wrc": "REV.WRC-07",
+    "title": "Calculation methods and interference criteria recommended by ITU-R for sharing frequency bands between space radiocommunication and terrestrial radiocommunication services or between space radiocommunication services",
+    "start_page": 650,
+    "end_page": 652,
+    "pages": 2,
+    "text_length": 3339,
+    "refs": [],
+    "text_preview": "RESOLUTION 703 (REV.WRC-07) Calculation methods and interference criteria recommended by ITU-R for  sharing frequency bands between space radiocommunication and terrestrial  radiocommunication service"
+  },
+  {
+    "number": 705,
+    "wrc": "REV.WRC-15",
+    "title": "Mutual protection of radio services operating in the frequency band 70-130 kHz",
+    "start_page": 652,
+    "end_page": 654,
+    "pages": 2,
+    "text_length": 2825,
+    "refs": [
+      "4.5"
+    ],
+    "text_preview": "RESOLUTION 705 (REV.WRC-15) Mutual protection of radio services operating in the frequency band 70-130 kHz  The World Radiocommunication Conference (Geneva,2015), considering a) that various radio ser"
+  },
+  {
+    "number": 712,
+    "wrc": "WRC-23",
+    "title": "Studies on compatibility between the Earth exploration-satellite service (passive), the radio astronomy service in certain bands above 76 GHz, and active services in adjacent and nearby frequency bands",
+    "start_page": 654,
+    "end_page": 658,
+    "pages": 4,
+    "text_length": 7142,
+    "refs": [
+      "5.208B",
+      "5.340",
+      "5.562C"
+    ],
+    "text_preview": "RESOLUTION 712 (WRC-23) Studies on compatibility between the Earth exploration-satellite service  (passive), the radio astronomy service in certain bands above 76 GHz,   and active services in adjacen"
+  },
+  {
+    "number": 716,
+    "wrc": "REV.WRC-23",
+    "title": "Use of the frequency bands 1 980-2 010 MHz and 2 170-2 200 MHz in all three Regions and 2 010-2 025 MHz and 2 160-2 170 MHz in Region 2 by the fixed and mobile-satellite services and associated transition arrangements",
+    "start_page": 658,
+    "end_page": 662,
+    "pages": 4,
+    "text_length": 8479,
+    "refs": [
+      "11.17",
+      "5.389A",
+      "9.11A"
+    ],
+    "text_preview": "RESOLUTION 716 (REV.WRC-23) Use of the frequency bands 1 980-2 010 MHz and 2 170-2 200 MHz in   all three Regions and 2 010-2 025 MHz and 2 160-2 170 MHz in   Region 2 by the fixed and mobile-satellit"
+  },
+  {
+    "number": 721,
+    "wrc": "WRC-23",
+    "title": "Studies on potential new allocations to fixed, mobile, radiolocation, amateur, amateur-satellite, radio astronomy, Earth exploration-satellite (passive and active) and space research (passive) services in the frequency range 275-325 GHz with the consequential update of Nos. 5.149, 5.340, 5.564A and 5.",
+    "start_page": 662,
+    "end_page": 666,
+    "pages": 4,
+    "text_length": 6352,
+    "refs": [
+      "5.149",
+      "5.564A"
+    ],
+    "text_preview": "RESOLUTION 721 (WRC-23) Studies on potential new allocations to fixed, mobile, radiolocation,   amateur, amateur-satellite, radio astronomy, Earth exploration-satellite   (passive and active) and spac"
+  },
+  {
+    "number": 722,
+    "wrc": "WRC-23",
+    "title": "Studies on the coexistence between spaceborne synthetic aperture radars operating in the Earth exploration-satellite service (active) and radiodetermination service in the frequency band [9 200-10 400 MHz]*",
+    "start_page": 666,
+    "end_page": 668,
+    "pages": 2,
+    "text_length": 4781,
+    "refs": [
+      "1.59",
+      "21.16",
+      "5.474A",
+      "5.474D",
+      "5.476A",
+      "9.21"
+    ],
+    "text_preview": "RESOLUTION 722 (WRC-23) Studies on the coexistence between spaceborne synthetic aperture   radars operating in the Earth exploration-satellite service (active)   and radiodetermination service in the "
+  },
+  {
+    "number": 726,
+    "wrc": "WRC-23",
+    "title": "Possible new primary allocation to the fixed-satellite service (space-to-Earth) in the frequency band 17.3-17.7 GHz and possible new primary allocation to the broadcasting-satellite service (space-to-Earth) in the frequency band 17.3-17.8 GHz in Region 3, and consideration of equivalent power flux-density limits to be applied in Regions 1 and 3 to non-geostationary-satellite systems in the fixed-satellite service (space-to-Earth) in the frequency band 17.3-17.7 GHz",
+    "start_page": 668,
+    "end_page": 672,
+    "pages": 4,
+    "text_length": 5853,
+    "refs": [
+      "5.516"
+    ],
+    "text_preview": "RESOLUTION 726 (WRC-23) Possible new primary allocation to the fixed-satellite service (space-to-Earth)   in the frequency band 17.3-17.7 GHz and possible new primary allocation   to the broadcasting-"
+  },
+  {
+    "number": 729,
+    "wrc": "REV.WRC-07",
+    "title": "Use of frequency adaptive systems in the MF and HF bands*",
+    "start_page": 672,
+    "end_page": 674,
+    "pages": 2,
+    "text_length": 2989,
+    "refs": [
+      "5.155"
+    ],
+    "text_preview": "RESOLUTION 729 (REV.WRC-07) Use of frequency adaptive systems in the MF and HF bands*  The World Radiocommunication Conference (Geneva, 2007), considering a) that the efficiency of spectrum use will b"
+  },
+  {
+    "number": 731,
+    "wrc": "REV.WRC-23",
+    "title": "Consideration of sharing and adjacent-band compatibility between passive and active services above 71 GHz",
+    "start_page": 674,
+    "end_page": 678,
+    "pages": 4,
+    "text_length": 4940,
+    "refs": [
+      "5.340",
+      "5.565"
+    ],
+    "text_preview": "RESOLUTION 731 (REV.WRC-23) Consideration of sharing and adjacent-band compatibility   between passive and active services above 71 GHz  The World Radiocommunication Conference (Dubai, 2023), consider"
+  },
+  {
+    "number": 732,
+    "wrc": "REV.WRC-12",
+    "title": "Consideration of sharing between active services above 71 GHz",
+    "start_page": 678,
+    "end_page": 680,
+    "pages": 2,
+    "text_length": 2517,
+    "refs": [],
+    "text_preview": "RESOLUTION 732 (REV.WRC-12) Consideration of sharing between active services above 71 GHz  The World Radiocommunication Conference (Geneva, 2012), considering a) that the World Radiocommunication Conf"
+  },
+  {
+    "number": 739,
+    "wrc": "REV.WRC-19",
+    "title": "Compatibility between the radio astronomy service and the active space services in certain adjacent and nearby frequency bands",
+    "start_page": 680,
+    "end_page": 686,
+    "pages": 6,
+    "text_length": 13707,
+    "refs": [],
+    "text_preview": "RESOLUTION 739 (REV.WRC-19) Compatibility between the radio astronomy service and the active   space services in certain adjacent and nearby frequency bands  The World Radiocommunication Conference (S"
+  },
+  {
+    "number": 741,
+    "wrc": "REV.WRC-15",
+    "title": "Protection of the radio astronomy service in the frequency band 4 990-5 000 MHz from unwanted emissions of the radionavigation-satellite service (space-to-Earth) operating in the frequency band 5 010-5 030 MHz",
+    "start_page": 686,
+    "end_page": 688,
+    "pages": 2,
+    "text_length": 3673,
+    "refs": [
+      "5.443B"
+    ],
+    "text_preview": "RESOLUTION 741 (REV.WRC-15) Protection of the radio astronomy service in the frequency band  4 990-5 000 MHz from unwanted emissions of the radionavigation-satellite  service (space-to-Earth) operatin"
+  },
+  {
+    "number": 743,
+    "wrc": "WRC-03",
+    "title": "Protection of single-dish radio astronomy stations in Region 2 in the 42.5-43.5 GHz band",
+    "start_page": 688,
+    "end_page": 690,
+    "pages": 2,
+    "text_length": 5291,
+    "refs": [
+      "5.551H",
+      "5.551I"
+    ],
+    "text_preview": "RESOLUTION 743 (WRC-03) Protection of single-dish radio astronomy stations in Region 2   in the 42.5-43.5 GHz band  The World Radiocommunication Conference (Geneva, 2003), considering a) that the band"
+  },
+  {
+    "number": 744,
+    "wrc": "REV.WRC-23",
+    "title": "Sharing between the mobile-satellite service (Earth-to-space) and the fixed and mobile services in the frequency band 1 668.4-1 675 MHz",
+    "start_page": 690,
+    "end_page": 692,
+    "pages": 2,
+    "text_length": 2499,
+    "refs": [
+      "5.348B"
+    ],
+    "text_preview": "RESOLUTION 744 (REV.WRC-23) Sharing between the mobile-satellite service (Earth-to-space) and the fixed   and mobile services in the frequency band 1 668.4-1 675 MHz  The World Radiocommunication Conf"
+  },
+  {
+    "number": 748,
+    "wrc": "REV.WRC-19",
+    "title": "Compatibility between the aeronautical mobile (R) service and the fixed-satellite service (Earth-to-space) in the frequency band 5 091-5 150 MHz",
+    "start_page": 692,
+    "end_page": 694,
+    "pages": 2,
+    "text_length": 4083,
+    "refs": [
+      "4.10",
+      "5.444",
+      "5.444B",
+      "9.21"
+    ],
+    "text_preview": "RESOLUTION 748 (REV.WRC-19) Compatibility between the aeronautical mobile (R) service and the fixed-satellite  service (Earth-to-space) in the frequency band 5 091-5 150 MHz  The World Radiocommunicat"
+  },
+  {
+    "number": 749,
+    "wrc": "REV.WRC-23",
+    "title": "Use of the frequency band 790-862 MHz in countries of Region 1 and the Islamic Republic of Iran by mobile applications and by other services",
+    "start_page": 694,
+    "end_page": 700,
+    "pages": 6,
+    "text_length": 10840,
+    "refs": [
+      "5.312",
+      "5.316B",
+      "9.21"
+    ],
+    "text_preview": "RESOLUTION 749 (REV.WRC-23) Use of the frequency band 790-862 MHz in countries of Region 1   and the Islamic Republic of Iran by mobile applications   and by other services  The World Radiocommunicati"
+  },
+  {
+    "number": 750,
+    "wrc": "REV.WRC-19",
+    "title": "Compatibility between the Earth exploration-satellite service (passive) and relevant active services",
+    "start_page": 700,
+    "end_page": 708,
+    "pages": 8,
+    "text_length": 16578,
+    "refs": [
+      "11.44",
+      "5.340",
+      "5.342"
+    ],
+    "text_preview": "RESOLUTION 750 (REV.WRC-19) Compatibility between the Earth exploration-satellite service (passive)  and relevant active services  The World Radiocommunication Conference (Sharm el-Sheikh, 2019), cons"
+  },
+  {
+    "number": 751,
+    "wrc": "WRC-07",
+    "title": "Use of the frequency band 10.6-10.68 GHz",
+    "start_page": 708,
+    "end_page": 712,
+    "pages": 4,
+    "text_length": 5939,
+    "refs": [
+      "5.340"
+    ],
+    "text_preview": "RESOLUTION 751 (WRC-07) Use of the frequency band 10.6-10.68 GHz  The World Radiocommunication Conference (Geneva, 2007), considering a) that the frequency band 10.6-10.7 GHz is allocated to the Earth"
+  },
+  {
+    "number": 752,
+    "wrc": "WRC-07",
+    "title": "Use of the frequency band 36-37 GHz",
+    "start_page": 712,
+    "end_page": 716,
+    "pages": 4,
+    "text_length": 5028,
+    "refs": [],
+    "text_preview": "RESOLUTION 752 (WRC-07) Use of the frequency band 36-37 GHz  The World Radiocommunication Conference (Geneva, 2007), considering a) that the frequency band 36-37 GHz is allocated to the Earth explorat"
+  },
+  {
+    "number": 759,
+    "wrc": "WRC-15",
+    "title": "Technical studies on the coexistence of the radiolocation service and the amateur, amateur-satellite and radio astronomy services in the frequency band 76-81 GHz",
+    "start_page": 716,
+    "end_page": 718,
+    "pages": 2,
+    "text_length": 2132,
+    "refs": [
+      "5.149"
+    ],
+    "text_preview": "RESOLUTION 759 (WRC-15) Technical studies on the coexistence of the radiolocation service and   the amateur, amateur-satellite and radio astronomy services   in the frequency band 76-81 GHz  The World"
+  },
+  {
+    "number": 760,
+    "wrc": "REV.WRC-23",
+    "title": "Provisions relating to the use of the frequency band 694-790 MHz in Region 1 by the mobile, except aeronautical mobile, service and by other services",
+    "start_page": 718,
+    "end_page": 724,
+    "pages": 6,
+    "text_length": 11527,
+    "refs": [
+      "5.312",
+      "9.21"
+    ],
+    "text_preview": "RESOLUTION 760 (REV.WRC-23) Provisions relating to the use of the frequency band 694-790 MHz in Region 1 by  the mobile, except aeronautical mobile, service and by other services  The World Radiocommu"
+  },
+  {
+    "number": 761,
+    "wrc": "REV.WRC-19",
+    "title": "Coexistence of International Mobile Telecommunications and the broadcasting-satellite service (sound) in the frequency band 1 452-1 492 MHz in Regions 1 and",
+    "start_page": 724,
+    "end_page": 728,
+    "pages": 4,
+    "text_length": 5982,
+    "refs": [
+      "11.31",
+      "11.44",
+      "13.6",
+      "5.342",
+      "5.346",
+      "9.11",
+      "9.19",
+      "9.21",
+      "9.35",
+      "9.36",
+      "9.52C",
+      "9.6"
+    ],
+    "text_preview": "RESOLUTION 761 (REV.WRC-19) Coexistence of International Mobile Telecommunications and the   broadcasting-satellite service (sound) in the frequency band   1 452-1 492 MHz in Regions 1 and 3   The Wor"
+  },
+  {
+    "number": 762,
+    "wrc": "WRC-15",
+    "title": "Application of power flux-density criteria to assess the potential for harmful interference under No. 11.32A for fixed-satellite and broadcasting-satellite service networks in the 6 GHz and 10/11/12/14 GHz frequency bands not subject to a Plan",
+    "start_page": 728,
+    "end_page": 732,
+    "pages": 4,
+    "text_length": 4530,
+    "refs": [
+      "11.32A"
+    ],
+    "text_preview": "RESOLUTION 762 (WRC-15) Application of power flux-density criteria to assess the potential for harmful  interference under No. 11.32A for fixed-satellite and broadcasting-satellite  service networks i"
+  },
+  {
+    "number": 768,
+    "wrc": "WRC-19",
+    "title": "Need for coordination of Region 2 fixed-satellite service networks in the frequency band 11.7-12.2 GHz with respect to the Region 1 broadcasting- satellite service assignments located further west than 37.2° W and of Region 1 fixed-satellite service networks in the frequency band 12.5-12.7 GHz with respect to the Region 2 broadcasting-satellite service assignments located further east than 54° W",
+    "start_page": 732,
+    "end_page": 736,
+    "pages": 4,
+    "text_length": 6199,
+    "refs": [],
+    "text_preview": "RESOLUTION 768 (WRC-19) Need for coordination of Region 2 fixed-satellite service networks in the  frequency band 11.7-12.2 GHz with respect to the Region 1 broadcasting- satellite service assignments"
+  },
+  {
+    "number": 769,
+    "wrc": "WRC-19",
+    "title": "Protection of geostationary fixed-satellite service, broadcasting-satellite service and mobile-satellite service networks from the aggregate interference produced by multiple non-geostationary fixed-satellite service systems in the frequency bands 37.5-39.5 GHz, 39.5-42.5 GHz, 47.2-50.2 GHz and 50.4-51.4 GHz",
+    "start_page": 736,
+    "end_page": 742,
+    "pages": 6,
+    "text_length": 14823,
+    "refs": [
+      "11.31",
+      "22.2",
+      "22.5L",
+      "22.5M"
+    ],
+    "text_preview": "RESOLUTION 769 (WRC-19) Protection of geostationary fixed-satellite service, broadcasting-satellite service  and mobile-satellite service networks from the aggregate interference produced  by multiple"
+  },
+  {
+    "number": 770,
+    "wrc": "REV.WRC-23",
+    "title": "Application of Article 22 of the Radio Regulations to the protection of geostationary fixed-satellite service and broadcasting-satellite service networks from non-geostationary fixed-satellite service systems in the frequency bands 37.5-39.5 GHz, 39.5-42.5 GHz, 47.2-50.2 GHz and 50.4-51.4 GHz",
+    "start_page": 742,
+    "end_page": 748,
+    "pages": 6,
+    "text_length": 10560,
+    "refs": [
+      "11.31",
+      "22.2",
+      "22.5L",
+      "9.35"
+    ],
+    "text_preview": "RESOLUTION 770 (REV.WRC-23) Application of Article 22 of the Radio Regulations to the protection of  geostationary fixed-satellite service and broadcasting-satellite service networks  from non-geostat"
+  },
+  {
+    "number": 771,
+    "wrc": "WRC-19",
+    "title": "Use of the frequency bands 37.5-42.5 GHz (space-to-Earth) and 47.2-48.9 GHz, 48.9-50.2 GHz and 50.4-51.4 GHz (Earth-to-space) by non-geostationary-satellite systems in the fixed-satellite service and 39.5-40.5 GHz (space-to-Earth) by non-geostationary-satellite systems in the mobile-satellite service",
+    "start_page": 748,
+    "end_page": 750,
+    "pages": 2,
+    "text_length": 1810,
+    "refs": [
+      "11.44"
+    ],
+    "text_preview": "RESOLUTION 771 (WRC-19) Use of the frequency bands 37.5-42.5 GHz (space-to-Earth) and 47.2-48.9 GHz,  48.9-50.2 GHz and 50.4-51.4 GHz (Earth-to-space) by non-geostationary-satellite  systems in the fi"
+  },
+  {
+    "number": 775,
+    "wrc": "REV.WRC-23",
+    "title": "Power flux-density and equivalent isotropically radiated power limits for inclusion in Article 21 for the fixed-satellite, mobile-satellite and broadcasting-satellite services to protect the fixed and mobile services in the frequency bands 71-76 GHz and 81-86 GHz",
+    "start_page": 750,
+    "end_page": 752,
+    "pages": 2,
+    "text_length": 3818,
+    "refs": [
+      "5.149"
+    ],
+    "text_preview": "RESOLUTION 775 (REV.WRC-23) Power flux-density and equivalent isotropically radiated power limits   for inclusion in Article 21 for the fixed-satellite, mobile-satellite   and broadcasting-satellite s"
+  },
+  {
+    "number": 804,
+    "wrc": "REV.WRC-23",
+    "title": "Principles for establishing agendas for world radiocommunication conferences",
+    "start_page": 752,
+    "end_page": 762,
+    "pages": 10,
+    "text_length": 18576,
+    "refs": [],
+    "text_preview": "RESOLUTION 804 (REV.WRC-23) Principles for establishing agendas for world radiocommunication conferences  The World Radiocommunication Conference (Dubai, 2023), considering a) that, in accordance with"
+  },
+  {
+    "number": 813,
+    "wrc": "WRC-23",
+    "title": "Agenda for the 2027 world radiocommunication conference",
+    "start_page": 762,
+    "end_page": 768,
+    "pages": 6,
+    "text_length": 12087,
+    "refs": [],
+    "text_preview": "RESOLUTION 813 (WRC-23) Agenda for the 2027 world radiocommunication conference  The World Radiocommunication Conference (Dubai, 2023), considering a) that, in accordance with No. 118 of the ITU Conve"
+  },
+  {
+    "number": 814,
+    "wrc": "WRC-23",
+    "title": "Preliminary agenda for the 2031 world radiocommunication conference*",
+    "start_page": 768,
+    "end_page": 772,
+    "pages": 4,
+    "text_length": 8960,
+    "refs": [
+      "5.149"
+    ],
+    "text_preview": "RESOLUTION 814 (WRC-23) Preliminary agenda for the 2031 world radiocommunication conference*  The World Radiocommunication Conference (Dubai, 2023), considering a) that, in accordance with No. 118 of "
+  },
+  {
+    "number": 901,
+    "wrc": "REV.WRC-15",
+    "title": "Determination of the orbital arc separation for which coordination would be required between two satellite networks operating in a space service not subject to a Plan",
+    "start_page": 772,
+    "end_page": 774,
+    "pages": 2,
+    "text_length": 4026,
+    "refs": [
+      "9.36",
+      "9.7"
+    ],
+    "text_preview": "RESOLUTION 901 (REV.WRC-15) Determination of the orbital arc separation for which coordination  would be required between two satellite networks operating   in a space service not subject to a Plan  T"
+  },
+  {
+    "number": 902,
+    "wrc": "REV.WRC-23",
+    "title": "Provisions relating to earth stations located on board vessels which operate in fixed-satellite service networks in the uplink frequency bands 5 925-6 425 MHz and 14-14.5 GHz",
+    "start_page": 774,
+    "end_page": 780,
+    "pages": 6,
+    "text_length": 8921,
+    "refs": [
+      "4.4",
+      "4.9",
+      "5.505",
+      "5.506B"
+    ],
+    "text_preview": "RESOLUTION 902 (REV.WRC-23) Provisions relating to earth stations located on board vessels which operate   in fixed-satellite service networks in the uplink frequency bands   5 925-6 425 MHz and 14-14"
+  },
+  {
+    "number": 903,
+    "wrc": "REV.WRC-19",
+    "title": "Transitional measures for certain broadcasting-satellite/fixed-satellite service systems in the frequency band 2 500-2 690 MHz",
+    "start_page": 780,
+    "end_page": 782,
+    "pages": 2,
+    "text_length": 2967,
+    "refs": [
+      "5.2",
+      "5.384A",
+      "5.415",
+      "5.416",
+      "5.418",
+      "9.21",
+      "9.35"
+    ],
+    "text_preview": "RESOLUTION 903 (REV.WRC-19) Transitional measures for certain broadcasting-satellite/fixed-satellite service  systems in the frequency band 2 500-2 690 MHz  The World Radiocommunication Conference (Sh"
+  },
+  {
+    "number": 906,
+    "wrc": "REV.WRC-15",
+    "title": "Electronic submission of notices for terrestrial services to the Radiocommunication Bureau and exchange of data between administrations",
+    "start_page": 782,
+    "end_page": 786,
+    "pages": 4,
+    "text_length": 6223,
+    "refs": [],
+    "text_preview": "RESOLUTION 906 (REV.WRC-15) Electronic submission of notices for terrestrial services   to the Radiocommunication Bureau and exchange of   data between administrations  The World Radiocommunication Co"
+  },
+  {
+    "number": 910,
+    "wrc": "WRC-23",
+    "title": "[Studies on the possible [frequency bands] for [non-beam and beam] wireless power transmission (WPT) to avoid harmful interference to the radiocommunication services caused by WPT]",
+    "start_page": 786,
+    "end_page": 790,
+    "pages": 4,
+    "text_length": 3978,
+    "refs": [
+      "15.12"
+    ],
+    "text_preview": "RESOLUTION 910 (WRC-23) [Studies on the possible [frequency bands] for [non-beam and beam]   wireless power transmission (WPT) to avoid harmful interference   to the radiocommunication services caused"
+  }
+]

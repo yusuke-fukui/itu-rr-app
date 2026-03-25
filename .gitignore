@@ -1,0 +1,8 @@
+.env
+data/index/
+data/*.pdf
+data/user_data/
+__pycache__/
+*.pyc
+.DS_Store
+data/graph/summary_cache.json
