@@ -25,10 +25,22 @@
     "8.1 -> 11.2": "international recognition requires notification",
     "11.2 -> 11.28": "Part I-S acknowledgement of receipt",
     "11.28 -> 11.31": "regulatory examination follows receipt acknowledgement",
+    "11.31 -> 11.36": "examination result determines recording or return",
+    "11.36 -> 11.32": "favourable under 11.31, further coordination conformity check needed",
+    "11.36 -> 11.44": "favourable under 11.31, no further checks needed → MR recorded → BIU",
+    "11.36 -> 11.41": "unfavourable under 11.31 and notice returned",
+    "11.32 -> 11.37": "coordination conformity examination result",
+    "11.37 -> 11.44": "favourable → MR recorded → BIU",
+    "11.37 -> 11.32A": "unfavourable under 11.32 but 11.32A/11.33 may apply",
+    "11.32A -> 11.38": "harmful interference probability examination result",
+    "11.38 -> 11.44": "favourable → MR recorded → BIU",
+    "11.38 -> 11.41": "unfavourable → notice returned, may resubmit",
+    "11.34 -> 11.39": "plan conformity examination result",
+    "11.39 -> 11.44": "favourable → MR recorded → BIU",
+    "11.39 -> 11.41": "unfavourable → notice returned",
     "11.31 -> 9.21": "agreement achieved when applicable",
     "11.31 -> 4.4": "non-conforming use on non-interference/unprotected basis",
     "11.41 -> 11.42A": "if harmful interference occurs, cancellation possible",
-    "11.31 -> 11.44": "after Master Register recording (Part II-S), proceed to BIU",
     "11.44 -> 11.47": "BIU confirmation to BR, provisional recording becomes final",
     "11.44 -> 11.44C": "for non-GSO in FSS/MSS/BSS: 90-day continuous operation required"
   },
@@ -106,6 +118,22 @@
       "section": "§3.5.4",
       "note": "Harmful interference probability assessment. Applied when the Bureau needs to evaluate whether an assignment would cause harmful interference to existing or planned assignments."
     },
+    "11.36": {
+      "section": "§3.5.4",
+      "note": "Decision point after examination under No. 11.31. Favourable: recorded in Master Register (or further examined under 11.32-11.34 if applicable). Unfavourable: recorded for information only under No. 4.4, or notice returned."
+    },
+    "11.37": {
+      "section": "§3.5.4",
+      "note": "Decision point after examination under No. 11.32 (coordination conformity). Favourable: recorded in Master Register with indication of completed coordinations. Unfavourable: notice returned, unless Nos. 11.32A or 11.33 apply."
+    },
+    "11.38": {
+      "section": "§3.5.4",
+      "note": "Decision point after examination under Nos. 11.32A or 11.33 (interference probability). Favourable: recorded in Master Register. Unfavourable: notice returned."
+    },
+    "11.39": {
+      "section": "§3.5.4",
+      "note": "Decision point after examination under No. 11.34 (plan conformity). Favourable: recorded in Master Register. Unfavourable: notice returned."
+    },
     "8.5": {
       "section": "§3.5.3",
       "note": "Any administration which has knowledge that a station under its jurisdiction is causing harmful interference shall immediately eliminate that interference."
@@ -124,15 +152,16 @@
       "handbook_section": "§3.5.1",
       "seven_year_clock_from": "API/A受理日（No. 9.1）",
       "steps": [
-        {"article": "9.2B", "label": "API提出（非調整）"},
-        {"article": "9.1", "label": "事前公表 (API/A)", "note": "⏱ 7年クロック起算"},
+        {"article": "9.1", "label": "API提出（事前公表情報の送付）"},
+        {"article": "9.2", "label": "完全な情報の送付"},
+        {"article": "9.2B", "label": "BR公表 (API/A)", "note": "⏱ 7年クロック起算"},
         {"article": "9.3", "label": "コメント期間（4ヶ月）"},
         {"article": "9.4", "label": "困難の解決"},
         {"article": "9.5", "label": "API/B公表"},
         {"article": "11.2", "label": "通告 — DBIU日付をAppendix 4で申告 (No.11.15)"},
         {"article": "11.28", "label": "Part I-S 受理確認"},
-        {"article": "11.31", "label": "規制審査 (Examination)"},
-        {"article": "11.41", "label": "Master Register記録（条件付き可）"},
+        {"article": "11.31", "label": "規制審査 — Table of Frequency Allocations適合性"},
+        {"article": "11.36", "label": "審査結果判定", "note": "Favorable → MR記録 / Unfavorable → 返却"},
         {"article": "11.44", "label": "BIU — 衛星打上げ・使用開始"},
         {"article": "11.47", "label": "BIU確認 → 仮記録確定"},
         {"article": "8.5", "label": "有害干渉の即時排除義務"}
@@ -145,16 +174,21 @@
       "handbook_section": "§3.5.2",
       "seven_year_clock_from": "API/C受理日（No. 9.1A）",
       "steps": [
+        {"article": "9.1", "label": "API提出（事前公表情報の送付）"},
+        {"article": "9.2", "label": "完全な情報の送付"},
+        {"article": "9.7", "label": "調整要件判定", "sub_articles": ["9.7", "9.7A", "9.7B", "9.11", "9.11A", "9.12", "9.12A", "9.13", "9.14", "9.21"]},
         {"article": "9.30", "label": "CR提出"},
         {"article": "9.1A", "label": "API/C公表", "note": "⏱ 7年クロック起算"},
         {"article": "9.35", "label": "BR審査・影響行政庁特定"},
         {"article": "9.36", "label": "調整実施"},
         {"article": "11.2", "label": "通告 — DBIU日付をAppendix 4で申告 (No.11.15)"},
         {"article": "11.28", "label": "Part I-S 受理確認"},
-        {"article": "11.31", "label": "規制審査"},
+        {"article": "11.31", "label": "規制審査 — Table of Frequency Allocations適合性"},
+        {"article": "11.36", "label": "11.31審査結果判定", "note": "Favorable → 11.32へ / Unfavorable → 返却"},
         {"article": "11.32", "label": "調整手続き適合確認"},
-        {"article": "11.32A", "label": "有害干渉確率評価"},
-        {"article": "11.41", "label": "Master Register記録（条件付き可）"},
+        {"article": "11.37", "label": "11.32審査結果判定", "note": "Favorable → MR記録 / Unfavorable → 11.32Aへ"},
+        {"article": "11.32A", "label": "有害干渉確率評価（調整未完了の場合）"},
+        {"article": "11.38", "label": "11.32A/11.33審査結果判定", "note": "Favorable → MR記録 / Unfavorable → 返却(11.41)"},
         {"article": "11.44", "label": "BIU — 衛星打上げ・使用開始"},
         {"article": "11.47", "label": "BIU確認 → 仮記録確定"},
         {"article": "8.5", "label": "有害干渉の即時排除義務"}

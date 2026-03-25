@@ -1,20 +1,20 @@
-# ITU-RR 条文参照グラフ v3
+# ITU-RR 条文参照グラフ v4
 
 ITU無線通則（Radio Regulations）の条文間参照関係を双方向でトラバーサルできるStreamlitアプリ。
+v4では**Vol.3 決議（Resolutions）ブラウザ**を追加。
 
 ## 経緯
 
-### 当初の構想（v1 → v2）
-v1ではRR全文をベクトル化し自然言語でセマンティック検索するアプリを構築。v2でツリー表示を追加したが、セマンティック検索ベースのツリーはスコアの揺らぎが大きく、手続きの「流れ」が見えにくかった。
+### v1 → v3
+v1ではRR全文をベクトル化しセマンティック検索。v2でツリー表示を追加。v3で**セマンティック検索を廃止し、`No. X.X` 明示参照のみの双方向リンク**に方針転換。条文参照グラフ（603条文、465リンク）を基盤に、ルート切替+パンくず履歴方式のUIを実装した。
 
-### v3で方針転換
-**セマンティック検索を廃止し、条文テキスト中の `No. X.X` 明示参照のみで双方向リンクを構築する**方針に転換。条文参照グラフ（603条文、465リンク）を基盤に、ルート切替+パンくず履歴方式のUIを実装。
+### v4: Vol.3 決議ブラウザ追加
+v3の全機能に加え、**Vol.3の191決議をPDFから直接パースし、条文⇔決議の双方向リンクを構築**する。
 
-### Small Satellite Handbook 統合
-Handbook（2023年版）§3.5〜§3.10の手続き構造を `handbook_overlay.json` に整理し、条文ノードに**Handbook Note**として折りたたみ表示。非調整/調整の2つの手続きルートをナビゲーション可能にした。
-
-### Rules of Procedure 統合
-当初はチャンクベースでRoPを紐付けようとしたが、チャンカーが `No. X.X` 参照ごとに分割するため本文が断片化。**RoP PDFの四角囲み/太字セクション見出しを検出し、セクション間テキストを完全抽出する方式**に切り替えた（180セクション）。
+#### v4 新機能（予定）
+- **Vol.3 決議ブラウザ**: 191決議をPDFダイレクトパースし構造化表示
+- **決議⇔条文クロスリファレンス**: 決議内の`No. X.X`参照（447件）を抽出、双方向リンク
+- **決議の階層表示**: RESOLUTION本文 → ANNEX → APPENDIX の構造可視化
 
 ---
 
@@ -29,7 +29,6 @@ Handbook（2023年版）§3.5〜§3.10の手続き構造を `handbook_overlay.js
 - **非調整フロー**: 9.2B → 9.1 → 9.3 → ... → 11.31 → 11.41 → 11.44 → 11.47
 - **調整フロー**: 9.30 → 9.1A → 9.35 → ... → 11.32 → 11.41 → 11.44 → 11.47
 - サイドバーからルート開始、プログレスバーで進捗表示
-- BIU（No. 11.44）はMaster Register記録後の運用フェーズに正しく配置
 
 ### 注釈レイヤー
 - **📘 Handbook Note**: Small Satellite Handbook 2023 の該当セクション解説
@@ -46,10 +45,11 @@ Handbook（2023年版）§3.5〜§3.10の手続き構造を `handbook_overlay.js
 
 ```
 data/graph/
-├── reference_graph.json   # 双方向参照グラフ
-├── articles.json          # 条文テキスト（Vol.1 PDFから直接パース）
-├── handbook_overlay.json  # Handbook条件ラベル・注釈・手続きルート定義
-└── rop_sections.json      # RoP全セクション（PDFの見出し検出で抽出）
+├── reference_graph.json          # 双方向参照グラフ
+├── articles.json                 # 条文テキスト（Vol.1 PDFから直接パース）
+├── handbook_overlay.json         # Handbook条件ラベル・注釈・手続きルート定義
+├── rop_sections.json             # RoP全セクション（PDFの見出し検出で抽出）
+└── vol3_resolutions_draft.json   # Vol.3決議（191決議、ドラフト）
 ```
 
 ## セットアップ
@@ -63,7 +63,7 @@ streamlit run src/app_v3.py
 ## Streamlit Community Cloud デプロイ
 
 1. [share.streamlit.io](https://share.streamlit.io) にGitHubアカウントでログイン
-2. リポジトリ `yusuke-fukui/itu-rr-app_v3` を選択（Private対応）
+2. リポジトリ `yusuke-fukui/itu-rr-app-v4` を選択（Private対応）
 3. Main file path: `src/app_v3.py`
 4. Secrets に `ANTHROPIC_API_KEY` を設定
 5. Deploy → 招待したユーザーのみアクセス可能

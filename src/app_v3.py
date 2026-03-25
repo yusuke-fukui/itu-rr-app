@@ -398,6 +398,7 @@ def render_root(num: str, graph: dict, articles: dict,
     node = graph.get(num, {})
     refs_from = node.get("refs_from", [])
     refs_to = node.get("refs_to", [])
+    refs_to_sources = node.get("refs_to_sources", {})
 
     # パンくず履歴
     history = st.session_state.get("history", [])
@@ -454,15 +455,8 @@ def render_root(num: str, graph: dict, articles: dict,
                 st.rerun()
 
     # ルートノード見出し
-    st.markdown(f"## 🔵 No. {num}")
+    st.markdown(f"## No. {num}")
     render_article_text(num, articles, footnote_index=footnote_index)
-
-    # ハンドブック注釈
-    note = handbook_notes.get(num)
-    if note:
-        with st.expander("📘 Handbook Note", expanded=False):
-            st.markdown(note["note"])
-            st.caption(f"Source: Small Satellite Handbook 2023, {note['section']}")
 
     # RoP注釈
     if rop_index and num in rop_index:
@@ -487,78 +481,93 @@ def render_root(num: str, graph: dict, articles: dict,
                     st.markdown("---")
             st.caption("Source: Rules of Procedure (2021 edition, rev.2)")
 
+    # Satellite Handbook注釈
+    note = handbook_notes.get(num)
+    if note:
+        with st.expander("📘 Satellite Handbook", expanded=False):
+            st.markdown(note["note"])
+            st.caption(f"Source: Small Satellite Handbook 2023, {note['section']}")
+
     st.divider()
+
+    # Articleごとにグループ化するヘルパー
+    def _group_by_article(ref_list: list) -> dict:
+        """参照リストをArticle番号ごとにグループ化する。"""
+        groups = {}
+        for ref in ref_list:
+            art_num = ref.split(".")[0]
+            if art_num not in groups:
+                groups[art_num] = []
+            groups[art_num].append(ref)
+        return groups
+
+    def _render_ref_item(ref: str, key_prefix: str, edge_key: str):
+        """参照アイテムを1つ描画する。"""
+        ref_art = articles.get(ref, {})
+        ref_text = ref_art.get("text", "")[:120]
+        label = condition_labels.get(edge_key, "")
+
+        c1, c2 = st.columns([5, 1])
+        with c1:
+            source_type = refs_to_sources.get(ref, "text") if key_prefix == "goto_to" else "text"
+            source_tag = ""
+            if source_type == "footnote":
+                source_tag = (
+                    ' <span style="background:#e3f2fd;padding:1px 6px;'
+                    'border-radius:8px;font-size:0.7em;color:#1565c0;">'
+                    '脚注</span>'
+                )
+            st.markdown(f"**No. {ref}**{source_tag}", unsafe_allow_html=True)
+            if label:
+                st.markdown(
+                    f'<span style="background:#fff3e0;padding:2px 8px;'
+                    f'border-radius:10px;font-size:0.75em;color:#e65100;">'
+                    f'{label}</span>',
+                    unsafe_allow_html=True,
+                )
+            if ref_text:
+                st.caption(ref_text + ("..." if len(ref_art.get("text", "")) > 120 else ""))
+        with c2:
+            if st.button("→", key=f"{key_prefix}_{ref}", help=f"No. {ref} に移動"):
+                navigate_to(ref)
+                st.rerun()
 
     # 参照元と参照先を左右2カラム
     col_from, col_to = st.columns(2)
 
     with col_from:
-        st.markdown(f"### ◀ 参照元（{len(refs_to)}件）")
-        st.caption("この条文が参照している条文")
+        st.markdown(
+            f'<p style="font-size:0.95em;font-weight:bold;color:#1a237e;">'
+            f'◀ この条文が参照している条文（{len(refs_to)}件）</p>',
+            unsafe_allow_html=True,
+        )
         if refs_to:
-            for ref in refs_to:
-                ref_art = articles.get(ref, {})
-                ref_text = ref_art.get("text", "")[:120]
-                ref_vol = ref_art.get("vol", "")
-
-                # 条件ラベル lookup: この条文(num) → 参照先(ref)
-                edge_key = f"{num} -> {ref}"
-                label = condition_labels.get(edge_key, "")
-
-                with st.container():
-                    c1, c2 = st.columns([4, 1])
-                    with c1:
-                        vol_tag = f" `{ref_vol}`" if ref_vol else ""
-                        st.markdown(f"**No. {ref}**{vol_tag}")
-                        if label:
-                            st.markdown(
-                                f'<span style="background:#fff3e0;padding:2px 8px;'
-                                f'border-radius:10px;font-size:0.75em;color:#e65100;">'
-                                f'{label}</span>',
-                                unsafe_allow_html=True,
-                            )
-                        if ref_text:
-                            st.caption(ref_text + ("..." if len(ref_art.get("text", "")) > 120 else ""))
-                    with c2:
-                        if st.button("→", key=f"goto_to_{ref}", help=f"No. {ref} に移動"):
-                            navigate_to(ref)
-                            st.rerun()
-                    st.markdown("---")
+            groups = _group_by_article(refs_to)
+            for art_num, refs_in_group in groups.items():
+                label = f"Article {art_num}（{len(refs_in_group)}件）"
+                with st.expander(label, expanded=(len(groups) <= 3)):
+                    for ref in refs_in_group:
+                        edge_key = f"{num} -> {ref}"
+                        _render_ref_item(ref, "goto_to", edge_key)
+                        st.markdown("---")
         else:
             st.info("なし")
 
     with col_to:
-        st.markdown(f"### ▶ 参照先（{len(refs_from)}件）")
-        st.caption("この条文を参照している条文")
+        st.markdown(
+            f'<p style="font-size:0.95em;font-weight:bold;color:#1a237e;">'
+            f'▶ この条文を参照している条文（{len(refs_from)}件）</p>',
+            unsafe_allow_html=True,
+        )
         if refs_from:
-            for ref in refs_from:
-                ref_art = articles.get(ref, {})
-                ref_text = ref_art.get("text", "")[:120]
-                ref_vol = ref_art.get("vol", "")
-
-                # 条件ラベル lookup: 参照元(ref) → この条文(num)
-                edge_key = f"{ref} -> {num}"
-                label = condition_labels.get(edge_key, "")
-
-                with st.container():
-                    c1, c2 = st.columns([4, 1])
-                    with c1:
-                        vol_tag = f" `{ref_vol}`" if ref_vol else ""
-                        st.markdown(f"**No. {ref}**{vol_tag}")
-                        if label:
-                            st.markdown(
-                                f'<span style="background:#fff3e0;padding:2px 8px;'
-                                f'border-radius:10px;font-size:0.75em;color:#e65100;">'
-                                f'{label}</span>',
-                                unsafe_allow_html=True,
-                            )
-                        if ref_text:
-                            st.caption(ref_text + ("..." if len(ref_art.get("text", "")) > 120 else ""))
-                    with c2:
-                        if st.button("→", key=f"goto_from_{ref}", help=f"No. {ref} に移動"):
-                            navigate_to(ref)
-                            st.rerun()
-                    st.markdown("---")
+            groups = _group_by_article(refs_from)
+            for art_num, refs_in_group in groups.items():
+                label = f"Article {art_num}（{len(refs_in_group)}件）"
+                with st.expander(label, expanded=(len(groups) <= 3)):
+                    for ref in refs_in_group:
+                        edge_key = f"{ref} -> {num}"
+                        _render_ref_item(ref, "goto_from", edge_key)
+                        st.markdown("---")
         else:
             st.info("なし")
 
@@ -625,12 +634,12 @@ def generate_flow_summary(article_nums: list, articles: dict) -> str:
 
 def main():
     st.set_page_config(
-        page_title="ITU-RR 条文参照グラフ",
-        page_icon="🔗",
+        page_title="ITU-R RR 条文参照アプリ（β版）",
+        page_icon=None,
         layout="wide",
     )
 
-    st.title("🔗 ITU-RR 条文参照グラフ")
+    st.title("ITU-R RR 条文参照アプリ（β版）")
     st.caption("条文間の明示的な参照関係を双方向でトラバーサルする")
 
     graph = load_graph()
@@ -647,7 +656,7 @@ def main():
     with st.sidebar:
         # 手続きルート
         if procedure_routes:
-            st.header("🗺 手続きルート")
+            st.header("手続きルート")
             for route_id, route in procedure_routes.items():
                 with st.expander(route["name"], expanded=False):
                     st.caption(route["description"])
@@ -669,6 +678,25 @@ def main():
                                     st.session_state["history"] = []
                                     st.session_state["current_article"] = art
                                     st.rerun()
+                        # サブ条項の展開表示
+                        if "sub_articles" in step:
+                            with st.expander(f"関連条項（{len(step['sub_articles'])}件）", expanded=False):
+                                for sub_art in step["sub_articles"]:
+                                    sub_col_art, sub_col_btn = st.columns([4, 1])
+                                    with sub_col_art:
+                                        sub_in = sub_art in graph
+                                        sub_marker = "●" if sub_in else "○"
+                                        sub_text = graph[sub_art].get("text", "")[:60] + "..." if sub_in and graph[sub_art].get("text") else ""
+                                        st.markdown(f"&nbsp;&nbsp;&nbsp;{sub_marker} No. {sub_art}")
+                                        if sub_text:
+                                            st.caption(f"&nbsp;&nbsp;&nbsp;&nbsp;{sub_text}")
+                                    with sub_col_btn:
+                                        if sub_in:
+                                            if st.button("→", key=f"route_{route_id}_sub_{sub_art}"):
+                                                st.session_state["active_route"] = route_id
+                                                st.session_state["history"] = []
+                                                st.session_state["current_article"] = sub_art
+                                                st.rerun()
 
                     if st.button(f"▶ このルートを開始", key=f"start_route_{route_id}"):
                         steps = route["steps"]
@@ -704,6 +732,46 @@ def main():
             st.session_state["current_article"] = num
             st.rerun()
 
+    def _render_article_list():
+        """主要Articleの条文一覧をテーブル形式で表示する。"""
+        import pandas as pd
+        target_articles = [4, 5, 9, 11, 13, 14]
+        for art_num in target_articles:
+            prefix = f"{art_num}."
+            art_items = [k for k in graph if k.startswith(prefix)]
+            if not art_items:
+                continue
+            rows = []
+            for num in sorted(art_items, key=sort_key):
+                text = articles.get(num, {}).get("text", "")
+                # 条文番号行を除いた説明文を取得（2行程度）
+                lines = [l.strip() for l in text.split("\n") if l.strip()]
+                desc_lines = [l for l in lines[1:] if l and not l.startswith("(WRC")]
+                desc = " ".join(desc_lines)[:120]
+                if len(" ".join(desc_lines)) > 120:
+                    desc += "..."
+                n_to = len(graph[num].get("refs_to", []))
+                n_from = len(graph[num].get("refs_from", []))
+                rows.append({
+                    "No.": num,
+                    "概要": desc,
+                    "参照": n_to,
+                    "被参照": n_from,
+                })
+            with st.expander(f"Article {art_num} の条文一覧（{len(rows)}件）", expanded=False):
+                df = pd.DataFrame(rows)
+                st.dataframe(
+                    df,
+                    use_container_width=True,
+                    hide_index=True,
+                    column_config={
+                        "No.": st.column_config.TextColumn("No.", width="small"),
+                        "概要": st.column_config.TextColumn("概要", width="large"),
+                        "参照": st.column_config.NumberColumn("参照", width="small"),
+                        "被参照": st.column_config.NumberColumn("被参照", width="small"),
+                    },
+                )
+
     # メイン表示
     current = st.session_state.get("current_article")
     if current and current in graph:
@@ -712,38 +780,20 @@ def main():
                     condition_labels, handbook_notes, procedure_routes,
                     footnote_index=footnote_index, rop_index=rop_index)
 
-        # AIサマリーボタン
         st.divider()
         history = st.session_state.get("history", [])
         trail = history + [current]
         if len(trail) >= 2:
             trail_str = " → ".join(trail)
-            st.caption(f"📍 辿ったルート: {trail_str}")
+            st.caption(f"辿ったルート: {trail_str}")
 
-            if st.button("🤖 このルートをAIで整理", type="secondary"):
-                with st.spinner(f"AIが {len(trail)} 条文のフローを整理中..."):
-                    summary = generate_flow_summary(trail, articles)
-                st.markdown(summary)
-        else:
-            st.caption("💡 条文を辿っていくと、AIでフロー全体を整理できます。")
+        # 条文一覧（検索後にも表示）
+        st.divider()
+        _render_article_list()
 
     else:
-        st.info("👆 条文番号を入力するか、サイドバーの手続きルートから条文を選んでください。")
-
-        art9 = [k for k in graph if k.startswith("9.")]
-        art11 = [k for k in graph if k.startswith("11.")]
-
-        with st.expander("📋 Article 9 の条文一覧", expanded=False):
-            for num in sorted(art9, key=sort_key):
-                refs_to = len(graph[num].get("refs_to", []))
-                refs_from = len(graph[num].get("refs_from", []))
-                st.markdown(f"**No. {num}** — 参照先: {refs_to}, 参照元: {refs_from}")
-
-        with st.expander("📋 Article 11 の条文一覧", expanded=False):
-            for num in sorted(art11, key=sort_key):
-                refs_to = len(graph[num].get("refs_to", []))
-                refs_from = len(graph[num].get("refs_from", []))
-                st.markdown(f"**No. {num}** — 参照先: {refs_to}, 参照元: {refs_from}")
+        st.info("条文番号を入力するか、サイドバーの手続きルートから条文を選んでください。")
+        _render_article_list()
 
 
 if __name__ == "__main__":
