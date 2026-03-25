@@ -1,816 +1,991 @@
 """
-ITU-RR 条文検索 Streamlitアプリ。
-自然言語でITU無線通則の条文を検索し、Claude Haikuによる日本語解説を表示する。
-インタラクティブ関連条文ツリー、ブックマーク、検索履歴機能を搭載。
+ITU-RR 条文参照グラフ v4
+双方向トラバーサルによる条文間リンク表示アプリ。
+ルート切替+パンくず履歴方式。
+Small Satellite Handbook 手続き構造対応。
 """
 
+import hashlib
 import json
 import os
 import re
-import subprocess
-import sys
-from datetime import datetime
 from pathlib import Path
-from typing import Optional
 
+import anthropic
 import streamlit as st
 from dotenv import load_dotenv
 
-# プロジェクトルートを基準にパスを設定
+# パス設定
 ROOT_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(ROOT_DIR / ".env", override=True)
 
-# 同じディレクトリのモジュールをインポート
-from searcher import RRSearcher
-from tree_engine import expand_node, find_article_text, build_tree_markdown
-from storage import get_storage
+GRAPH_PATH = ROOT_DIR / "data" / "graph" / "reference_graph.json"
+ARTICLES_PATH = ROOT_DIR / "data" / "graph" / "articles.json"
+HANDBOOK_PATH = ROOT_DIR / "data" / "graph" / "handbook_overlay.json"
+CACHE_PATH = ROOT_DIR / "data" / "graph" / "summary_cache.json"
+RESOLUTIONS_PATH = ROOT_DIR / "data" / "graph" / "vol3_resolutions_draft.json"
 
-# --- ページ設定 ---
-st.set_page_config(
-    page_title="ITU-RR 条文検索",
-    page_icon="📡",
-    layout="wide",
-)
-
-# --- ストレージ ---
-storage = get_storage()
+SUMMARY_MODEL = "claude-sonnet-4-20250514"
 
 
-# --- ブックマーク・検索履歴の読み込み ---
-def load_bookmarks() -> list:
-    """ブックマークを読み込む。"""
-    data = storage.load("bookmarks")
-    return data if isinstance(data, list) else []
+# ─────────────────────────────────────────
+# データ読み込み
+# ─────────────────────────────────────────
+
+@st.cache_data
+def load_graph():
+    with open(GRAPH_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 
-def save_bookmarks(bookmarks: list):
-    """ブックマークを保存する。"""
-    storage.save("bookmarks", bookmarks)
+@st.cache_data
+def load_articles():
+    with open(ARTICLES_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 
-def load_search_history() -> list:
-    """検索履歴を読み込む。"""
-    data = storage.load("search_history")
-    return data if isinstance(data, list) else []
+CHUNKS_INDEX_PATH = ROOT_DIR / "data" / "index" / "chunks.json"
 
 
-def save_search_history(history: list):
-    """検索履歴を保存する（最大100件）。"""
-    storage.save("search_history", history[:100])
+def _extract_footnotes_from_text(text: str, index: dict, entry_pat):
+    """テキスト中の脚注区切り線以降から脚注エントリを抽出してindexに追加する。"""
+    divider_pat = re.compile(r'_{10,}')
+    m = divider_pat.search(text)
+    if not m:
+        return
+    fn_raw = text[m.end():]
+    # 脚注番号付きエントリ: "21 11.41.2 When submitting..."
+    matches = list(entry_pat.finditer(fn_raw))
+    # 脚注番号なしエントリも拾う: "11.41.1 (SUP - WRC-12)"
+    bare_pat = re.compile(r'(?:^|\n)(\d+\.\d+[A-Z]?\.\d+)\s', re.MULTILINE)
+    bare_matches = list(bare_pat.finditer(fn_raw))
+
+    # 全エントリの位置をマージしてソート
+    all_entries = []
+    for match in matches:
+        sub_num = match.group(2)
+        pos = match.start()
+        if fn_raw[pos] == '\n':
+            pos += 1
+        all_entries.append((pos, sub_num))
+    for match in bare_matches:
+        sub_num = match.group(1)
+        pos = match.start()
+        if fn_raw[pos] == '\n':
+            pos += 1
+        # 重複回避（既に番号付きで取得済みの場合）
+        if not any(e[1] == sub_num for e in all_entries):
+            all_entries.append((pos, sub_num))
+    all_entries.sort(key=lambda x: x[0])
+
+    for i, (pos, sub_num) in enumerate(all_entries):
+        end = all_entries[i + 1][0] if i + 1 < len(all_entries) else len(fn_raw)
+        full_text = fn_raw[pos:end].strip()
+        if not full_text:
+            continue
+        parent_match = re.match(r'(\d+\.\d+[A-Z]?)\.\d+', sub_num)
+        if parent_match:
+            parent_num = parent_match.group(1)
+            # 重複追加回避
+            if parent_num not in index:
+                index[parent_num] = []
+            if full_text not in index[parent_num]:
+                index[parent_num].append(full_text)
 
 
-def add_search_history(query: str):
-    """検索履歴に追加する。"""
-    history = load_search_history()
-    entry = {"query": query, "timestamp": datetime.now().isoformat()}
-    # 同じクエリがあれば削除して先頭に追加
-    history = [h for h in history if h.get("query") != query]
-    history.insert(0, entry)
-    save_search_history(history)
+def build_footnote_index(articles: dict) -> dict:
+    """全条文テキスト + チャンクから脚注をパースし、条文番号→脚注テキストの索引を構築する。
+    Returns: {"11.28": ["11 11.28.1\\nIn case of...", ...], "11.31": [...], ...}
+    """
+    entry_pat = re.compile(r'(?:^|\n)(\d+)\s+(\d+\.\d+[A-Z]?\.\d+)\s', re.MULTILINE)
+    index = {}  # article_num -> [footnote_text, ...]
+
+    # 1. articles.json から抽出
+    for art_num, art in articles.items():
+        text = art.get("text", "")
+        _extract_footnotes_from_text(text, index, entry_pat)
+
+    # 2. chunks.json から補完（articles.jsonに含まれない脚注を拾う）
+    if CHUNKS_INDEX_PATH.exists():
+        with open(CHUNKS_INDEX_PATH, "r", encoding="utf-8") as f:
+            chunks = json.load(f)
+        for chunk in chunks:
+            text = chunk.get("text", "")
+            if "___" in text:
+                _extract_footnotes_from_text(text, index, entry_pat)
+
+    # 3. 手動修正データ（PDF抽出の文字化け・欠落を補正）
+    footnote_corrections = {
+        "11.41": [
+            "11.41.1     (SUP - WRC-12)",
+            "21 11.41.2  When submitting notices in application of No. 11.41, the notifying administration shall indicate to the Bureau that efforts have been made to effect coordination with those administrations whose assignments were the basis of the unfavourable findings under No. 11.38, without success.     (WRC-12)",
+        ],
+    }
+    for art_num, entries in footnote_corrections.items():
+        index[art_num] = entries  # 手動データで上書き
+
+    # 4. 重複排除（同じ脚注が複数ソースから拾われる場合）
+    for art_num in index:
+        seen = set()
+        unique = []
+        for entry in index[art_num]:
+            # 先頭50文字をキーにして重複判定
+            key = entry[:50].strip()
+            if key not in seen:
+                seen.add(key)
+                unique.append(entry)
+        index[art_num] = unique
+
+    return index
 
 
-def toggle_bookmark(article_no: str, text: str, vol: str, section_path: str):
-    """ブックマークのトグル（追加/削除）。"""
-    bookmarks = load_bookmarks()
-    # 同じ条文番号+テキストハッシュで判定
-    key = f"{article_no}_{hash(text)}"
-    existing = [b for b in bookmarks if b.get("key") == key]
-    if existing:
-        bookmarks = [b for b in bookmarks if b.get("key") != key]
-    else:
-        bookmarks.append({
-            "key": key,
-            "article_no": article_no,
-            "text": text[:500],
-            "vol": vol,
-            "section_path": section_path,
-            "timestamp": datetime.now().isoformat(),
-        })
-    save_bookmarks(bookmarks)
-    return not bool(existing)  # True=追加, False=削除
+ROP_SECTIONS_PATH = ROOT_DIR / "data" / "graph" / "rop_sections.json"
 
 
-def is_bookmarked(article_no: str, text: str) -> bool:
-    """ブックマーク済みか確認する。"""
-    key = f"{article_no}_{hash(text)}"
-    bookmarks = load_bookmarks()
-    return any(b.get("key") == key for b in bookmarks)
+def build_rop_index() -> dict:
+    """RoP PDFから抽出済みのセクションデータを読み込む。
+    rop_sections.json: 四角囲み/太字のセクション見出しで分割した全文テキスト。
+    Returns: {"9.21": ["full RoP text..."], "11.31": ["..."], ...}
+    """
+    if not ROP_SECTIONS_PATH.exists():
+        return {}
+    with open(ROP_SECTIONS_PATH, "r", encoding="utf-8") as f:
+        sections = json.load(f)
+
+    # 各セクションを1エントリのリストとして返す
+    index = {}
+    for art_no, text in sections.items():
+        text = text.strip()
+        if text:
+            index[art_no] = [text]
+
+    # 複合セクション見出し（例: "11.44B, 11.44C, 11.44D and 11.44E"）を
+    # 個別の条文にも紐付ける
+    _split_combined_sections(index)
+
+    return index
 
 
-# --- セッション初期化 ---
-if "searcher" not in st.session_state:
-    st.session_state.searcher = RRSearcher()
+def _split_combined_sections(index: dict):
+    """セクション内に複合見出し行がある場合、その内容を個別条文にも紐付ける。
+    例: 11.44 内の "11.44B, 11.44C, 11.44D and 11.44E" 以降を各条文に登録。
+    """
+    # パターン: "11.44B, 11.44C, 11.44D and 11.44E" のような行
+    combined_pat = re.compile(
+        r'^(\d+\.\d+[A-Z](?:\.\d+)?)'  # 最初の条文番号
+        r'(?:,\s*\d+\.\d+[A-Z](?:\.\d+)?)*'  # カンマ区切りの追加番号
+        r'(?:\s+and\s+(\d+\.\d+[A-Z](?:\.\d+)?))?$'  # "and" の最後の番号
+    )
 
-if "explanations" not in st.session_state:
-    st.session_state.explanations = {}
+    updates = {}
+    for art_no, texts in list(index.items()):
+        for text in texts:
+            paragraphs = text.split('\n\n')
+            for i, para in enumerate(paragraphs):
+                clean = para.strip()
+                m = combined_pat.match(clean)
+                if m and i + 1 < len(paragraphs):
+                    # この行以降のテキストを抽出
+                    sub_text = '\n\n'.join(paragraphs[i + 1:]).strip()
+                    if not sub_text:
+                        continue
+                    # 全ての条文番号を抽出
+                    sub_arts = re.findall(r'(\d+\.\d+[A-Z](?:\.\d+)?)', clean)
+                    for sub_art in sub_arts:
+                        if sub_art != art_no:
+                            if sub_art not in updates:
+                                updates[sub_art] = []
+                            updates[sub_art].append(sub_text)
+                    # 親セクションのテキストをこの見出し行の前までに切る
+                    index[art_no] = ['\n\n'.join(paragraphs[:i]).strip()]
+                    break  # 1セクションにつき1つの複合見出しのみ
 
-if "search_results" not in st.session_state:
-    st.session_state.search_results = []
-
-if "all_hits" not in st.session_state:
-    st.session_state.all_hits = []
-
-if "total_hits" not in st.session_state:
-    st.session_state.total_hits = 0
-
-if "last_query" not in st.session_state:
-    st.session_state.last_query = ""
-
-# ツリー関連の状態
-if "tree_data" not in st.session_state:
-    st.session_state.tree_data = {}
-
-if "active_tree" not in st.session_state:
-    st.session_state.active_tree = None
-
-
-# --- テキスト処理関数 ---
-def _decode_font_shift(text: str) -> str:
-    """PDFカスタムフォントのシフト文字化けをデコードする。"""
-    result = []
-    for c in text:
-        code = ord(c)
-        if 'A' <= c <= 'Z':
-            result.append(chr((code - ord('A') - 3) % 26 + ord('A')))
-        elif 'a' <= c <= 'z':
-            result.append(chr((code - ord('a') - 3) % 26 + ord('a')))
-        elif 33 <= code <= 64 or 91 <= code <= 96 or 123 <= code <= 126:
-            decoded = code + 29
-            if 32 <= decoded <= 126:
-                result.append(chr(decoded))
-            else:
-                result.append(c)
+    for art_no, texts in updates.items():
+        if art_no in index:
+            index[art_no].extend(texts)
         else:
-            result.append(c)
-    return ''.join(result)
+            index[art_no] = texts
 
 
-def _vowel_ratio(text: str, min_len: int = 4) -> float:
-    """テキストの母音比率を計算する。"""
-    alpha = re.sub(r'[^a-zA-Z]', '', text)
-    if len(alpha) < min_len:
-        return 0.4
-    vowels = sum(1 for c in alpha.lower() if c in 'aeiou')
-    return vowels / len(alpha)
+def load_handbook():
+    if HANDBOOK_PATH.exists():
+        with open(HANDBOOK_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {}
 
 
-def fix_font_encoding(text: str) -> str:
-    """フォントエンコーディング文字化けを検出・修復する（行単位対応）。"""
-    alpha_only = re.sub(r'[^a-zA-Z]', '', text)
-    if len(alpha_only) < 8:
-        return text
-    lines = text.split('\n')
-    result_lines = []
-    changed = False
-    for line in lines:
-        line_alpha = re.sub(r'[^a-zA-Z]', '', line)
-        if len(line_alpha) >= 4:
-            line_vr = _vowel_ratio(line)
-            if line_vr < 0.28:
-                decoded_line = _decode_font_shift(line)
-                decoded_line_vr = _vowel_ratio(decoded_line)
-                if decoded_line_vr - line_vr > 0.08 and decoded_line_vr >= 0.25:
-                    result_lines.append(decoded_line)
-                    changed = True
-                    continue
-        result_lines.append(line)
-    return '\n'.join(result_lines) if changed else text
+def load_summary_cache():
+    if CACHE_PATH.exists():
+        with open(CACHE_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {}
 
 
-def clean_text(raw: str) -> str:
-    """PDF抽出テキストのノイズを除去し、読みやすく整形する。"""
-    text = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", " ", raw)
-    text = re.sub(r"[\x80-\x9f]", "", text)
-    text = re.sub(r"[\ue000-\uf8ff]", "", text)
-    text = re.sub(
-        r"[\u0590-\u083F\u0900-\u0DFF\u0F00-\u0FFF\u1200-\u137F"
-        r"\u1B80-\u1BBF\uFB00-\uFDFF\uFE70-\uFEFF]", "", text)
-    text = re.sub(r"[\ufffd\ufffe\uffff\u25a1\u25a0\u2610\u2612]", "", text)
-    text = re.sub(r"\s+", " ", text).strip()
-    text = re.sub(r"–\s*\d+\s*–", "", text).strip()
-    text = re.sub(r"^[a-z]{1,3}\s+", "", text)
-    text = re.sub(r"(>>\s*)+", "", text).strip()
-    text = re.sub(r"_{3,}", "", text).strip()
-    text = re.sub(r"\.{3,}\s*\d*", "", text).strip()
-    text = re.sub(r"^[A-Z]{2,4}\d+[-–]\d+\s*", "", text).strip()
-    text = re.sub(r"\s{2,}", " ", text).strip()
-    text = fix_font_encoding(text)
-    return text
+def save_summary_cache(cache: dict):
+    CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(CACHE_PATH, "w", encoding="utf-8") as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2)
 
 
-def extract_title(text: str, article_no: str) -> str:
-    """条文テキストからタイトル/セクション名を推定する。"""
-    if article_no:
-        after_no = re.sub(r"^No\.\s*\d+\.\d+[A-Z]?\s*", "", text).strip()
-        match = re.match(r"^(.+?[.;])", after_no)
-        if match and len(match.group(1)) <= 120:
-            return match.group(1).strip()
-        return after_no[:80].strip() + ("..." if len(after_no) > 80 else "")
-    heading_match = re.match(
-        r"^((?:ARTICLE|Article|RESOLUTION|Resolution|APPENDIX|Appendix|ANNEX|Annex|RECOMMENDATION|Recommendation)"
-        r"\s*\d*[A-Z]?\s*[\-–:]?\s*.{0,80}?)(?:\s{2}|$)",
-        text,
+@st.cache_data
+def load_resolutions() -> list[dict]:
+    """Vol.3 決議データを読み込む。"""
+    if RESOLUTIONS_PATH.exists():
+        with open(RESOLUTIONS_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
+
+
+@st.cache_data
+def build_resolution_reverse_index(_resolutions: list[dict]) -> dict[str, list[dict]]:
+    """条文番号 → その条文を参照している決議リストの逆引きインデックスを構築する。"""
+    index: dict[str, list[dict]] = {}
+    for res in _resolutions:
+        summary = {
+            "number": res["number"],
+            "wrc": res["wrc"],
+            "title": res["title"],
+        }
+        for ref in res.get("refs", []):
+            if ref not in index:
+                index[ref] = []
+            index[ref].append(summary)
+    return index
+
+
+# ─────────────────────────────────────────
+# ユーティリティ
+# ─────────────────────────────────────────
+
+def sort_key(num: str) -> tuple:
+    """条文番号を数値ソート。9.4 < 9.11 < 11.3"""
+    m = re.match(r'(\d+)\.(\d+)([A-Z]*)', num)
+    if not m:
+        return (999, 999, num)
+    return (int(m.group(1)), int(m.group(2)), m.group(3))
+
+
+def validate_article_number(query: str) -> str | None:
+    query = query.strip()
+    m = re.match(r'^(?:No\.?\s*)?(\d+\.\d+[A-Z]?)$', query, re.IGNORECASE)
+    return m.group(1) if m else None
+
+
+# ─────────────────────────────────────────
+# ナビゲーション（ルート切替+履歴）
+# ─────────────────────────────────────────
+
+def navigate_to(num: str):
+    """条文にナビゲートする。履歴にプッシュ。"""
+    if "history" not in st.session_state:
+        st.session_state["history"] = []
+
+    current = st.session_state.get("current_article")
+    if current and current != num:
+        st.session_state["history"].append(current)
+
+    st.session_state["current_article"] = num
+    st.session_state["current_resolution"] = None
+
+
+def navigate_to_resolution(res_num: int):
+    """決議にナビゲートする。条文表示をクリアし決議ビューに切り替え。"""
+    st.session_state["current_resolution"] = res_num
+    st.session_state["current_article"] = None
+    st.session_state["history"] = []
+    if "active_route" in st.session_state:
+        del st.session_state["active_route"]
+
+
+def navigate_back():
+    """履歴を1つ戻る。"""
+    history = st.session_state.get("history", [])
+    if history:
+        prev = history.pop()
+        st.session_state["current_article"] = prev
+        st.session_state["history"] = history
+
+
+# ─────────────────────────────────────────
+# 条文テキスト表示
+# ─────────────────────────────────────────
+
+def parse_footnote_entries(footnotes_raw: str) -> list:
+    """脚注テキストを個別エントリに分割する。
+    各脚注は "番号 条文サブ番号 テキスト" の形式。
+    例: "15 11.32A.1 The examination of such notices..."
+    Returns: [(footnote_num, sub_number, full_text), ...]
+    """
+    # 脚注エントリの開始パターン: 行頭の数字 + スペース + 条文サブ番号
+    entry_pattern = re.compile(
+        r'(?:^|\n)(\d+)\s+(\d+\.\d+[A-Z]?\.\d+)\s',
     )
-    if heading_match:
-        return heading_match.group(1).strip()
-    match = re.match(r"^(.+?[.;])", text)
-    if match and len(match.group(1)) <= 120:
-        return match.group(1).strip()
-    return text[:80].strip() + ("..." if len(text) > 80 else "")
+    matches = list(entry_pattern.finditer(footnotes_raw))
+    entries = []
+    for i, m in enumerate(matches):
+        fn_num = m.group(1)
+        sub_num = m.group(2)
+        start = m.start()
+        if footnotes_raw[start] == '\n':
+            start += 1
+        end = matches[i + 1].start() if i + 1 < len(matches) else len(footnotes_raw)
+        full_text = footnotes_raw[start:end].strip()
+        entries.append((fn_num, sub_num, full_text))
+    return entries
 
 
-def highlight_keywords(text: str, query: str) -> str:
-    """検索クエリのフレーズ全体を赤字でハイライトする（HTML）。"""
-    if not query or not text:
-        return text
-    phrase = query.strip()
-    if not phrase:
-        return text
-    import html
-    text = html.escape(text)
-    phrase_escaped = html.escape(phrase)
-    pattern = re.compile(re.escape(phrase_escaped), re.IGNORECASE)
-    text = pattern.sub(
-        lambda m: f'<span style="color: red; font-weight: bold;">{m.group()}</span>',
-        text,
-    )
-    return text
+def filter_footnotes_for_article(footnotes_raw: str, article_num: str) -> str:
+    """条文番号に該当する脚注のみを返す。
+    例: article_num="11.32A" → "11.32A.1", "11.32A.2" の脚注のみ返す。
+    """
+    entries = parse_footnote_entries(footnotes_raw)
+    if not entries:
+        return footnotes_raw  # パース失敗時はそのまま返す
+
+    # 条文番号プレフィックスでフィルタ (例: "11.32A.")
+    prefix = article_num + "."
+    matched = [text for fn_num, sub_num, text in entries if sub_num.startswith(prefix)]
+
+    if matched:
+        return "\n\n".join(matched)
+    # マッチなしでもエントリがある場合は空（他の条文の脚注のみ）
+    if entries:
+        return None
+    return footnotes_raw
 
 
-def extract_paragraph(raw: str, max_len: int = 500) -> str:
-    """テキストから最初の意味のあるパラグラフ（文単位）を抽出する。"""
-    cleaned_t = clean_text(raw)
-    if not cleaned_t:
-        return ""
-    protected = cleaned_t
-    for abbr in ["Rec.", "No.", "Art.", "Rev.", "Vol.", "Res.", "Nos.", "etc.", "i.e.", "e.g."]:
-        protected = protected.replace(abbr, abbr.replace(".", "\x00"))
-    sentences = re.split(r"(?<=[.;])\s+", protected)
-    sentences = [s.replace("\x00", ".") for s in sentences]
-    sentences = [s for s in sentences if len(s) > 5]
-    if not sentences:
-        return cleaned_t[:max_len]
-    result_text = ""
-    for s in sentences:
-        if len(result_text) + len(s) > max_len and len(result_text) >= 50:
-            break
-        result_text += s + " "
-    return result_text.strip()
+def split_footnotes(text: str, article_num: str = ""):
+    """条文テキストから脚注を分離する。
+    区切り線 _______________ 以降を脚注として扱い、
+    article_num に該当する脚注のみ返す。"""
+    # 区切り線パターン: 連続アンダースコア（10個以上）、末尾でもマッチ
+    divider_pattern = re.compile(r'\n?_{10,}\n?')
+    match = divider_pattern.search(text)
+    if match:
+        body = text[:match.start()].strip()
+        footnotes_raw = text[match.end():].strip()
+        # 本文末尾の脚注参照番号を整理（例: ";15, 16 or     (WRC-15)"）
+        body = re.sub(r';\s*\d+(?:\s*,\s*\d+)*\s+or\s*$', ';', body, flags=re.MULTILINE)
+        # 条文番号でフィルタ
+        if article_num and footnotes_raw:
+            filtered = filter_footnotes_for_article(footnotes_raw, article_num)
+            return body, filtered
+        return body, footnotes_raw
+    return text, None
 
 
-def get_claude_explanation(article_text: str, api_key: str) -> str:
-    """Claude Haikuを使って条文の日本語解説を生成する。"""
-    import anthropic
-    client = anthropic.Anthropic(api_key=api_key)
-    try:
-        response = client.messages.create(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=300,
-            messages=[{
-                "role": "user",
-                "content": f"ITU無線通則の専門家として、以下の条文を日本語で150字以内で解説してください。\n\n条文:\n{article_text}",
-            }],
+def clean_inline_footnote_refs(body: str) -> str:
+    """本文中に埋め込まれた脚注参照番号を除去する。
+    例: "notice11" → "notice", "Allocations12" → "Allocations"
+         "sub-paragraphs;14" → "sub-paragraphs;"
+    ただし条文番号（9.12, 11.31等）は除去しない。"""
+    # 英字/セミコロン/閉じ括弧の直後に続く1-2桁の数字（上付き文字のプレーンテキスト化）
+    # 条文番号パターン（数字.数字）の一部は除外
+    cleaned = re.sub(r'([a-zA-Z);])(\d{1,2})(?=[\s\.\,\n]|$)', r'\1', body)
+    return cleaned
+
+
+def render_article_text(num: str, articles: dict, footnote_index: dict = None):
+    art = articles.get(num, {})
+    text = art.get("text", "")
+    vol = art.get("vol", "")
+
+    if text:
+        body, footnotes = split_footnotes(text, article_num=num)
+
+        # 本文中の脚注参照番号を除去
+        body = clean_inline_footnote_refs(body)
+
+        # 脚注が本文内になかった場合、グローバル脚注インデックスから取得
+        if not footnotes and footnote_index and num in footnote_index:
+            footnotes = "\n\n".join(footnote_index[num])
+
+        display_text = body[:2000]
+        if len(body) > 2000:
+            display_text += "..."
+        vol_badge = f"<span style='background:#e3f2fd;padding:2px 6px;border-radius:3px;font-size:0.75em;margin-left:8px;'>{vol}</span>" if vol else ""
+        st.markdown(
+            f'<div style="background:#f8f9fa; border-left:3px solid #1976d2; '
+            f'padding:12px 16px; margin:8px 0; font-size:0.9em; '
+            f'color:#333; max-height:400px; overflow-y:auto; line-height:1.6;">'
+            f'{display_text}</div>',
+            unsafe_allow_html=True
         )
-        return response.content[0].text
-    except anthropic.APIError as e:
-        return f"解説の生成に失敗しました: {e}"
-
-
-# --- ツリー表示関数 ---
-_DEPTH_COLORS = ["#1f77b4", "#2ca02c", "#d62728", "#9467bd", "#ff7f0e", "#8c564b"]
-
-
-def _expand_node_action(node: dict, root_key: str):
-    """ノード展開処理（Claude APIを呼び出して子ノードを追加）。"""
-    number = node.get("number", "")
-    text_preview = node.get("text_preview", "")
-    searcher = st.session_state.searcher
-    if searcher.chunks is None:
-        searcher.load()
-
-    article_text = text_preview
-    if not article_text and number:
-        found = find_article_text(searcher.chunks, number)
-        if found:
-            article_text = found
-
-    if article_text:
-        with st.spinner(f"{number} の関連条文を探索中..."):
-            result = expand_node(number, article_text)
-
-        new_children = []
-        for rel in result.get("related", []):
-            child_text = ""
-            if searcher.chunks:
-                found = find_article_text(searcher.chunks, rel["number"])
-                if found:
-                    child_text = found[:500]
-            new_children.append({
-                "node_id": rel.get("node_id", ""),
-                "number": rel.get("number", ""),
-                "reason": rel.get("reason", ""),
-                "summary": "",
-                "text_preview": child_text,
-                "children": [],
-            })
-
-        node["summary"] = result.get("summary", "")
-        node["children"] = new_children
-        st.rerun()
-    else:
-        st.warning(f"条文 {number} のテキストが見つかりません。")
-
-
-def _render_tree_node(node: dict, depth: int, root_key: str):
-    """ツリーノードをStreamlitコンポーネントで再帰的にレンダリングする（ボタン付き）。"""
-    import html as html_mod
-    number = html_mod.escape(node.get("number", ""))
-    summary = html_mod.escape(node.get("summary", ""))
-    reason = html_mod.escape(node.get("reason", ""))
-    text_preview = node.get("text_preview", "")
-    children = node.get("children", [])
-    node_id = node.get("node_id", "")
-    color = _DEPTH_COLORS[depth % len(_DEPTH_COLORS)]
-    is_leaf = len(children) == 0
-
-    # インデント用のプレフィックス
-    indent_px = depth * 32
-
-    # ノードヘッダー（条文番号 + 展開ボタン）
-    if depth == 0:
-        # ルートノード
-        header_html = f'<span style="font-size:1.2em; font-weight:bold; color:{color};">🔵 {number}</span>'
-        if is_leaf:
-            col_header, col_btn = st.columns([4, 1.5])
-            with col_header:
-                st.markdown(header_html, unsafe_allow_html=True)
-            with col_btn:
-                btn_key = f"expand_{root_key}_{node_id}_{depth}"
-                if st.button("▶ 関連条文を探す", key=btn_key, type="secondary"):
-                    _expand_node_action(node, root_key)
-        else:
-            st.markdown(header_html, unsafe_allow_html=True)
-    else:
-        # 子ノード
-        connector = f'<span style="color:#999;">{"│　" * (depth - 1)}├─</span>'
-        number_html = f'<span style="font-weight:bold; color:{color}; font-size:1.05em;">{number}</span>'
-
-        if is_leaf:
-            col_header, col_btn = st.columns([4, 1.5])
-            with col_header:
+        if footnotes:
+            with st.expander(f"📝 脚注 (Footnotes)", expanded=False):
                 st.markdown(
-                    f'<div style="margin-left:{indent_px}px; margin-top:4px;">'
-                    f'{connector} {number_html}</div>',
+                    f'<div style="background:#fffde7; border-left:3px solid #fbc02d; '
+                    f'padding:10px 14px; font-size:0.8em; color:#555; line-height:1.5;">'
+                    f'{footnotes[:3000]}</div>',
+                    unsafe_allow_html=True
+                )
+    else:
+        st.caption("（条文テキスト未収録）")
+
+
+# ─────────────────────────────────────────
+# メイン表示：ルートノード + 参照一覧
+# ─────────────────────────────────────────
+
+def render_root(num: str, graph: dict, articles: dict,
+                condition_labels: dict, handbook_notes: dict,
+                procedure_routes: dict, footnote_index: dict = None,
+                rop_index: dict = None, resolution_reverse_index: dict = None):
+    """ルートノードと参照元/参照先の一覧を表示。"""
+    node = graph.get(num, {})
+    refs_from = node.get("refs_from", [])
+    refs_to = node.get("refs_to", [])
+    refs_to_sources = node.get("refs_to_sources", {})
+
+    # パンくず履歴
+    history = st.session_state.get("history", [])
+    if history:
+        breadcrumb_parts = []
+        for i, h in enumerate(history):
+            breadcrumb_parts.append(f"`{h}`")
+        breadcrumb = " → ".join(breadcrumb_parts) + f" → **{num}**"
+
+        col_bc, col_back = st.columns([5, 1])
+        with col_bc:
+            st.markdown(f"🔙 {breadcrumb}")
+        with col_back:
+            if st.button("← 戻る", key="back_btn"):
+                navigate_back()
+                st.rerun()
+
+    # アクティブルートインジケーター
+    active_route_id = st.session_state.get("active_route")
+    if active_route_id and active_route_id in procedure_routes:
+        route = procedure_routes[active_route_id]
+        steps = route["steps"]
+        step_articles = [s["article"] for s in steps]
+
+        if num in step_articles:
+            idx = step_articles.index(num)
+            progress = (idx + 1) / len(steps)
+            st.progress(progress)
+            st.markdown(
+                f'<div style="background:#e8f5e9; border-left:3px solid #4caf50; '
+                f'padding:8px 12px; margin:4px 0; font-size:0.85em; border-radius:4px;">'
+                f'🗺 <b>{route["name"]}</b> — '
+                f'Step {idx+1}/{len(steps)}: {steps[idx]["label"]}'
+                f'</div>',
+                unsafe_allow_html=True,
+            )
+
+            nav_col1, nav_col2, nav_col3 = st.columns([1, 3, 1])
+            with nav_col1:
+                if idx > 0:
+                    if st.button(f"← No. {step_articles[idx-1]}", key="route_prev"):
+                        navigate_to(step_articles[idx - 1])
+                        st.rerun()
+            with nav_col3:
+                if idx < len(steps) - 1:
+                    if st.button(f"No. {step_articles[idx+1]} →", key="route_next"):
+                        navigate_to(step_articles[idx + 1])
+                        st.rerun()
+        else:
+            # ルート外の条文に移動した場合
+            st.caption(f"🗺 {route['name']} — ルート外の条文を表示中")
+            if st.button("✕ ルートを終了", key="exit_route"):
+                del st.session_state["active_route"]
+                st.rerun()
+
+    # ルートノード見出し
+    st.markdown(f"## No. {num}")
+    render_article_text(num, articles, footnote_index=footnote_index)
+
+    # RoP注釈
+    if rop_index and num in rop_index:
+        rop_texts = rop_index[num]
+        with st.expander("📜 Rules of Procedure", expanded=False):
+            for i, rop_text in enumerate(rop_texts):
+                # 段落を維持して表示（\n\n → <br><br>）
+                paragraphs = rop_text.strip().split("\n\n")
+                html_parts = []
+                for para in paragraphs:
+                    clean = para.replace("\n", " ").strip()
+                    if clean:
+                        html_parts.append(f"<p style='margin:0 0 8px 0;'>{clean}</p>")
+                html_content = "".join(html_parts)
+                st.markdown(
+                    f'<div style="background:#fff8e1; border-left:3px solid #ffa726; '
+                    f'padding:8px 12px; margin:4px 0; font-size:0.85em; border-radius:4px;">'
+                    f'{html_content}</div>',
                     unsafe_allow_html=True,
                 )
-            with col_btn:
-                btn_key = f"expand_{root_key}_{node_id}_{depth}"
-                if st.button("▶ 展開", key=btn_key, type="secondary"):
-                    _expand_node_action(node, root_key)
-        else:
-            st.markdown(
-                f'<div style="margin-left:{indent_px}px; margin-top:4px;">'
-                f'{connector} {number_html}</div>',
-                unsafe_allow_html=True,
-            )
+                if i < len(rop_texts) - 1:
+                    st.markdown("---")
+            st.caption("Source: Rules of Procedure (2021 edition, rev.2)")
 
-        # 関連理由
-        if reason:
-            st.markdown(
-                f'<div style="margin-left:{indent_px + 24}px; color:#666; font-size:0.85em; margin-bottom:2px;">'
-                f'💬 {reason}</div>',
-                unsafe_allow_html=True,
-            )
+    # Satellite Handbook注釈
+    note = handbook_notes.get(num)
+    if note:
+        with st.expander("📘 Satellite Handbook", expanded=False):
+            st.markdown(note["note"])
+            st.caption(f"Source: Small Satellite Handbook 2023, {note['section']}")
 
-    # 要約
-    if summary:
-        s_indent = indent_px + (24 if depth > 0 else 0)
+    st.divider()
+
+    # Articleごとにグループ化するヘルパー
+    def _group_by_article(ref_list: list) -> dict:
+        """参照リストをArticle番号ごとにグループ化する。"""
+        groups = {}
+        for ref in ref_list:
+            art_num = ref.split(".")[0]
+            if art_num not in groups:
+                groups[art_num] = []
+            groups[art_num].append(ref)
+        return groups
+
+    def _render_ref_item(ref: str, key_prefix: str, edge_key: str):
+        """参照アイテムを1つ描画する。"""
+        ref_art = articles.get(ref, {})
+        ref_text = ref_art.get("text", "")[:120]
+        label = condition_labels.get(edge_key, "")
+
+        c1, c2 = st.columns([5, 1])
+        with c1:
+            source_type = refs_to_sources.get(ref, "text") if key_prefix == "goto_to" else "text"
+            source_tag = ""
+            if source_type == "footnote":
+                source_tag = (
+                    ' <span style="background:#e3f2fd;padding:1px 6px;'
+                    'border-radius:8px;font-size:0.7em;color:#1565c0;">'
+                    '脚注</span>'
+                )
+            st.markdown(f"**No. {ref}**{source_tag}", unsafe_allow_html=True)
+            if label:
+                st.markdown(
+                    f'<span style="background:#fff3e0;padding:2px 8px;'
+                    f'border-radius:10px;font-size:0.75em;color:#e65100;">'
+                    f'{label}</span>',
+                    unsafe_allow_html=True,
+                )
+            if ref_text:
+                st.caption(ref_text + ("..." if len(ref_art.get("text", "")) > 120 else ""))
+        with c2:
+            if st.button("→", key=f"{key_prefix}_{ref}", help=f"No. {ref} に移動"):
+                navigate_to(ref)
+                st.rerun()
+
+    # 参照元と参照先を左右2カラム
+    col_from, col_to = st.columns(2)
+
+    with col_from:
         st.markdown(
-            f'<div style="margin-left:{s_indent}px; color:#333; font-size:0.9em; margin-bottom:2px;">'
-            f'📝 {summary}</div>',
+            f'<p style="font-size:0.95em;font-weight:bold;color:#1a237e;">'
+            f'◀ この条文が参照している条文（{len(refs_to)}件）</p>',
+            unsafe_allow_html=True,
+        )
+        if refs_to:
+            groups = _group_by_article(refs_to)
+            for art_num, refs_in_group in groups.items():
+                label = f"Article {art_num}（{len(refs_in_group)}件）"
+                with st.expander(label, expanded=(len(groups) <= 3)):
+                    for ref in refs_in_group:
+                        edge_key = f"{num} -> {ref}"
+                        _render_ref_item(ref, "goto_to", edge_key)
+                        st.markdown("---")
+        else:
+            st.info("なし")
+
+    with col_to:
+        st.markdown(
+            f'<p style="font-size:0.95em;font-weight:bold;color:#1a237e;">'
+            f'▶ この条文を参照している条文（{len(refs_from)}件）</p>',
+            unsafe_allow_html=True,
+        )
+        if refs_from:
+            groups = _group_by_article(refs_from)
+            for art_num, refs_in_group in groups.items():
+                label = f"Article {art_num}（{len(refs_in_group)}件）"
+                with st.expander(label, expanded=(len(groups) <= 3)):
+                    for ref in refs_in_group:
+                        edge_key = f"{ref} -> {num}"
+                        _render_ref_item(ref, "goto_from", edge_key)
+                        st.markdown("---")
+        else:
+            st.info("なし")
+
+    # 決議クロスリファレンス
+    if resolution_reverse_index and num in resolution_reverse_index:
+        res_list = resolution_reverse_index[num]
+        st.divider()
+        st.markdown(
+            f'<p style="font-size:0.95em;font-weight:bold;color:#4a148c;">'
+            f'📜 この条文を参照している決議（{len(res_list)}件）</p>',
+            unsafe_allow_html=True,
+        )
+        for res_info in sorted(res_list, key=lambda r: r["number"]):
+            col_res, col_btn = st.columns([5, 1])
+            with col_res:
+                st.markdown(f"**Resolution {res_info['number']}** ({res_info['wrc']})")
+                st.caption(res_info["title"][:100])
+            with col_btn:
+                if st.button("→", key=f"art_to_res_{res_info['number']}",
+                           help=f"Resolution {res_info['number']} を表示"):
+                    navigate_to_resolution(res_info["number"])
+                    st.rerun()
+
+
+# ─────────────────────────────────────────
+# 決議詳細表示
+# ─────────────────────────────────────────
+
+def render_resolution(res_num: int, resolutions: list[dict],
+                      articles: dict, graph: dict):
+    """決議の詳細表示。タイトル、プレビュー、参照条文リスト。"""
+    res = None
+    for r in resolutions:
+        if r["number"] == res_num:
+            res = r
+            break
+
+    if not res:
+        st.error(f"決議 {res_num} が見つかりません。")
+        return
+
+    if st.button("← 一覧に戻る", key="res_back"):
+        st.session_state["current_resolution"] = None
+        st.rerun()
+
+    st.markdown(f"## Resolution {res['number']} ({res['wrc']})")
+    st.markdown(f"**{res['title']}**")
+
+    meta_parts = [
+        f"pp. {res['start_page']}–{res['end_page']} ({res['pages']}ページ)",
+        f"{res['text_length']:,}文字",
+    ]
+    st.caption(" | ".join(meta_parts))
+
+    if res.get("text_preview"):
+        st.markdown(
+            f'<div style="background:#f8f9fa; border-left:3px solid #7b1fa2; '
+            f'padding:12px 16px; margin:8px 0; font-size:0.9em; '
+            f'color:#333; max-height:300px; overflow-y:auto; line-height:1.6;">'
+            f'{res["text_preview"]}</div>',
             unsafe_allow_html=True,
         )
 
-    # 条文テキストプレビュー
-    if text_preview:
-        t_indent = indent_px + (24 if depth > 0 else 0)
-        paragraph = extract_paragraph(text_preview, max_len=500)
-        if paragraph:
-            para_escaped = html_mod.escape(paragraph)
-            st.markdown(
-                f'<div style="margin-left:{t_indent}px; color:#555; font-size:0.85em; '
-                f'line-height:1.5; margin-bottom:6px; padding:4px 8px; '
-                f'background:#f5f5f5; border-radius:4px;">'
-                f'{para_escaped}</div>',
-                unsafe_allow_html=True,
-            )
-
-    # 子ノードを再帰的にレンダリング
-    for child in children:
-        _render_tree_node(child, depth + 1, root_key)
-
-
-def render_tree(tree: dict, root_key: str):
-    """ツリー全体をレンダリングする。"""
-    with st.container(border=True):
-        _render_tree_node(tree, depth=0, root_key=root_key)
-
-
-# --- サイドバー ---
-with st.sidebar:
-    st.title("📡 ITU-RR 条文検索")
-    st.markdown("ITU無線通則（Radio Regulations）の条文を自然言語で検索できます。")
     st.divider()
 
-    # ページ選択
-    page_mode = st.radio(
-        "ページ",
-        options=["search", "bookmarks", "history"],
-        format_func=lambda x: {
-            "search": "🔍 検索",
-            "bookmarks": "⭐ ブックマーク",
-            "history": "📜 検索履歴",
-        }[x],
-        index=0,
+    refs = res.get("refs", [])
+    st.markdown(
+        f'<p style="font-size:0.95em;font-weight:bold;color:#4a148c;">'
+        f'📎 この決議が参照している条文（{len(refs)}件）</p>',
+        unsafe_allow_html=True,
     )
 
-    st.divider()
+    if refs:
+        for ref in sorted(refs, key=sort_key):
+            ref_art = articles.get(ref, {})
+            ref_text = ref_art.get("text", "")[:120]
+            in_graph = ref in graph
 
-    search_mode = st.radio(
-        "検索モード",
-        options=["hybrid", "keyword", "semantic"],
-        format_func=lambda x: {
-            "hybrid": "🔍 ハイブリッド（推奨）",
-            "keyword": "📝 キーワードのみ",
-            "semantic": "🧠 意味検索のみ",
-        }[x],
-        index=0,
-        help="ハイブリッド: キーワード一致 + 意味検索を統合\n"
-             "キーワード: テキストに含まれるもののみ\n"
-             "意味検索: AIが意味を理解して類似文を検索",
-    )
-
-    top_k = st.slider("カード表示件数", min_value=3, max_value=30, value=10)
-    threshold = st.slider("スコアしきい値（%）", min_value=5, max_value=70, value=50, step=5,
-                           help="この値以上のスコアを持つ条文のみテーブルに表示します")
-    threshold_float = threshold / 100.0
-
-    st.divider()
-
-    # --- 検索範囲フィルタ ---
-    st.caption("**📂 検索範囲**")
-    vol_options = ["All", "Vol.1", "Vol.2", "Vol.3", "Vol.4", "RoP"]
-    vol_labels = {
-        "All": "📚 全Volume",
-        "Vol.1": "📗 Vol.1（条文）",
-        "Vol.2": "📘 Vol.2（周波数表・脚注）",
-        "Vol.3": "📙 Vol.3（決議）",
-        "Vol.4": "📕 Vol.4（Q信号等）",
-        "RoP": "📔 Rules of Procedure",
-    }
-    vol_filter = st.radio(
-        "Volume",
-        options=vol_options,
-        format_func=lambda x: vol_labels[x],
-        index=0,
-        label_visibility="collapsed",
-    )
-
-    # サブフィルタ（Volume選択に応じて表示）
-    sub_filter = "All"
-    if vol_filter == "Vol.1":
-        # Vol.1: Article選択（よく使うものを上部に表示）
-        _frequent = ["Article 5", "Article 9", "Article 11",
-                      "Article 21", "Article 22"]
-        _all_articles = [f"Article {n}" for n in range(1, 60)]
-        _all_articles += ["Article 29A", "Article 29B", "Article 54A"]
-        _others = [a for a in _all_articles if a not in _frequent]
-        _article_options = ["All"] + _frequent + _others
-        sub_filter = st.selectbox(
-            "Article",
-            options=_article_options,
-            index=0,
-            help="よく使うArticle（5, 9, 11, 21, 22）を上部に表示",
-        )
-    elif vol_filter == "Vol.2":
-        # Vol.2: ANNEX選択
-        _annex_options = ["All", "ANNEX 1", "ANNEX 2", "ANNEX 3",
-                          "ANNEX 4", "ANNEX 5", "ANNEX 6", "ANNEX 7"]
-        sub_filter = st.selectbox(
-            "Annex",
-            options=_annex_options,
-            index=0,
-        )
-
-    st.divider()
-    st.caption("**スコアの見方**")
-    st.caption(
-        "📝 **キーワード一致**: 検索フレーズがテキストに直接含まれている\n\n"
-        "🧠 **意味検索**: AIが意味的に類似と判断（フレーズが含まれない場合あり）\n\n"
-        "🔍 **ハイブリッド**: キーワード一致＋意味検索の両方でマッチ（最も高スコア）"
-    )
-
-    st.divider()
-    if st.button("🔄 インデックス再作成", use_container_width=True):
-        with st.spinner("インデックスを再作成中...（数分かかります）"):
-            result = subprocess.run(
-                [sys.executable, str(ROOT_DIR / "src" / "indexer.py"), "--force"],
-                capture_output=True,
-                text=True,
-                cwd=str(ROOT_DIR),
-            )
-            if result.returncode == 0:
-                st.session_state.searcher = RRSearcher()
-                st.success("インデックスを再作成しました。")
-            else:
-                st.error(f"エラーが発生しました:\n{result.stderr}")
-
-# --- メインエリア ---
-searcher = st.session_state.searcher
-
-# インデックスの存在確認
-if not searcher.is_index_ready():
-    st.warning(
-        "⚠️ インデックスが未作成です。以下のコマンドでインデックスを作成してください:\n\n"
-        "```\npython src/indexer.py\n```\n\n"
-        "または、左サイドバーの「インデックス再作成」ボタンを押してください。"
-    )
-    st.stop()
-
-
-# ========================================
-# ブックマーク一覧ページ
-# ========================================
-if page_mode == "bookmarks":
-    st.header("⭐ ブックマーク一覧")
-    bookmarks = load_bookmarks()
-    if not bookmarks:
-        st.info("ブックマークされた条文はありません。\n検索結果の ⭐ ボタンでブックマークできます。")
-    else:
-        st.caption(f"{len(bookmarks)}件のブックマーク")
-        for idx, bm in enumerate(bookmarks):
-            with st.container(border=True):
-                col1, col2 = st.columns([5, 1])
-                with col1:
-                    st.markdown(f"**📌 {bm.get('article_no', '')}**　`{bm.get('vol', '')}`")
-                    if bm.get("section_path"):
-                        st.caption(bm["section_path"])
-                    preview = clean_text(bm.get("text", ""))[:200]
-                    st.caption(preview)
-                with col2:
-                    ts = bm.get("timestamp", "")[:10]
-                    st.caption(ts)
-                    if st.button("🗑️", key=f"unbm_{idx}", help="ブックマーク解除"):
-                        bookmarks = [b for b in bookmarks if b.get("key") != bm.get("key")]
-                        save_bookmarks(bookmarks)
+            c1, c2 = st.columns([5, 1])
+            with c1:
+                st.markdown(f"**No. {ref}**")
+                if ref_text:
+                    st.caption(ref_text[:120] + ("..." if len(ref_art.get("text", "")) > 120 else ""))
+            with c2:
+                if in_graph:
+                    if st.button("→", key=f"res_goto_{ref}", help=f"No. {ref} に移動"):
+                        navigate_to(ref)
                         st.rerun()
-    st.stop()
-
-# ========================================
-# 検索履歴ページ
-# ========================================
-if page_mode == "history":
-    st.header("📜 検索履歴")
-    history = load_search_history()
-    if not history:
-        st.info("検索履歴はありません。")
+                else:
+                    st.caption("—")
+            st.markdown("---")
     else:
-        st.caption(f"{len(history)}件の検索履歴")
+        st.info("この決議には条文参照がありません。")
 
-        col_clear, _ = st.columns([1, 5])
-        with col_clear:
-            if st.button("🗑️ 履歴をクリア"):
-                save_search_history([])
-                st.rerun()
 
-        for idx, entry in enumerate(history):
-            col_q, col_ts, col_btn = st.columns([3, 1.5, 1])
-            with col_q:
-                st.write(f"**{entry.get('query', '')}**")
-            with col_ts:
-                ts = entry.get("timestamp", "")[:16].replace("T", " ")
-                st.caption(ts)
-            with col_btn:
-                if st.button("🔍 再検索", key=f"hist_{idx}"):
-                    st.session_state.last_query = entry["query"]
-                    with st.spinner("検索中..."):
-                        search_data = searcher.search(
-                            entry["query"], top_k=top_k,
-                            threshold=threshold_float, mode=search_mode,
-                            vol_filter=vol_filter, sub_filter=sub_filter
-                        )
-                        st.session_state.search_results = search_data["results"]
-                        st.session_state.all_hits = search_data["all_hits"]
-                        st.session_state.total_hits = search_data["total_hits"]
-                    st.rerun()
-    st.stop()
+# ─────────────────────────────────────────
+# AIサマリー
+# ─────────────────────────────────────────
 
-# ========================================
-# 検索ページ（メイン）
-# ========================================
+def generate_flow_summary(article_nums: list, articles: dict) -> str:
+    cache = load_summary_cache()
+    cache_key = hashlib.md5(",".join(sorted(article_nums)).encode()).hexdigest()
 
-# ツリーが開いている場合は先に表示
-if st.session_state.active_tree and st.session_state.active_tree in st.session_state.tree_data:
-    tree_key = st.session_state.active_tree
-    tree = st.session_state.tree_data[tree_key]
+    if cache_key in cache:
+        return cache[cache_key]
 
-    st.subheader(f"🌳 関連条文ツリー — {tree.get('number', '')}")
+    context_parts = []
+    for num in article_nums:
+        art = articles.get(num, {})
+        text = art.get("text", "")[:500]
+        if text:
+            context_parts.append(f"No. {num}:\n{text}")
 
-    tree_btn_col1, tree_btn_col2, tree_btn_col3 = st.columns([1.5, 1.5, 3])
-    with tree_btn_col1:
-        md = build_tree_markdown(tree)
-        number_safe = re.sub(r"[^a-zA-Z0-9._-]", "_", tree.get("number", "tree"))
-        filename = f"RR_{number_safe}_tree.md"
-        st.download_button(
-            "📥 Markdownエクスポート",
-            data=md,
-            file_name=filename,
-            mime="text/markdown",
-            key="tree_download",
-            use_container_width=True,
+    context = "\n\n".join(context_parts)
+
+    api_key = os.getenv("ANTHROPIC_API_KEY")
+    if not api_key:
+        return "APIキーが設定されていません。"
+
+    client = anthropic.Anthropic(api_key=api_key)
+
+    try:
+        response = client.messages.create(
+            model=SUMMARY_MODEL,
+            max_tokens=2000,
+            system="あなたはITU Radio Regulations（無線通信規則）の専門家です。",
+            messages=[{
+                "role": "user",
+                "content": f"""以下の条文群は、ユーザーが条文参照グラフを辿ったルートです。
+このフロー全体を英語と日本語の両方で整理してください。
+
+出力形式:
+## English Summary
+（条文間の関係とフローの概要を2-3段落で）
+
+## 日本語サマリー
+（同内容を日本語で）
+
+条文群:
+{context}"""
+            }],
         )
-    with tree_btn_col2:
-        if st.button("✖ ツリーを閉じる", key="tree_close", use_container_width=True):
-            st.session_state.active_tree = None
+        summary = response.content[0].text.strip()
+        cache[cache_key] = summary
+        save_summary_cache(cache)
+        return summary
+
+    except Exception as e:
+        return f"サマリー生成エラー: {e}"
+
+
+# ─────────────────────────────────────────
+# メインアプリ
+# ─────────────────────────────────────────
+
+def main():
+    st.set_page_config(
+        page_title="ITU-R RR 条文参照アプリ（β版）",
+        page_icon=None,
+        layout="wide",
+    )
+
+    st.title("ITU-R RR 条文参照アプリ（β版）")
+    st.caption("条文間の明示的な参照関係を双方向でトラバーサルする")
+
+    graph = load_graph()
+    articles = load_articles()
+    footnote_index = build_footnote_index(articles)
+    handbook = load_handbook()
+    rop_index = build_rop_index()
+    resolutions = load_resolutions()
+    resolution_reverse_index = build_resolution_reverse_index(resolutions)
+
+    condition_labels = handbook.get("condition_labels", {})
+    handbook_notes = handbook.get("handbook_notes", {})
+    procedure_routes = handbook.get("procedure_routes", {})
+
+    # サイドバー
+    with st.sidebar:
+        # 手続きルート
+        if procedure_routes:
+            st.header("手続きルート")
+            for route_id, route in procedure_routes.items():
+                with st.expander(route["name"], expanded=False):
+                    st.caption(route["description"])
+                    if route.get("handbook_section"):
+                        st.caption(f"📘 {route['handbook_section']}")
+
+                    for i, step in enumerate(route["steps"]):
+                        art = step["article"]
+                        label = step["label"]
+                        col_step, col_btn = st.columns([4, 1])
+                        with col_step:
+                            in_graph = art in graph
+                            marker = "●" if in_graph else "○"
+                            st.markdown(f"{marker} **{i+1}.** No. {art} — {label}")
+                        with col_btn:
+                            if art in graph:
+                                if st.button("→", key=f"route_{route_id}_{art}"):
+                                    st.session_state["active_route"] = route_id
+                                    st.session_state["history"] = []
+                                    st.session_state["current_article"] = art
+                                    st.rerun()
+                        # サブ条項の展開表示
+                        if "sub_articles" in step:
+                            with st.expander(f"関連条項（{len(step['sub_articles'])}件）", expanded=False):
+                                for sub_art in step["sub_articles"]:
+                                    sub_col_art, sub_col_btn = st.columns([4, 1])
+                                    with sub_col_art:
+                                        sub_in = sub_art in graph
+                                        sub_marker = "●" if sub_in else "○"
+                                        sub_text = graph[sub_art].get("text", "")[:60] + "..." if sub_in and graph[sub_art].get("text") else ""
+                                        st.markdown(f"&nbsp;&nbsp;&nbsp;{sub_marker} No. {sub_art}")
+                                        if sub_text:
+                                            st.caption(f"&nbsp;&nbsp;&nbsp;&nbsp;{sub_text}")
+                                    with sub_col_btn:
+                                        if sub_in:
+                                            if st.button("→", key=f"route_{route_id}_sub_{sub_art}"):
+                                                st.session_state["active_route"] = route_id
+                                                st.session_state["history"] = []
+                                                st.session_state["current_article"] = sub_art
+                                                st.rerun()
+
+                    if st.button(f"▶ このルートを開始", key=f"start_route_{route_id}"):
+                        steps = route["steps"]
+                        st.session_state["history"] = []
+                        st.session_state["current_article"] = steps[0]["article"]
+                        st.session_state["active_route"] = route_id
+                        st.rerun()
+
+            st.divider()
+
+        # 決議ブラウザ
+        if resolutions:
+            st.header("決議ブラウザ")
+            res_search = st.text_input(
+                "決議を検索（番号 or キーワード）",
+                placeholder="例: 26, satellite",
+                key="res_search_input",
+            )
+
+            # WRC年代別グループ化（新しい順）
+            wrc_groups: dict[str, list[dict]] = {}
+            for res in resolutions:
+                wrc = res["wrc"]
+                if wrc not in wrc_groups:
+                    wrc_groups[wrc] = []
+                wrc_groups[wrc].append(res)
+
+            def _wrc_sort_key(wrc: str) -> tuple:
+                m = re.search(r'(\d{2,4})$', wrc)
+                year = int(m.group(1)) if m else 0
+                if year < 100:
+                    year += 1900 if year > 50 else 2000
+                is_rev = 0 if wrc.startswith("REV") else 1
+                return (-year, is_rev)
+
+            for wrc in sorted(wrc_groups.keys(), key=_wrc_sort_key):
+                group = wrc_groups[wrc]
+                if res_search:
+                    q = res_search.strip().lower()
+                    group = [
+                        r for r in group
+                        if (q.isdigit() and int(q) == r["number"])
+                        or q in r["title"].lower()
+                        or q in r["wrc"].lower()
+                    ]
+                if not group:
+                    continue
+
+                with st.expander(f"{wrc}（{len(group)}件）", expanded=bool(res_search)):
+                    for res in group:
+                        n_refs = len(res.get("refs", []))
+                        ref_badge = f" [{n_refs}refs]" if n_refs > 0 else ""
+                        col_res, col_btn = st.columns([5, 1])
+                        with col_res:
+                            st.markdown(f"**Res. {res['number']}**{ref_badge}")
+                            st.caption(res["title"][:80])
+                        with col_btn:
+                            if st.button("→", key=f"sb_res_{res['number']}"):
+                                navigate_to_resolution(res["number"])
+                                st.rerun()
+
+            st.divider()
+
+    # 検索入力
+    col_input, col_btn = st.columns([4, 1])
+    with col_input:
+        query = st.text_input(
+            "🔍 条文番号を入力（例: 9.12, 11.31）",
+            placeholder="9.12",
+            key="search_input",
+        )
+    with col_btn:
+        st.markdown("<br>", unsafe_allow_html=True)
+        search_clicked = st.button("検索", type="primary", use_container_width=True)
+
+    if search_clicked and query:
+        num = validate_article_number(query)
+        if num is None:
+            st.error("❌ 条文番号の形式が正しくありません。例: 9.12, 11.31, 5.364")
+        elif num not in graph:
+            st.warning(f"⚠️ No. {num} は参照グラフに存在しません。")
+        else:
+            if "active_route" in st.session_state:
+                del st.session_state["active_route"]
+            st.session_state["history"] = []
+            st.session_state["current_article"] = num
             st.rerun()
 
-    render_tree(tree, root_key=tree_key)
-    st.divider()
+    def _render_article_list():
+        """主要Articleの条文一覧をテーブル形式で表示する。"""
+        import pandas as pd
+        target_articles = [4, 5, 9, 11, 13, 14]
+        for art_num in target_articles:
+            prefix = f"{art_num}."
+            art_items = [k for k in graph if k.startswith(prefix)]
+            if not art_items:
+                continue
+            rows = []
+            for num in sorted(art_items, key=sort_key):
+                text = articles.get(num, {}).get("text", "")
+                # 条文番号行を除いた説明文を取得（2行程度）
+                lines = [l.strip() for l in text.split("\n") if l.strip()]
+                desc_lines = [l for l in lines[1:] if l and not l.startswith("(WRC")]
+                desc = " ".join(desc_lines)[:120]
+                if len(" ".join(desc_lines)) > 120:
+                    desc += "..."
+                n_to = len(graph[num].get("refs_to", []))
+                n_from = len(graph[num].get("refs_from", []))
+                rows.append({
+                    "No.": num,
+                    "概要": desc,
+                    "参照": n_to,
+                    "被参照": n_from,
+                })
+            with st.expander(f"Article {art_num} の条文一覧（{len(rows)}件）", expanded=False):
+                df = pd.DataFrame(rows)
+                st.dataframe(
+                    df,
+                    use_container_width=True,
+                    hide_index=True,
+                    column_config={
+                        "No.": st.column_config.TextColumn("No.", width="small"),
+                        "概要": st.column_config.TextColumn("概要", width="large"),
+                        "参照": st.column_config.NumberColumn("参照", width="small"),
+                        "被参照": st.column_config.NumberColumn("被参照", width="small"),
+                    },
+                )
 
-# 検索フォーム
-query = st.text_input(
-    "🔍 検索キーワードを入力（英語のみ）",
-    placeholder="e.g. NGSO protection, frequency allocation, harmful interference...",
-)
+    # メイン表示
+    current = st.session_state.get("current_article")
+    current_res = st.session_state.get("current_resolution")
 
-# 検索ボタン
-if st.button("検索", type="primary", use_container_width=True):
-    if not query:
-        st.info("検索キーワードを入力してください。")
-    else:
-        st.session_state.last_query = query
-        add_search_history(query)
-        with st.spinner("検索中..."):
-            try:
-                search_data = searcher.search(query, top_k=top_k, threshold=threshold_float, mode=search_mode,
-                                                          vol_filter=vol_filter, sub_filter=sub_filter)
-                st.session_state.search_results = search_data["results"]
-                st.session_state.all_hits = search_data["all_hits"]
-                st.session_state.total_hits = search_data["total_hits"]
-            except FileNotFoundError as e:
-                st.error(str(e))
-                st.stop()
-
-# 検索結果の表示
-results = st.session_state.search_results
-
-if results:
-    total = st.session_state.total_hits
-    # フィルタ表示
-    filter_label = ""
-    if vol_filter != "All":
-        filter_label = f" [{vol_filter}"
-        if sub_filter != "All":
-            filter_label += f" > {sub_filter}"
-        filter_label += "]"
-    st.subheader(f"検索結果（{len(results)}件 / {total}件ヒット）— 「{st.session_state.last_query}」{filter_label}")
-
-    for i, result in enumerate(results):
-        score_pct = result["score"] * 100
-        article = result["article_no"] or ""
-        vol = result["vol"]
-        pdf_page = result.get("pdf_page", result.get("page", 0))
-        printed_page = result.get("printed_page", "")
-        section_path = result.get("section_path", "")
-        raw_text = result["text"]
-        cleaned = clean_text(raw_text)
-        title = extract_title(cleaned, article)
-        cache_key = hash(raw_text)
-
-        if printed_page:
-            page_display = f"p.{printed_page}"
-        else:
-            page_display = f"p.{pdf_page}"
-
-        with st.container(border=True):
-            # ヘッダー行
-            col1, col2 = st.columns([4, 1])
-            with col1:
-                label = f"📌 **{article}**" if article else "📄"
-                st.markdown(f"{label}　`{vol}`　{page_display}")
-            with col2:
-                match_type = result.get("match_type", "")
-                type_icon = {"keyword": "📝", "semantic": "🧠", "hybrid": "🔍"}.get(match_type, "")
-                st.metric("スコア", f"{score_pct:.1f}%", delta=type_icon, delta_color="off")
-
-            # 文書構造パス
-            if section_path:
-                path_parts = [p.strip() for p in section_path.split(">")]
-                tree_lines = []
-                for depth, part in enumerate(path_parts):
-                    indent_str = "　" * depth
-                    connector = "📁" if depth == 0 else "└"
-                    tree_lines.append(f"{indent_str}{connector} {part}")
-                st.markdown("  \n".join(tree_lines))
-
-            # 本文表示
-            paragraph = extract_paragraph(raw_text, max_len=500)
-            if paragraph:
-                highlighted = highlight_keywords(paragraph, st.session_state.last_query)
-                st.markdown(highlighted, unsafe_allow_html=True)
-
-            # ボタン行: Claude解説 + 関連条文ツリー + ブックマーク
-            btn_col1, btn_col2, btn_col3, _ = st.columns([1, 1.5, 0.5, 3])
-
-            with btn_col1:
-                if st.button("💡 Claude解説", key=f"explain_{i}"):
-                    if cache_key not in st.session_state.explanations:
-                        api_key = os.getenv("ANTHROPIC_API_KEY")
-                        if not api_key:
-                            st.error("ANTHROPIC_API_KEYが設定されていません。")
-                        else:
-                            with st.spinner("Claude Haikuが解説を生成中..."):
-                                explanation = get_claude_explanation(cleaned, api_key)
-                                st.session_state.explanations[cache_key] = explanation
-
-            with btn_col2:
-                tree_key = f"tree_{article}_{i}" if article else f"tree_noart_{i}"
-                if st.button("🌳 関連条文ツリー", key=f"treebtn_{i}"):
-                    root_node = {
-                        "node_id": f"root_{i}",
-                        "number": article or "(条文番号なし)",
-                        "summary": "",
-                        "reason": "",
-                        "text_preview": cleaned[:500],
-                        "children": [],
-                    }
-                    st.session_state.tree_data[tree_key] = root_node
-                    st.session_state.active_tree = tree_key
-                    st.rerun()
-
-            with btn_col3:
-                bm_icon = "⭐" if is_bookmarked(article, raw_text) else "☆"
-                if st.button(bm_icon, key=f"bm_{i}", help="ブックマーク"):
-                    added = toggle_bookmark(article, raw_text, vol, section_path)
-                    st.rerun()
-
-            # キャッシュされた解説
-            if cache_key in st.session_state.explanations:
-                st.info(st.session_state.explanations[cache_key])
-
-    # --- 全件テーブル表示 ---
-    all_hits = st.session_state.all_hits
-    if all_hits:
+    if current_res:
+        # 決議詳細表示
         st.divider()
-        st.subheader(f"📋 全ヒット一覧（{len(all_hits)}件）— Vol / ページ順")
+        render_resolution(current_res, resolutions, articles, graph)
 
-        def vol_sort_key(vol_str):
-            m = re.match(r"Vol\.(\d+)", vol_str)
-            return int(m.group(1)) if m else 99
+    elif current and current in graph:
+        st.divider()
+        render_root(current, graph, articles,
+                    condition_labels, handbook_notes, procedure_routes,
+                    footnote_index=footnote_index, rop_index=rop_index,
+                    resolution_reverse_index=resolution_reverse_index)
 
-        def page_sort_key(r):
-            pp = r.get("printed_page", "")
-            if pp and pp.isdigit():
-                return int(pp)
-            return r.get("pdf_page", r.get("page", 9999))
+        st.divider()
+        history = st.session_state.get("history", [])
+        trail = history + [current]
+        if len(trail) >= 2:
+            trail_str = " → ".join(trail)
+            st.caption(f"辿ったルート: {trail_str}")
 
-        sorted_hits = sorted(all_hits, key=lambda r: (vol_sort_key(r["vol"]), page_sort_key(r)))
+        # 条文一覧（検索後にも表示）
+        st.divider()
+        _render_article_list()
 
-        header_cols = st.columns([0.6, 0.5, 0.7, 2.0, 0.6, 3.0, 0.8])
-        headers = ["Vol", "Page", "条文番号", "セクション", "スコア", "内容", "解説"]
-        for col, h in zip(header_cols, headers):
-            col.markdown(f"**{h}**")
-        st.markdown("---")
+    else:
+        st.info("条文番号を入力するか、サイドバーの手続きルートから条文を選んでください。")
+        _render_article_list()
 
-        for idx, result in enumerate(sorted_hits):
-            pp = result.get("printed_page", "")
-            dp = result.get("pdf_page", result.get("page", ""))
-            page_str = pp if pp else str(dp)
-            paragraph = extract_paragraph(result["text"])
-            cleaned_full = clean_text(result["text"])
-            tbl_cache_key = f"tbl_{hash(result['text'])}"
 
-            row_cols = st.columns([0.6, 0.5, 0.7, 2.0, 0.6, 3.0, 0.8])
-            row_cols[0].write(result["vol"])
-            row_cols[1].write(page_str)
-            row_cols[2].write(result["article_no"] or "—")
-            row_cols[3].caption(result.get("section_path", ""))
-            row_cols[4].write(f"{result['score'] * 100:.1f}%")
-            highlighted_para = highlight_keywords(paragraph, st.session_state.last_query)
-            row_cols[5].markdown(
-                f'<span style="font-size: 0.85em; color: #666;">{highlighted_para}</span>',
-                unsafe_allow_html=True,
-            )
-
-            if row_cols[6].button("💡", key=f"tbl_explain_{idx}", help="Claude解説を表示"):
-                if tbl_cache_key not in st.session_state.explanations:
-                    api_key = os.getenv("ANTHROPIC_API_KEY")
-                    if not api_key:
-                        st.error("ANTHROPIC_API_KEYが設定されていません。")
-                    else:
-                        with st.spinner("解説生成中..."):
-                            explanation = get_claude_explanation(cleaned_full, api_key)
-                            st.session_state.explanations[tbl_cache_key] = explanation
-
-            if tbl_cache_key in st.session_state.explanations:
-                st.info(st.session_state.explanations[tbl_cache_key])
+if __name__ == "__main__":
+    main()
