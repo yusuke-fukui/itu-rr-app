@@ -927,7 +927,7 @@ def _check_login() -> bool:
         submitted = st.form_submit_button("ログイン", use_container_width=True)
 
     if submitted:
-        if username == "kddi" and password == "kddi":
+        if username == "kddi" and password == "since2026":
             st.session_state["authenticated"] = True
             st.rerun()
         else:
