@@ -628,13 +628,16 @@ def render_root(num: str, graph: dict, articles: dict,
 
 def _format_rop_html(text: str) -> str:
     """RoPテキストをHTML表示用に整形する。
-    \\n\\nで段落分割し、先頭の番号パターンでインデントを付与。"""
+    \\n\\nで段落分割→段落内のサブ番号でさらに分割→インデント表示。"""
     import html as html_mod
 
-    # 番号パターン: "1 ", "1.1 ", "2.3.1 " 等（段落先頭）
-    num_pattern = re.compile(r"^(\d+(?:\.\d+)*)\s")
     # 脚注区切り
     footnote_pattern = re.compile(r"^_{5,}")
+    # 段落内サブ番号分割: "coordination 2.1 After" 等のパターン
+    # No./Nos. の後の番号は除外
+    inline_num_split = re.compile(r"(?<!No\.)(?<!Nos\.) (\d+(?:\.\d+)+) (?=[A-Z(])")
+    # 段落先頭の番号
+    num_pattern = re.compile(r"^(\d+(?:\.\d+)*)\s")
 
     paragraphs = text.strip().split("\n\n")
     html_parts = []
@@ -644,14 +647,11 @@ def _format_rop_html(text: str) -> str:
         if not clean:
             continue
 
-        escaped = html_mod.escape(clean)
-
         # 脚注区切り線
         if footnote_pattern.match(clean):
             html_parts.append(
                 '<hr style="border:none; border-top:1px solid #ccc; margin:12px 0;">'
             )
-            # 脚注テキスト（区切り線の後の部分）
             fn_text = footnote_pattern.sub("", clean).strip()
             if fn_text:
                 html_parts.append(
@@ -660,23 +660,39 @@ def _format_rop_html(text: str) -> str:
                 )
             continue
 
-        # 番号付き段落
-        m = num_pattern.match(clean)
-        if m:
-            num_str = m.group(1)
-            depth = num_str.count(".")
-            indent = depth * 20
-            weight = "600" if depth == 0 else "normal"
-            margin_top = "12px" if depth == 0 else "6px"
-            html_parts.append(
-                f'<div style="padding-left:{indent}px; margin-top:{margin_top};">'
-                f'<span style="font-weight:{weight};">{html_mod.escape(num_str)}</span>'
-                f' {html_mod.escape(clean[m.end():])}</div>'
-            )
-        else:
-            html_parts.append(
-                f'<p style="margin:0 0 8px 0;">{escaped}</p>'
-            )
+        # 段落内のサブ番号で分割（例: "... Appendix 5). 1.1 The period..."）
+        sub_parts = inline_num_split.split(clean)
+        # sub_parts: [前テキスト, 番号1, 後テキスト1, 番号2, 後テキスト2, ...]
+        segments = [sub_parts[0]]
+        i = 1
+        while i < len(sub_parts) - 1:
+            segments.append(sub_parts[i] + " " + sub_parts[i + 1])
+            i += 2
+        if i < len(sub_parts) and sub_parts[i].strip():
+            segments[-1] += " " + sub_parts[i]
+
+        for seg in segments:
+            seg = seg.strip()
+            if not seg:
+                continue
+            m = num_pattern.match(seg)
+            if m:
+                num_str = m.group(1)
+                depth = num_str.count(".")
+                indent = depth * 20
+                weight = "600" if depth == 0 else "normal"
+                margin_top = "12px" if depth == 0 else "6px"
+                html_parts.append(
+                    f'<div style="padding-left:{indent}px; margin-top:{margin_top};">'
+                    f'<span style="font-weight:{weight};">'
+                    f'{html_mod.escape(num_str)}</span>'
+                    f' {html_mod.escape(seg[m.end():])}</div>'
+                )
+            else:
+                html_parts.append(
+                    f'<p style="margin:0 0 8px 0;">'
+                    f'{html_mod.escape(seg)}</p>'
+                )
 
     return "\n".join(html_parts)
 
