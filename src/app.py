@@ -633,9 +633,50 @@ def render_root(num: str, graph: dict, articles: dict,
 # 決議詳細表示
 # ─────────────────────────────────────────
 
+def _format_section_html(text: str) -> str:
+    """決議セクションテキストをHTML表示用に整形する。
+    セクションキーワードを太字にし、サブ項目にインデントを付与。"""
+    import html as html_mod
+
+    # セクションキーワード（太字表示対象）
+    kw_pattern = re.compile(
+        r"^(considering(?:\s+further)?|noting(?:\s+further)?|"
+        r"recognizing(?:\s+further)?|referring\s+to|recalling|"
+        r"having\s+(?:considered|noted|examined)|bearing\s+in\s+mind|"
+        r"taking\s+into\s+account|aware|concerned|convinced|"
+        r"emphasizing|reaffirming|welcoming|"
+        r"resolves?|further\s+resolves?|decides?|further\s+decides?|"
+        r"instructs\s+.*|requests\s+.*|invites\s+.*|urges\s+.*|encourages\s+.*)$",
+        re.IGNORECASE | re.MULTILINE,
+    )
+    # サブ項目パターン
+    sub_item_pattern = re.compile(r"^([a-z]\))")
+
+    lines = text.split("\n")
+    html_lines: list[str] = []
+    for line in lines:
+        escaped = html_mod.escape(line)
+        # セクションキーワード行 → 太字 + 上マージン
+        if kw_pattern.match(line):
+            html_lines.append(
+                f'<div style="font-weight:600; font-style:italic; '
+                f'margin-top:12px; margin-bottom:4px;">{escaped}</div>'
+            )
+        # サブ項目 → インデント
+        elif sub_item_pattern.match(line):
+            html_lines.append(
+                f'<div style="padding-left:24px; text-indent:-16px; '
+                f'margin-left:16px;">{escaped}</div>'
+            )
+        else:
+            html_lines.append(f"<div>{escaped}</div>")
+
+    return "\n".join(html_lines)
+
+
 def render_resolution(res_num: int, resolutions: list[dict],
                       articles: dict, graph: dict):
-    """決議の詳細表示。タイトル、プレビュー、参照条文リスト。"""
+    """決議の詳細表示。構造化セクション（preamble / resolves / instructs）と参照条文。"""
     res = None
     for r in resolutions:
         if r["number"] == res_num:
@@ -653,27 +694,77 @@ def render_resolution(res_num: int, resolutions: list[dict],
     st.markdown(f"## Resolution {res['number']} ({res['wrc']})")
     st.markdown(f"**{res['title']}**")
 
+    # ページ番号: 印刷ページ番号を優先表示
+    pp_start = res.get("printed_start_page", res["start_page"])
+    pp_end = res.get("printed_end_page", res["end_page"])
     meta_parts = [
-        f"pp. {res['start_page']}–{res['end_page']} ({res['pages']}ページ)",
+        f"pp. {pp_start}–{pp_end}",
         f"{res['text_length']:,}文字",
     ]
     st.caption(" | ".join(meta_parts))
 
-    if res.get("text_preview"):
+    # --- 構造化セクション表示 ---
+    sections = res.get("sections", {})
+    if sections:
+        # セクション表示名の定義
+        SECTION_LABELS = {
+            "preamble": "Preamble（前文）",
+            "resolves": "Resolves",
+            "further_resolves": "Further Resolves",
+            "decides": "Decides",
+            "further_decides": "Further Decides",
+            "instructs": "Instructs",
+            "requests": "Requests",
+            "invites": "Invites",
+            "urges": "Urges",
+            "encourages": "Encourages",
+        }
+        # 表示順序
+        SECTION_ORDER = [
+            "preamble", "resolves", "further_resolves",
+            "decides", "further_decides",
+            "instructs", "requests", "invites",
+            "urges", "encourages",
+        ]
+
+        for key in SECTION_ORDER:
+            if key not in sections:
+                continue
+            label = SECTION_LABELS.get(key, key)
+            with st.expander(label):
+                formatted = _format_section_html(sections[key])
+                st.markdown(
+                    f'<div style="font-size:0.9em; line-height:1.7;">'
+                    f'{formatted}</div>',
+                    unsafe_allow_html=True,
+                )
+
+        # 定義外のセクションも表示
+        for key, text in sections.items():
+            if key not in SECTION_ORDER:
+                with st.expander(key):
+                    st.markdown(
+                        f'<div style="font-size:0.9em; line-height:1.7; '
+                        f'white-space:pre-wrap;">{text}</div>',
+                        unsafe_allow_html=True,
+                    )
+    elif res.get("text_preview"):
+        # sectionsがない場合はフォールバック表示
         st.markdown(
             f'<div style="background:#f8f9fa; border-left:3px solid #7b1fa2; '
             f'padding:12px 16px; margin:8px 0; font-size:0.9em; '
-            f'color:#333; max-height:300px; overflow-y:auto; line-height:1.6;">'
+            f'color:#333; line-height:1.6;">'
             f'{res["text_preview"]}</div>',
             unsafe_allow_html=True,
         )
 
     st.divider()
 
+    # --- 参照条文リスト ---
     refs = res.get("refs", [])
     st.markdown(
         f'<p style="font-size:0.95em;font-weight:bold;color:#4a148c;">'
-        f'📎 この決議が参照している条文（{len(refs)}件）</p>',
+        f'参照条文（{len(refs)}件）</p>',
         unsafe_allow_html=True,
     )
 
