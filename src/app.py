@@ -915,12 +915,36 @@ def generate_flow_summary(article_nums: list, articles: dict) -> str:
 # メインアプリ
 # ─────────────────────────────────────────
 
+def _check_login() -> bool:
+    """簡易ログイン認証。認証済みならTrueを返す。"""
+    if st.session_state.get("authenticated"):
+        return True
+
+    st.title("🔒 ログイン")
+    with st.form("login_form"):
+        username = st.text_input("ユーザーID")
+        password = st.text_input("パスワード", type="password")
+        submitted = st.form_submit_button("ログイン", use_container_width=True)
+
+    if submitted:
+        if username == "kddi" and password == "kddi":
+            st.session_state["authenticated"] = True
+            st.rerun()
+        else:
+            st.error("❌ ユーザーIDまたはパスワードが正しくありません。")
+
+    return False
+
+
 def main():
     st.set_page_config(
         page_title="ITU-R RR 条文参照アプリ（β版）",
         page_icon=None,
         layout="wide",
     )
+
+    if not _check_login():
+        return
 
     st.title("ITU-R RR 条文参照アプリ（β版）")
     st.caption("条文間の明示的な参照関係を双方向でトラバーサルする")
