@@ -500,14 +500,7 @@ def render_root(num: str, graph: dict, articles: dict,
         rop_texts = rop_index[num]
         with st.expander("📜 Rules of Procedure", expanded=False):
             for i, rop_text in enumerate(rop_texts):
-                # 段落を維持して表示（\n\n → <br><br>）
-                paragraphs = rop_text.strip().split("\n\n")
-                html_parts = []
-                for para in paragraphs:
-                    clean = para.replace("\n", " ").strip()
-                    if clean:
-                        html_parts.append(f"<p style='margin:0 0 8px 0;'>{clean}</p>")
-                html_content = "".join(html_parts)
+                html_content = _format_rop_html(rop_text)
                 st.markdown(
                     f'<div style="background:#fff8e1; border-left:3px solid #ffa726; '
                     f'padding:8px 12px; margin:4px 0; font-size:0.85em; border-radius:4px;">'
@@ -632,6 +625,61 @@ def render_root(num: str, graph: dict, articles: dict,
 # ─────────────────────────────────────────
 # 決議詳細表示
 # ─────────────────────────────────────────
+
+def _format_rop_html(text: str) -> str:
+    """RoPテキストをHTML表示用に整形する。
+    \\n\\nで段落分割し、先頭の番号パターンでインデントを付与。"""
+    import html as html_mod
+
+    # 番号パターン: "1 ", "1.1 ", "2.3.1 " 等（段落先頭）
+    num_pattern = re.compile(r"^(\d+(?:\.\d+)*)\s")
+    # 脚注区切り
+    footnote_pattern = re.compile(r"^_{5,}")
+
+    paragraphs = text.strip().split("\n\n")
+    html_parts = []
+
+    for para in paragraphs:
+        clean = para.replace("\n", " ").strip()
+        if not clean:
+            continue
+
+        escaped = html_mod.escape(clean)
+
+        # 脚注区切り線
+        if footnote_pattern.match(clean):
+            html_parts.append(
+                '<hr style="border:none; border-top:1px solid #ccc; margin:12px 0;">'
+            )
+            # 脚注テキスト（区切り線の後の部分）
+            fn_text = footnote_pattern.sub("", clean).strip()
+            if fn_text:
+                html_parts.append(
+                    f'<div style="font-size:0.85em; color:#666; '
+                    f'padding-left:8px;">{html_mod.escape(fn_text)}</div>'
+                )
+            continue
+
+        # 番号付き段落
+        m = num_pattern.match(clean)
+        if m:
+            num_str = m.group(1)
+            depth = num_str.count(".")
+            indent = depth * 20
+            weight = "600" if depth == 0 else "normal"
+            margin_top = "12px" if depth == 0 else "6px"
+            html_parts.append(
+                f'<div style="padding-left:{indent}px; margin-top:{margin_top};">'
+                f'<span style="font-weight:{weight};">{html_mod.escape(num_str)}</span>'
+                f' {html_mod.escape(clean[m.end():])}</div>'
+            )
+        else:
+            html_parts.append(
+                f'<p style="margin:0 0 8px 0;">{escaped}</p>'
+            )
+
+    return "\n".join(html_parts)
+
 
 def _format_section_html(text: str) -> str:
     """決議セクションテキストをHTML表示用に整形する。
