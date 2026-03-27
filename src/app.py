@@ -1021,7 +1021,7 @@ def main():
             st.header("決議ブラウザ")
             res_search = st.text_input(
                 "決議を検索（番号 or キーワード）",
-                placeholder="例: 26, satellite",
+                placeholder="例: 26, satellite, HAPS, ESIM",
                 key="res_search_input",
             )
 
@@ -1041,15 +1041,33 @@ def main():
                 is_rev = 0 if wrc.startswith("REV") else 1
                 return (-year, is_rev)
 
+            # 略語→検索キーワード辞書
+            _ACRONYM_MAP = {
+                "esim": ["earth station in motion", "earth stations in motion"],
+                "haps": ["high-altitude platform", "high altitude platform"],
+                "hibs": ["high intensity broadcasting", "high-intensity broadcasting"],
+                "gso": ["geostationary"],
+                "ngso": ["non-geostationary"],
+                "bss": ["broadcasting-satellite service"],
+                "fss": ["fixed-satellite service"],
+                "mss": ["mobile-satellite service"],
+                "epfd": ["equivalent power flux density", "equivalent power-flux density"],
+                "pfd": ["power flux density", "power-flux density"],
+                "ifi": ["interference"],
+            }
+
             for wrc in sorted(wrc_groups.keys(), key=_wrc_sort_key):
                 group = wrc_groups[wrc]
                 if res_search:
                     q = res_search.strip().lower()
+                    # 略語展開: 検索語に対応する正式名称も検索対象に
+                    search_terms = [q] + _ACRONYM_MAP.get(q, [])
                     group = [
                         r for r in group
                         if (q.isdigit() and int(q) == r["number"])
-                        or q in r["title"].lower()
+                        or any(term in r["title"].lower() for term in search_terms)
                         or q in r["wrc"].lower()
+                        or any(term in r.get("text", "").lower() for term in search_terms)
                     ]
                 if not group:
                     continue
