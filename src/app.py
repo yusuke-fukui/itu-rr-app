@@ -3,7 +3,7 @@ ITU-R RR 条文参照アプリ
 双方向トラバーサルによる条文間リンク表示アプリ。
 """
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 import hashlib
 import json
@@ -945,6 +945,16 @@ def main():
 
     if not _check_login():
         return
+
+    # ツールバー・GitHubアイコン・フッターを非表示
+    st.markdown(
+        """<style>
+        [data-testid="stToolbar"] {display: none !important;}
+        header[data-testid="stHeader"] {display: none !important;}
+        footer {display: none !important;}
+        </style>""",
+        unsafe_allow_html=True,
+    )
 
     st.title("ITU-R RR 条文参照アプリ（β版）")
     st.caption(f"条文間の明示的な参照関係を双方向でトラバーサルする　v{__version__}")
