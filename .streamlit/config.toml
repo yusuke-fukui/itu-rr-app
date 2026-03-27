@@ -2,6 +2,9 @@
 headless = true
 port = 8501
 
+[client]
+toolbarMode = "minimal"
+
 [theme]
 primaryColor = "#e63946"
 backgroundColor = "#ffffff"
