@@ -3,7 +3,7 @@ ITU-R RR 条文参照アプリ
 双方向トラバーサルによる条文間リンク表示アプリ。
 """
 
-__version__ = "1.0.3"
+__version__ = "1.0.4"
 
 import hashlib
 import json
@@ -920,7 +920,8 @@ def _check_login() -> bool:
     if st.session_state.get("authenticated"):
         return True
 
-    st.title("🔒 ログイン")
+    st.title("ITU-R RR 条文参照アプリ")
+    st.subheader("ログイン")
     with st.form("login_form"):
         username = st.text_input("ユーザーID")
         password = st.text_input("パスワード", type="password")
