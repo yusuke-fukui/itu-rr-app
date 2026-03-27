@@ -3,7 +3,7 @@ ITU-R RR 条文参照アプリ
 双方向トラバーサルによる条文間リンク表示アプリ。
 """
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 
 import hashlib
 import json
@@ -1096,6 +1096,12 @@ def main():
                                 st.rerun()
 
             st.divider()
+
+        # ログアウト・バージョン
+        if st.button("ログアウト"):
+            st.session_state["authenticated"] = False
+            st.rerun()
+        st.caption(f"v{__version__}")
 
     # 検索入力
     col_input, col_btn = st.columns([4, 1])
