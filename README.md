@@ -67,3 +67,13 @@ streamlit run src/app.py
 3. Main file path: `src/app.py`
 4. Secrets に `ANTHROPIC_API_KEY` を設定
 5. Deploy → 招待したユーザーのみアクセス可能
+
+## スリープ防止
+
+`.github/workflows/keep-alive.yml` にてPlaywrightが12時間ごとに自動アクセス。スリープ画面が出た場合は自動でボタンをクリックして復帰する。
+
+手動で今すぐ起こしたい場合：
+
+```bash
+gh workflow run keep-alive.yml
+```
