@@ -24,15 +24,33 @@ jobs:
               browser = p.chromium.launch()
               page = browser.new_page()
               page.goto("https://itu-rr-app.streamlit.app/", timeout=60000)
-              # スリープ中なら「wake up」ボタンをクリック
+              time.sleep(5)
+
+              print("Title:", page.title())
+              print("URL:", page.url)
+
+              # スリープ画面のボタンをクリック
               try:
-                  btn = page.locator("text=Yes, get this app back up!")
-                  if btn.is_visible(timeout=5000):
+                  btn = page.get_by_role("button", name="Yes, get this app back up!")
+                  if btn.is_visible(timeout=8000):
+                      print("Sleep button found, clicking...")
                       btn.click()
-                      time.sleep(15)
-              except Exception:
-                  pass
-              time.sleep(10)
+                      time.sleep(30)
+                      print("Waited 30s after click")
+                  else:
+                      print("Sleep button not visible, app may already be awake")
+              except Exception as e:
+                  print("Button check error:", e)
+
+              page.screenshot(path="screenshot.png")
+              print("Screenshot saved")
               browser.close()
               print("Done")
           EOF
+
+      - name: Upload screenshot
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshot
+          path: screenshot.png
