@@ -2,12 +2,37 @@ name: Keep Alive
 
 on:
   schedule:
-    - cron: "0 */12 * * *"
+    - cron: '0 */12 * * *'  # 12時間ごと
   workflow_dispatch:
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Streamlit app
-        run: curl -s -o /dev/null -w "%{http_code}" https://itu-rr-app.streamlit.app
+      - name: Install Playwright
+        run: |
+          pip install playwright
+          playwright install chromium --with-deps
+
+      - name: Wake up Streamlit app
+        run: |
+          python - <<'EOF'
+          from playwright.sync_api import sync_playwright
+          import time
+
+          with sync_playwright() as p:
+              browser = p.chromium.launch()
+              page = browser.new_page()
+              page.goto("https://itu-rr-app.streamlit.app/", timeout=60000)
+              # スリープ中なら「wake up」ボタンをクリック
+              try:
+                  btn = page.locator("text=Yes, get this app back up!")
+                  if btn.is_visible(timeout=5000):
+                      btn.click()
+                      time.sleep(15)
+              except Exception:
+                  pass
+              time.sleep(10)
+              browser.close()
+              print("Done")
+          EOF
